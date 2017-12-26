@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!-- This is the general configuration file for eLocation dispatcher -->
+
+<!-- poll_interval: specifies the polling interval in seconds. Dispatcher
+                    polls each component at this interval to make sure they
+                    are up and running.
+     map_life:      specifies how many days a map will exist on disk. If the
+                    value is zero the maps will never be deleted from disk.
+
+     admin_email:   the person who will receive email when disasters occur.
+     smtp_host:     if admin_email presents, this specifies the smtp server to
+                    send the emergency messages.
+-->
+
+<DispatcherConfig poll_interval="45" admin_email="youremail@provider.com"
+                  smtp_host="smtp.provider.com" >
+
+  <logging log_level="finest" log_thread_name="true" log_time="true">
+    <log_output name="System.err" />
+    <log_output name="log/dispatcher.log" />
+  </logging>
+  
+  <base_map_datasource>elocation_mercator</base_map_datasource>
+  
+  <poi_datasource>gcus</poi_datasource>
+  
+  <map_layer>world_map</map_layer>
+
+  <mapper_cluster>
+    <!--
+      add mappers here like this
+      <mapper url="http://localhost/mapviewer/omserver" />
+    -->
+    <mapper url="http://localhost:7001/mapviewer/omserver" />
+  </mapper_cluster>
+
+  <router_cluster maxRoutesPerRequest="20" serverPoolSize="2">
+    <!--
+      add routers here like this
+    <router url="http://localhost/routeserver/servlet/RouteServerServlet" />
+    -->
+    <router 
+      url="http://hostname_1/routeserver/servlet/RouteServerServlet"
+      supportedCountries="BM,BS,BZ,CA,CR,CU,DO,GT,HN,JM,KY,MX,NI,PA,PR,SV,US,VI"/>
+    <router 
+      url="http://hostname_2/routeserver_eu/servlet/RouteServerServlet"
+      supportedCountries="AD,AT,BE,BG,CH,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,HR,HU,IE,IM,IS,IT,KG,KZ,LI,LT,LU,LV,MC,MD,MT,NL,NO,PL,PT,RO,RU,SE,SI,SK,SM,TR,UA,UZ,VA,XA"/>
+    <router 
+      url="http://hostname-3/routeserver_sa/servlet/RouteServerServlet" 
+      supportedCountries="AR,AW,BB,BL,BO,BR,CL,CO,EC,FK,GF,GP,GS,GY,MQ,PE,PY,SR,TT,UY,VE"/>
+  </router_cluster>
+
+  <geocoder_cluster>
+    <!--
+      add geocoders here like this
+    <geocoder url="http://localhost/geocoder/gcserver" />
+    -->
+    <geocoder url="http://localhost:7001/geocoder/gcserver" />
+  </geocoder_cluster>
+
+  <!-- uncomment this to enable IP filtering/monitoring 
+       Sample:
+		 <ip_monitor>
+		 	<ips> 138.1.*, 24.*, 139.1.1.9 </ips>
+			<ip_range> 137.1.12.99 - 137.1.12.108 </ip_range>
+			<ip_range> 25.1.1.1 - 25.1.1.255 </ip_range>
+			<ips_exclude> 38.*, 24.1.1.99 </ips_exclude>
+			<ip_range_exclude> 138.1.17.1 - 138.1.17.255</ip_range_exclude>
+		</ip_monitor>
+  -->
+  <!--
+  <ip_monitor>
+    <ips> * </ips>
+	 <ips_exclude> 138.1.17.245, 138.1.19.20 </ips_exclude>
+  </ip_monitor>
+  -->
+
+</DispatcherConfig>
+

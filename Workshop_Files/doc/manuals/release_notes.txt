@@ -1,0 +1,86 @@
+MapViewer (Server and Map Builder) =========
+
+new Features:
+
+        MapViewer services are now CORS enabled by default. You can change this in the web.xml deployment descriptor.
+
+        MapViewer admin console can now be disabled entirely by setting a flag in mapViewerConfig.xml
+
+        GeoRaster Virtual Mosaic themes now allow specifying individual bands.
+
+        MapViewer now supports authentication using OAM.
+
+        Dynamic GeoRaster themes now support SQL binding variables.
+
+        Reduced number of threads used for cleaning stale map tile images.
+
+        Removed unnecessary tile layer definition write-back to database during server initialization
+
+        Enhanced WFS 1.1.0 support; also added support for custom axis ordering in certain service providers
+        
+Bug fixes:
+    
+        Fixed a server JDBC connection leak bug caused by JavaSctipt map API performing rapid zoom/pan operations.
+
+        Fixed an issue where in rare occasions server will attempt to allocate huge amount of memory when
+        processing map requests (FOI requests from the V1 map API).
+
+        Fixed several Admin Console UI refresh and consistency issues.
+
+
+
+Orale Maps HTML5 JS API  ===================
+
+New Features
+
+        Overhauled the internal progress reporting service with improved map progress bar (previously a loading/spinning icon).
+
+        DynamicTileLayer now supports programmatic tile URL generator
+
+        DynamicTileLayer now supports collection bucket styles
+
+        DynamciTileLayer now supports MapViewer JDBC themes (theme based on dynamic SQL queries).
+
+        DynamciTileLayer now supports dynamic GeoRaster themes (GeoRaster themes based on dynamic SQL queries).
+
+        DynamicTileLayer now supports custom Line styles
+
+        DynamicTileLayer now supports local SRS/SRID
+
+        DynamicTileLayer now supports configurable (visible) zoom level ranges
+
+        OSMTileLayer now supports zyx tile scheme
+
+        Redline tool now supports drawing voids (holes inside polygons)
+
+        Updated WMSTileLayer and DynamicTileLayer JSDoc API references
+   
+Bug Fixes
+                
+        Fixed an issue where mouse wheel zoom operation sometimes fails or triggers too many map actions.
+        
+        Fixed an issue where the navigation control is mis-placed after map window is resized.
+
+        Fixed several compatibility issues when using the V2 API together with jQuery version 3.
+        
+        Fixed a number of bugs related to DynamicTileLayer
+                
+        Fixed a bug where a MapMarker is sometimes displayed at wrong position when being dragged. 
+
+        Fixed a bug where sometimes a MapMarker's label style is not using the style set via its setLabelingStyle() method.
+        
+        Fixed a bug where sometimes the API message files were not being loaded properly
+        
+        Fixed a bug so that server side TTF (TrueType Font) glyph based marker styles can be used.
+
+        Fixed several bugs related to map printing involving DynamicTileLayer and dynamic styles.
+        
+        Fixed a bug so that when mouse over a MapMarker both the marker text and marker label will be displayed in the tooltip.
+        
+        Fixed a bug where sometimes Google tile layer is not displayed correctly.
+    
+        Fixed a bug where sometimes the scale bar is not displayed correctly on initial map display.
+    
+        Fixed a jsdoc bug regarding "simplifyAlgorithm" in VectorLayer class.
+
+       

@@ -1,0 +1,101 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fprq8\fcharset0 Arial;}{\f1\fnil\fprq8\fcharset0 Times New Roman;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fprq1\fcharset0 Consolas;}{\f4\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red0\green0\blue255;\red0\green255\blue255;\red0\green0\blue0;\red204\green204\blue204;\red255\green255\blue255;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sb240\sa120\lang9\f0\fs28 Conducting Network Analysis Using .NET\par
+\b\fs32 Table of Contents\par
+\pard\li283\tqr\tldot\tx9689\b0\f1\fs24 Purpose\tab 1\par
+Assumptions\tab 1\par
+Requirements\tab 1\par
+Description\tab 1\par
+Directory Structure\tab 2\par
+Running the Sample\tab 2\par
+\pard\li566\tqr\tldot\tx9406 Configuration\tab 2\par
+Usage\tab 2\par
+\pard\li283\tqr\tldot\tx9689 Code\tab 2\par
+\pard\li566\tqr\tldot\tx9406 XML Model Classes Generation\tab 3\par
+XML Serialization\tab 3\par
+Request Templates\tab 3\par
+\pard\li283\tqr\tldot\tx9689 Alternatives to XML API\tab 4\par
+\pard\sa120\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Purpose\par
+\pard\b0\i0\f1\fs24 This document is intended to serve as a guide to understand the sample NDMXmlDemo which in turn is meant to show how to conduct different types of network analysis from a .NET application using the NDM XML API and the NDM Web Services.\par
+\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Assumptions\par
+\pard\b0\i0\f1\fs24 This guide assumes that you have already read the NDM Tutorial and have set up a network for analysis. If not, please refer to the NDM Tutorial index.\par
+\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Requirements\par
+\pard\b0\i0\f1\fs24 In order to be able to run this sample you need the following:\par
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}NDM Web Service deployed over the Oracle Spatial Web Services. For guidance on deploying and configuring the NDM Web Service refer to the page \cf1{\field{\*\fldinst{HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"}}{\fldrslt{\ul http://\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 <\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 your-host\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 >\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 :\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 <\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 your-host-port\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 >\ulnone\v HYPERLINK "http://localhost:7001/ndmdemo/ndmws.html"\ul\v0 /ndmdemo/ndmws.html}}}\cf0\ulnone\f1\fs24  of your NDMDemo deployed application or to the file ndmdemo.ear\\web.war\\ndmws.html if you don\rquote t the NDMDemo application deployed.\par
+{\pntext\f4\'B7\tab}Net Framework version 3.5 or later is required to run the sample.\par
+\pard\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Description\par
+\pard\b0\i0\f1\fs24 This sample is composed of a .NET application which displays a Graphical User Interface (GUI) that  allows the user to perform some network analysis functions. \par
+The user selects the network analysis type and provides the input values (such as start point, end point, link cost calculator, etc). The .NET application takes the user input  and generates an XML request. The XML request is sent via HTTP to the NDM Web Service which performs the analysis and sends back an XML response to the .NET client.\par
+The .NET application processes the XML response and shows the analysis\rquote  results to the user. \par
+\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Directory Structure\par
+\pard\sa120\b0\i0\f1\fs24 The sample consists of the following directories:\par
+NDMXmlDemo: Contains the executable file, the settings file and the XmlNdmAnalysis.dll file\par
+NDMXmlDemo/xml: Contains the XML API XSD files and XML network request templates.\par
+NDMXmlDemo/code: The source files of the sample.\par
+\pard\sb240\sa120\b\i\f0\fs28 Running the Sample\par
+\i0 Configuration\par
+\pard\b0\f1\fs24 The file NDMDemo.exe.config contains the settings for the sample application. You would need to change some of the values depending on where are your Spatial Web Services deployed and the name of the network you want to work with.\par
+If needed, change the following settings under the XML element configuration/userSettings/NDMDemo.Settings.\par
+\f2\fs22\par
+\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat4\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx3324\clcfpat3\clcbpat4\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx6648\clcfpat3\clcbpat4\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\b\f1\fs18 Setting Name\b0\f2\fs22\cell\b\f1\fs18 Description\b0\f2\fs22\cell\b\f1\fs18 Example\b0\f2\fs22\cell\row\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx3324\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx6648\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\f1\fs18 spatialWsUrl\f2\fs22\cell\f1\fs18 The URL where your Spatial Web Services are deployed.\f2\fs22\cell\f3\fs18{\field{\*\fldinst{HYPERLINK "http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"}}{\fldrslt{\ul\cf1 http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet}}}\f3\fs18\par
+\f2\fs22\cell\row\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx3324\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx6648\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\f1\fs18 targetNetwork\f2\fs22\cell\f1\fs18 The network used to run the analysis\f2\fs22\cell\f1\fs18 NAVTEQ_SF\f2\fs22\cell\row\pard\par
+\pard\sb240\sa120\b\f0\fs28 Usage\par
+\pard\b0\f1\fs24 Double click on the NDMDemo.exe executable file to run the sample. \par
+There are four types of network analysis available: shortest path, nearest neighbors, within cost and TSP.\par
+Wherever you are required to enter a point it can be specified as a node ID or a link ID and percentage, the format of the later is: <LIINK_ID>@<PERCENTAGE> where <LINK_ID> is a valid database link ID and <PERCENTAGE> is a decimal number between 0 and 1.\par
+Once an analysis is performed the links in the bottom right corner will show the XML for the request and the response.\par
+This sample only shows a subset of options that can be specified in the XML request, other options such as saving the resulting path in the database can be specified as part of the XML request. Please refer to the XML schemas in the folder xml/xsd to see all the possible options for each network analysis request.\par
+\f2\fs22\par
+\pard\sb240\sa120\b\i\f0\fs28 Code\par
+\pard\b0\i0\f1\fs24 The code is split in two components:\par
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\b XmlNdmAnalysis\b0 : It contains the code related to the network analysis. Creates XML requests, sends requests and receives responses through HTTP, receives and processes the XML response.\line Here are the XML Model Classes, that is, the classes used to represent the XML requests and responses. This component is packaged as a DLL (XmlNdmAnalysis.dll).\par
+\b{\pntext\f4\'B7\tab}NDMDemo\b0 : It has the application entry point and contains the GUI (Graphic User Interface). It is basically a client of the classes defined in the XmlNdmAnalysis component.\par
+\pard\f2\fs22\par
+\pard\sb240\sa120\b\f0\fs28 XML Model Classes Generation\par
+\pard\b0\f1\fs24 The network requests and responses are defined in a set of schema files located under the directory xml/xsd. The XSD files are used to generate C# classes that represent the structure of the XML requests and response. The classes can be generated using the XSD .NET tool with the following line:\par
+\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\fs18\tab\i xsd networkAnalysis.xsd geometry.xsd xlinks.xsd /classes\i0\f2\fs22\cell\row\pard\par
+\par
+\pard\sb240\sa120\b\f0\fs28 XML Serialization\par
+\pard\b0\f1\fs24 The XML serialization/deserialization mechanism is used to convert XML into objects and transform objects back into XML. The generated XML model classes already contain all the meta data needed to perform these operations (all the meta data is generated automatically when the XML model classes are created using the XSD tool).\par
+An object of the type NetworkAnalysisType which represents an XML request can be easily serialized to XML as is shown in the following code snippet:\par
+\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\i\fs18             MemoryStream memoryStream = new MemoryStream();\par
+            XmlTextWriter xmlTextWriter = new XmlTextWriter( memoryStream, Encoding.UTF8 );\par
+            XmlSerializer serializer = new XmlSerializer( typeof( NetworkAnalysisRequestType ) );\par
+\pard\intbl             //myNetworkAnalysisRequestObject is the memory representation of the XML analysis request\par
+\pard\intbl             serializer.Serialize( xmlTextWriter, myNetworkAnalysisRequestObject );\par
+            string xml = Encoding.UTF8.GetString( memoryStream.ToArray() );\i0\f2\fs22\cell\row\pard\par
+\f1\fs24 In the same way, an XML response can be deserialized as an instance of the type NetworkAnalysisResponseType:\par
+\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl          \i\fs18 StringReader reader = new StringReader( xml );\par
+            XmlSerializer serializer = new XmlSerializer( typeof( NetworkAnalysisResponseType ) );\par
+            NetworkAnalysisResponseType myNetworkAnalysisResponseObject = serializer.Deserialize( reader );\i0\f2\fs22\cell\row\pard\par
+\pard\sb240\sa120\b\f0\fs28 Request Templates\par
+\pard\b0\f1\fs24 It is only needed to instantiate classes of the XML Model to create an analysis request: first you create an instance of the root element class (i.e. NetworkAnalysisRequestType), then you set instances of the nested element classes to your root element instance and so on until you have your XML request set up with all the desired options. This creation could look like the following snippet:\par
+\trowd\trgaph55\trrh1\trpaddl55\trpaddr55\trpaddfl3\trpaddfr3
+\clcfpat3\clcbpat5\clbrdrl\brdrw1\brdrs\brdrcf3\clbrdrt\brdrw1\brdrs\brdrcf3\clbrdrr\brdrw1\brdrs\brdrcf3\clbrdrb\brdrw1\brdrs\brdrcf3 \cellx9972\pard\intbl\i\fs18             NetworkAnalysisRequestType request = new NetworkAnalysisRequestType();\par
+            request.networkName = "NAVTEQ_SF";\par
+            NearestNeighborsRequestType nearestNeighbors = new NearestNeighborsRequestType();\par
+            request.Item = nearestNeighbors;\par
+            nearestNeighbors.startPoint = new PointOnNetType();\par
+            nearestNeighbors.startPoint.ItemsElementName = new ItemsChoiceType[] \{ ItemsChoiceType.nodeID \};\par
+            nearestNeighbors.startPoint.Items = new object[] \{ 12090934 \};\par
+            nearestNeighbors.noOfNeighbors = 10;\par
+            nearestNeighbors.subPathRequestParameter = new SubPathRequestParameterType();\par
+            nearestNeighbors.subPathRequestParameter.geometry = true;\par
+            nearestNeighbors.subPathRequestParameter.pathRequestParameter = new PathRequestParameterType();\par
+            nearestNeighbors.subPathRequestParameter.pathRequestParameter.geometry = true;\par
+            :\par
+            :\i0\f2\fs22\cell\row\pard\par
+\f1\fs24 To avoid creating from scratch all the code needed for a request this sample loads XML request templates which already have the entire structure of a valid request. The only thing the code has to do is set or remove values or element instances based on the options selected by the user in the GUI.\par
+}
+ 

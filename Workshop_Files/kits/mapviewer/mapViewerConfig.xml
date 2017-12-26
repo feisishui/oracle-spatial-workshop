@@ -1,0 +1,619 @@
+<?xml version="1.0" ?>
+<!-- This is the configuration file for OracleFMW MapViewer. -->
+<!-- Note: All paths are resolved relative to this directory (where 
+           this config file is located), unless specified as an absolute 
+           path name.
+ -->
+
+<MapperConfig>
+
+  <!-- ****************************************************************** -->
+  <!-- ************************ Logging Settings ************************ -->
+  <!-- ****************************************************************** -->
+
+<!-- Possible attribute values are:
+console_log_level : "fatal"|"error"|"warn"|"info"|"config"|"fine"|"debug"|"finest" ; default
+is info.
+file_limit: max file size of a log file; specify a single number.
+Unit is in MB. Default value is 50 (for max log file size of 50MB);
+file_count: how many log files to rotate; default is 10.
+-->
+
+<logging console_log_level="info" file_limit="5" file_count="10">
+    <log_output name="System.err" />
+    <log_output name="../log/mapviewer.log" />
+    <logger name="oracle.mapviewer.ws" level="info"/>
+    <logger name="oracle.mapviewer.access" level="info"/>
+    <logger name="oracle.mapviewer.sdovis" level="info"/>
+    <logger name="oracle.mapviewer.webconsole" level="info"/>
+</logging>
+
+
+ <!-- ****************************************************************** -->
+  <!-- ************************ Temporary Directory ************************ -->
+  <!-- ****************************************************************** -->
+
+  <!-- Uncomment the following to define a temporary directory for
+       MapViewer server. The default value is WEB-INF/temp for server
+       installation.
+  -->
+  
+  <!--
+    <temp_directory value="/temp" />
+  -->
+  
+  <!-- ****************************************************************** -->
+  <!-- ********************** Map Image Settings ************************ -->
+  <!-- ****************************************************************** -->
+
+  <!-- Uncomment the following only if you want generated images to 
+       be stored in a different directory, or if you want to customize
+       the life cycle of generated image files.
+
+       By default, all maps are generated under 
+       $ORACLE_HOME/lbs/mapviewer/web/images. 
+
+       Images location-related attributes:
+       file_prefix: image file prefix, default value is "omsmap"
+       url:  the URL at which images can be accessed. It must match the 'path'
+             attribute below. Its default value is "%HOST_URL%/mapviewer/images"
+       path: the corresponding path in the server where the images are
+             saved; default value is "%ORACLE_HOME%/lbs/mapviewer/web/images"
+
+       Images life cycle-related attributes:
+       life: the life period of generated images, specified in minutes. 
+             If not specified or if the value is 0, images saved on disk will 
+             never be deleted. 
+       recycle_interval:  this attribute specifies how often the recycling 
+             of generated map images will be performed. The unit is minute.
+             The default interval (when not specified or if the value is 0) 
+             is 8*60, or 8 hours.
+             
+   -->
+  <!--
+   <save_images_at  file_prefix="omsmap"
+                   url="http://mypc.mycorp.com:8888/mapviewer/images"
+                   path="../../images"
+                   life="0"
+                   recycle_interval="480"
+   /> 
+  -->
+  <!-- Uncomment the following only if you want to customize 
+       the life cycle of generated utfgrid files used by client sided defined Image Tile Layers.
+       The client HTML5 API always retrieves the utfgrid file from mapviewer/images/utfgrid/<filename>. 
+       UTFGrid life cycle-related attributes:
+       life: it specifies the life period of generated utfgrid files in minutes. 
+             If not specified, the value is 60 minutes. 
+       recycle_interval:  it specifies how often the recycling of generated map images will be performed in minutes.
+             If not specified, the value is 480, or 8 hours.
+   -->
+    
+   <utfgrid_life_cycle 
+                   life="60"
+                   recycle_interval="480"
+   />
+    
+  <!-- ****************************************************************** -->
+  <!-- ***************** Graphics & Rendering Settings ****************** -->
+  <!-- ****************************************************************** -->
+  <!--  Uncomment the following to enable graphics related settings. -->
+    <graphics_config>
+        <default_dpi>96</default_dpi>
+    </graphics_config>
+
+  <!-- ****************************************************************** -->
+  <!-- ********************* IP Monitoring Settings ********************* -->
+  <!-- ****************************************************************** -->
+
+  <!-- Uncomment the following to enable IP filtering for administrative 
+        requests.
+    Note:
+    - Use <ips> and <ip_range> to specify which IPs (and ranges) are allowed.
+      Wildcard form such as 20.* is also accepted. Use a comma-delimited 
+      list in <ips>.
+
+    - Use <ips_exclude> and <ip_range_exclude> for IPs and IP ranges
+      prohibited from accessing eLocation.
+
+    - If an IP falls into both "allowed" and "prohibited" categories, it is
+      prohibited.
+
+    - If you put  "*" in an <ips> element, then all IPs are allowed, except
+      those specified in <ips_exclude> and <ip_range_exclude>.
+      On the other hand, if you put "*" in an <ips_exclude> element, no one
+      will be able to access MapViewer (regardless of whether an IP is in
+      <ips> or <ip_range>).
+
+    - You can have multiple <ips>, <ip_range>, <ips_exclude>, and
+      <ip_range_exclude> elements under <ip_monitor>.
+
+    - If no <ip_monitor> element is present in the XML configuration
+      file, then no IP filtering will be performed (all allowed).
+
+    - The way MapViewer determines if an IP is allowed is:
+
+          if(IP filtering is not enabled) then allow;
+          if(IP is in exclude-list) then not allow;
+          else if(IP is in allow-list) then allow;
+          else not allow;  
+   -->
+
+  <!--
+     <ip_monitor>
+          <ips> 138.1.17.9, 138.1.17.21, 138.3.*, 20.* </ips>
+          <ip_range> 24.17.1.3 - 24.17.1.20 </ip_range>
+          <ips_exclude> 138.3.29.* </ips_exclude>
+          <ip_range_exclude>20.22.34.1 - 20.22.34.255</ip_range_exclude>
+     </ip_monitor>
+   -->
+
+
+  <!-- ****************************************************************** -->
+  <!-- ********************** Web Proxy Setting  ************************ -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following to specify the Web proxy setting.
+       This is only needed for passing background image URLs to
+       MapViewer in map requests or for setting a logo image URL, if
+       such URLs cannot be accessed without the proxy.
+       If proxy server requires authentication, parameters for
+       user name and password must be defined. For example: user="uservalue" password="!pwdvalue"
+   -->
+
+  <!--
+    <web_proxy host="www-proxy.my_corp.com"  port="80" />
+  -->
+
+  <!-- ****************************************************************** -->
+  <!-- *********************** Security Configuration ******************* -->
+  <!-- ****************************************************************** -->
+  <!-- Here you can set various security related configurations of MapViewer.
+  -->
+
+  <security_config>
+    <!-- if you wish to disable direct XML based info requests from 
+         MapViewer's requests web page, set the following value to true. 
+     --> 
+    <disable_direct_info_request> false </disable_direct_info_request>
+
+    <!-- Add remote URLs that this MapViewer's built-in proxy servlet
+         is allowed to communicate with. URLs should be separated by a comma.
+         URL may also end with a wild card '*' to allow a wide range of URLs
+         that start with a certain path. 
+         Some sample URL patterns:
+         foo.com:8080/mapviewer, 
+         https://foo.com/mapviewer,
+         earthquake.usgs.gov/eqcenter/catalogs/*
+    -->
+    <proxy_enabled_hosts>
+    <!-- foo.com:8080/mapviewer -->
+    </proxy_enabled_hosts>
+
+    <!-- To facilitate mapViewer's HTTPS (SSL) connection with
+         external web sites that use self signed certificates, you may 
+         register those certificates here. Use one entry for each
+         server that requires HTTPS connection.
+
+        host_name:  should be the IP address or  domain name of the 
+                     server that requires HTTPS connection.
+        keystore_file:  a key store containing a single self-signed
+                        certificate. After you obtain the certificate 
+                        (typically a .pem file) from the server site, you can 
+                        create a key store file using the Java keytool, for example:
+
+          keytool -import -file fooserver.pem -alias fooserver -keystore fooserver.jks 
+
+        key:  the password you provided to the keytool when creating the key store
+              file. It is used to ensure the integrity of the key store file
+              itself.
+     -->
+    <!--
+    <certificates>
+        <entry>
+           <host_name>fooserver.com</host_name>
+           <keystore_file>/scratch/fooserver.jks</keystore_file>
+           <key>123456</key>
+        </entry>
+    </certificates>
+    -->
+
+  </security_config>
+ 
+
+  <!-- ****************************************************************** -->
+  <!-- *********************** Global Map Configuration ***************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following to specify systemwide parameters
+       for generated maps. You can specify your copyright note, map title, and
+       an image to be used as a custom logo shown on maps. The logo image must 
+       be accessible to this MapViewer and in either GIF or JPEG format.
+       Notes:
+         -  To disable a global note or title, specify an empty string ("") for
+            the text attribute of <note> and <title> element.
+         - position specifies a relative position on the map where the
+                  logo, note, or title  will be displayed. Possible values are
+                  NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST,
+                  SOUTH_WEST, NORTH_WEST, and CENTER.
+         - image_path specifies a file path or a URL (starts with "http://")
+                    for the image.
+
+       <rendering> element attributes:
+       - Local geodetic data adjustment: If allow_local_adjustment="true",
+         MapViewer automatically performs local data
+         "flattening" with geodetic data if the data window is less than
+         3 decimal degrees. Specifically, MapViewer performs a simple
+         mathematical transformation of the coordinates using a tangential
+         plane at the current map request center.
+         If allow_local_adjustment="false" (default), no adjustment is
+         performed.
+       - Automatically applies a globular map projection (geodetic data only): 
+         If use_globular_projection="true", MapViewer will 
+         apply a globular projection on the fly to geometries being displayed. 
+         If use_globular_projection="false" (the default), MapViewer does no map 
+         projection to geodetic geometries. This option has no effect on 
+         non-geodetic data.
+   -->
+
+  <!--
+    <global_map_config>
+        <note text="Copyright 2004, Oracle Corporation" 
+              font="sans serif" 
+              position="SOUTH_EAST"/>
+        <title  text="MapViewer Demo" 
+                font="Serif"
+                position="NORTH" />
+        <logo image_path="C:\\images\\a.gif"  
+              position="SOUTH_WEST" />
+
+        <rendering allow_local_adjustment="false" 
+                   use_globular_projection="false" />
+    </global_map_config>
+  -->
+
+
+  <!-- ****************************************************************** -->
+  <!-- ****************** Spatial Data Cache Setting  ******************* -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following to customize the spatial data cache
+       used by MapViewer. The default is 64 MB for in-memory cache.
+
+       To disable the cache, set max_cache_size to 0.
+
+       max_cache_size:  Maximum size of in-memory spatial cache of MapViewer.
+                        Size must be specified in megabytes (MB).
+       report_stats:    If you would like to see periodic output of cache
+                        statistics, set this attribute to true. The default
+                        is false.
+   -->
+
+  <!--
+    <spatial_data_cache   max_cache_size="64"
+                          report_stats="false" 
+    />
+  -->
+
+
+  <!-- ****************************************************************** -->
+  <!-- ******************** Custom Image Renderers ********************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and add as many custom image renderers as needed here, 
+       each in its own  <custom_image_renderer> element. The "image_format"
+       attribute specifies the format of images that are to be custom 
+       rendered using the class with full name specified in "impl_class". 
+       You are responsible for placing the implementation classes in the
+       MapViewer's classpath.
+  -->
+  <!-- 
+  <custom_image_renderer image_format="ECW" 
+                         impl_class="com.my_corp.image.ECWRenderer" />
+  -->
+
+
+  <!-- ****************************************************************** -->
+  <!-- ****************** Custom SRS Mapping Info ****************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       read the file information to map SDO SRID with EPSG. Applies to
+       WFS and WMS themes.
+  -->
+  <!--
+  <srs_mapping>
+    <sdo_epsg_mapfile>
+      ../config/epsg_srids.properties
+    </sdo_epsg_mapfile>
+  </srs_mapping>
+  --> 
+
+  <!-- ****************************************************************** -->
+  <!-- ****************** Custom WMS Capabilities Info ****************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       use the following information in its WMS getCapabilities response.
+  -->
+  <!--
+  <wms_config host="www.my_corp.com" port="80" 
+              protocol="http" default_datasource="mvdemo"
+              public_datasources="mvdemo, dsrc2">
+              
+    <title>
+        WMS interface provided by OracleFMW MapViewer
+    </title>
+    <abstract>
+        This WMS service is for bird lovers.
+    </abstract>
+    <keyword_list>
+       <keyword>bird</keyword>
+       <keyword>roadrunner</keyword>
+       <keyword>ambush</keyword>
+    </keyword_list>    
+    <online_resource>
+        http://www.my_corp.com/wms-help
+    </online_resource>
+    <contact_information>
+       <ContactPersonPrimary>
+       		<ContactPerson>John Doe</ContactPerson>
+       		<ContactOrganization>My Corp.</ContactOrganization>
+       </ContactPersonPrimary>
+       <ContactPosition>Sr. Manager</ContactPosition>
+       <ContactAddress>
+       		<AddressType>US Street</AddressType>
+       		<Address>1 MyCorp drv</Address>
+       		<City>Nashua</City>
+       		<StateOrProvince>NH</StateOrProvince>
+       		<PostCode>03062</PostCode>
+       		<Country>USA</Country>
+       </ContactAddress>
+       <ContactVoiceTelephone>18001122333</ContactVoiceTelephone>
+       <ContactFacsimileTelephone></ContactFacsimileTelephone>
+       <ContactElectronicMailAddress>jdoe@my_corp.com</ContactElectronicMailAddress>
+    </contact_information>
+    <Fees>None</Fees>
+    <AccessConstraints>None whatsoever</AccessConstraints>
+		
+    <sdo_epsg_mapfile>
+      ../config/epsg_srids.properties
+    </sdo_epsg_mapfile>
+
+    </wms_config>
+  -->
+
+
+  <!-- ****************************************************************** -->
+  <!-- **************** Custom Non-Spatial Data Provider **************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and add as many custom non-spatial data provider as
+       needed here, each in its own <ns_data_provider> element.
+       You must provide the id and full class name here. Optionally you
+       can also specify any number of global parameters, which MapViewer
+       will pass to the data provider implementation during initialization. 
+       The name and value of each parameter is interpreted only by the 
+       implementation.
+  -->
+
+  <!-- this is the default data provider that comes with MapViewer; please
+       refer to the MapViewer User's Guide for instructions on how to use it.
+  -->
+  <ns_data_provider
+    id="defaultNSDP" 
+    class="oracle.sdovis.NSDataProviderDefault" 
+  />
+
+  <!-- this is a sample NS data provider with prameters:
+  <ns_data_provider
+    id="myProvider1" class="com.mycorp.bi.NSDataProviderImpl" >
+
+    <parameters>
+      <parameter name="myparam1" value="value1" />
+      <parameter name="p2"       value="v2"     />
+    </parameters>
+
+  </ns_data_provider>
+  -->
+
+  <!-- ****************************************************************** -->
+  <!-- **************** Custom Spatial Data Provider **************** -->
+  <!-- ****************************************************************** -->
+  <!-- A Spatial data provider refer to an external source
+       of spatial data. For example, system files on a specific format such
+       as Shapefile or others.       
+       You must define the provider id and the full class name. Also if the
+       provider has some initialization parameters, you may define them here. 
+       Copy the jar library file with the class to a directory that is part of 
+       MapViewer's classpath. 
+       
+       MapViewer provides a spatial provider for Shapefiles. This provider has
+       a init parameter "datadir" which defines a directory where the shapefiles
+       will be searched, and a runtime parameter "filename" that defines
+       the path to the shapefile (this runtime parameter comes from the 
+       theme definition). 
+       The definition of the init parameter "datadir" on this configuration file 
+       is optional. The shapefile provider first tries to use just the "filename"
+       parameter defined on the theme definition, but if the server can not access 
+       the file then the "datadir" is used if it is defined. 
+       MapViewer does not know the semantic of the init parameter name, and if
+       the parameter corresponds to a directory, then you must define a value
+       with the complete path.
+       
+       This is an example of a Shapefile spatial provider:
+       
+       <s_data_provider
+         id="shapefileSDP"
+         class="oracle.sdovis.ShapefileDataProvider" >
+         <parameters>
+            <parameter name="datadir" value="/temp/data" />
+         </parameters>
+       </s_data_provider>
+       
+  -->
+
+  <!-- this is the default data provider that comes with MapViewer; please
+       refer to the MapViewer User's Guide for instructions on how to use it
+       with Custom Geometry themes.
+  -->
+
+  <s_data_provider
+    id="shapefileSDP" 
+    class="oracle.sdovis.ShapefileDataProvider" 
+    >
+    <parameters>
+      <parameter name="datadir" value="/temp/data" />
+    </parameters>
+  </s_data_provider>
+
+ <s_data_provider
+    id="ogrSDP" 
+    class="oracle.sdovis.OGRDataProvider" 
+    >
+    <parameters>
+      <parameter name="datadir" value="/temp/data" />
+    </parameters>
+  </s_data_provider>
+  
+  <s_data_provider
+    id="teradataSDP" 
+    class="oracle.sdovis.TeradataDataProvider" 
+    >
+  </s_data_provider> 
+  
+  <!-- ****************************************************************** -->
+  <!-- *******************  Map Cache Server Setting  ******************* -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following to customize the map tile server. 
+
+       <tile_storage> specifies the default root directory under which the 
+       cached tile images are to be stored if the map tile layer configuration
+       does not specify the root directory for the map tile layer. If the 
+       default root directory is not set or not valid, the default root 
+       direcotry will be set to be $MAPVIEWER_HOME/web/tilecache
+       
+         default_root_path:  The default root directory under which the cached 
+                              tile images are stored. 
+      
+  -->
+
+  <!--
+     <map_tile_server>
+       <tile_storage default_root_path="/scratch/maptiles/"/>
+    </map_tile_server>
+  -->
+ 
+ 
+  <!-- ****************************************************************** -->
+  <!-- ******************** Predefined Data Sources  ******************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following to predefine one or more data 
+       sources.
+       Note: You must precede the jdbc_password value with a '!' 
+             (exclamation point), so that when MapViewer starts the next
+             time, it will encrypt and replace the clear text password. 
+  -->
+
+  <!-- 
+  <map_data_source name="mvdemo"
+                   jdbc_host="db1.sample.com"
+                   jdbc_sid="orcl"
+                   jdbc_port="1521"
+                   jdbc_user="myuser"
+                   jdbc_password="!mypassword" 
+                   jdbc_mode="thin"
+                   number_of_mappers="3"
+                   allow_jdbc_theme_based_foi="false"
+                   editable="false"
+   />
+   -->
+
+  <map_data_source name="scott"
+                   jdbc_host="localhost"
+                   jdbc_sid="orcl122"
+                   jdbc_port="1521"
+                   jdbc_user="scott"
+                   jdbc_password="x8jkuM1nvzjYuqH++9Pomf3nAAa739dE" 
+                   jdbc_mode="thin"
+                   number_of_mappers="3"
+                   allow_jdbc_theme_based_foi="true"
+                   editable="true"
+   />
+
+  <!--
+     This example shows how to create a data source based on a JDBC resource
+     managed by the JEE container:
+  -->
+  <!--
+  <map_data_source name="mvdemo"
+                   container_ds="jdbc/mvdemo"
+                   number_of_mappers="8"
+                   allow_jdbc_theme_based_foi="false"
+                   editable="false"
+   />
+   -->
+
+  <!--
+     This example shows how to create a catalog data source.
+  -->
+  <!--
+  <map_data_source name="mvdemo"
+                   catalog_dir="../catalogs/mvdemo"
+                   number_of_mappers="3"
+                   allow_jdbc_theme_based_foi="false"
+                   editable="false"
+   />
+   -->
+   
+  <!-- ****************************************************************** -->
+  <!-- ******************** Map Data Server configs  ******************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment the <mds_config> tag to configure how MapViewer Data Server 
+       streams data stored in each data source.  For details please 
+       refer to the MapViewer User's Guide. 
+       Note: if you use a separate mds.xml for this purpose, then you should
+             keep this section commented-out, as any setting here will be
+             ignored.
+  -->  
+  <!--
+  <mds_config>
+  
+    <data_source name="mvdemo">
+       <allow_predefined_themes>true</allow_predefined_themes>
+       <allow_dynamic_themes>true</allow_dynamic_themes>  
+
+      <allow>
+        <theme>THEME_DEMO_ST*</theme>
+        <theme>theme_demo_cities</theme>
+      </allow>
+
+      <deny>
+         <theme>M_ADMIN_AREA1_S01</theme>
+      </deny>
+  
+    </data_source>
+    
+  </mds_config>     
+  -->
+
+  <mds_config>
+    <data_source name="scott">
+      <allow_predefined_themes>true</allow_predefined_themes>
+      <allow_dynamic_themes>true</allow_dynamic_themes>  
+      <allow>
+        <theme>*</theme>
+      </allow>
+    </data_source>
+  </mds_config>     
+
+  <!-- ****************************************************************** -->
+  <!-- ******************** OAM centralized logout  ******************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment the <oam_logout> tag to configure the logout URL
+       for MapViewer JET web console. The parameters should be related with
+       the OAM logout redirect URL value registered in OAM installation:
+       protocol: http, https,...
+       host: OAM host
+       port: OAM logout port
+  -->  
+  <!--
+  <oam_logout
+      protocol="http"
+      host="oam.host.com"
+      port="7001"
+   />-->
+   
+</MapperConfig>

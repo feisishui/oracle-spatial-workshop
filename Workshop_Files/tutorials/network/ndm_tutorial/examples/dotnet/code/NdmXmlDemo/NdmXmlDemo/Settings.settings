@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NDMDemo" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="spatialWsUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet</Value>
+    </Setting>
+    <Setting Name="templatesDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\..\..\xml\request_templates\</Value>
+    </Setting>
+    <Setting Name="targetNetwork" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NAVTEQ_SF</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

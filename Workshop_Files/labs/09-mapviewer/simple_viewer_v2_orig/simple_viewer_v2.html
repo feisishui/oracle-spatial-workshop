@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Spatial Viewer V2</title>
+  <style type= "text/css">
+    @media print {    
+      .noprint, .noprint * {
+        display: none !important;
+      }
+    }  
+    @media screen {    
+      .noscreen, .noscreen * {
+        display: none !important;
+      }
+    }
+  </style>
+  <script language="Javascript"  src='/mapviewer/jslib/v2/oraclemapsv2.js'></script>
+  <script language="JavaScript" src="simple_viewer_v2.js"> </script>
+</head>
+<body onload=javascript:showMap();>
+  <div id="print_title" class="noscreen">
+    <p>This is only printed - not shown on screen <p>
+  </div>
+  <div id="map" style="width:70%; height:70%"></div>
+  <div id="navigation" class="noprint">
+    <p>Click <a href="javascript:printMap()" >here</a> to print the map.</p>
+    <p>Click <a href="javascript:getMapImage()" >here</a> to get a map image and print it</p>
+    <p>Click <a href="javascript:printWindow()" >here</a> to print the window</p>
+  </div>
+</body>
+</html>
+
+
+

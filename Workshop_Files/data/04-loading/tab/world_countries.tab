@@ -1,0 +1,20 @@
+!table
+!version 450
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 13
+    FIPS_CNTRY Char (254) ;
+    GMI_CNTRY Char (254) ;
+    ISO_2DIGIT Char (254) ;
+    ISO_3DIGIT Char (254) ;
+    CNTRY_NAME Char (254) ;
+    SOVEREIGN Char (254) ;
+    POP_CNTRY Integer ;
+    SQKM_CNTRY Float ;
+    SQMI_CNTRY Float ;
+    CURR_TYPE Char (254) ;
+    CURR_CODE Char (254) ;
+    LANDLOCKED Char (254) ;
+    COLOR_MAP Char (254) ;

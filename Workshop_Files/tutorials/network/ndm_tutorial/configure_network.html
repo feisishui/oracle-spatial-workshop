@@ -1,0 +1,20 @@
+<html>
+<title>Configuring For Analysis</title>
+<h4><span style="color:blue">CONFIGURING A NETWORK FOR ANALYSIS.</span></h4>
+<body bgcolor="#d8d8d8">
+<pre>
+     //Example for loading the configuration file placed on the class path, under package lod.
+     InputStream config1 = ClassLoader.getSystemResourceAsStream("lod/LODConfigs.xml");
+     LODNetworkManager.getConfigManager().loadConfig(config1);
+
+     //Example for loading the configuration file from an absolute file path.
+     InputStream config2 = new FileInputStream(
+                            "/ndm_tutorial/examples/java/src/lod/LODConfigs.xml");
+     LODNetworkManager.getConfigManager().loadConfig(config2);
+</pre>
+</body>
+</html>
+
+
+	
+

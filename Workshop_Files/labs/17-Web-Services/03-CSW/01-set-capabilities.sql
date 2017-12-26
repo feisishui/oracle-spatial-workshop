@@ -1,0 +1,189 @@
+-- Run as SYSTEM or SYS
+declare
+  capabilitiesXML CLOB :=
+'<Capabilities
+   version="2.0.0"
+   updateSequence="0"
+   xmlns="http://www.opengis.net/cat/csw"
+   xmlns:ows="http://www.opengis.net/ows"
+   xmlns:ogc="http://www.opengis.net/ogc"
+   xmlns:csw="http://www.opengis.net/cat/csw"
+   xmlns:xlink="http://www.w3.org/1999/xlink" >
+   <ows:ServiceIdentification>
+      <ows:ServiceType>CSW</ows:ServiceType>
+      <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
+      <ows:Title>Company CSW</ows:Title>
+      <ows:Abstract>
+         A catalogue service that conforms to the HTTP protocol
+         binding of the OpenGIS Catalogue Service specification
+         version 2.0.0.
+      </ows:Abstract>
+      <ows:Keywords>
+         <ows:Keyword>CSW</ows:Keyword>
+         <ows:Keyword>Company Name</ows:Keyword>
+         <ows:Keyword>geospatial</ows:Keyword>
+         <ows:Keyword>catalogue</ows:Keyword>
+      </ows:Keywords>
+      <ows:Fees>NONE</ows:Fees>
+      <ows:AccessConstraints>NONE</ows:AccessConstraints>
+   </ows:ServiceIdentification>
+   <ows:ServiceProvider>
+      <ows:ProviderName>Company Name</ows:ProviderName>
+      <ows:ProviderSite xlink:href="http://www.oracle.com"/>
+      <ows:ServiceContact>
+         <ows:IndividualName> Contact Person Name</ows:IndividualName>
+         <ows:PositionName>Staff</ows:PositionName>
+         <ows:ContactInfo>
+            <ows:Phone>
+               <ows:Voice>+1-999-999-9999</ows:Voice>
+               <ows:Facsimile>+1-999-999-9999</ows:Facsimile>
+            </ows:Phone>
+            <ows:Address>
+               <ows:DeliveryPoint>1 Street Name</ows:DeliveryPoint>
+               <ows:City>CityName</ows:City>
+               <ows:AdministrativeArea>StateName</ows:AdministrativeArea>
+               <ows:PostalCode>09999</ows:PostalCode>
+               <ows:Country>USA</ows:Country>
+               <ows:ElectronicMailAddress>
+               contact.person@company.com
+               </ows:ElectronicMailAddress>
+            </ows:Address>
+            <ows:OnlineResource xlink:href="mailto:contact.person@company.com"/>
+         </ows:ContactInfo>
+      </ows:ServiceContact>
+   </ows:ServiceProvider>
+   <ows:OperationsMetadata>
+      <ows:Operation name="GetCapabilities">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Get xlink:href="http://www.myserver.com/get?"/>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+      </ows:Operation>
+      <ows:Operation name="DescribeRecord">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+         <ows:Parameter name="typeName">
+         </ows:Parameter>
+         <ows:Parameter name="outputFormat">
+            <ows:Value>text/xml</ows:Value>
+         </ows:Parameter>
+         <ows:Parameter name="schemaLanguage">
+            <ows:Value>XMLSCHEMA</ows:Value>
+         </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="GetRecords">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+         <ows:Parameter name="TypeName">
+         </ows:Parameter>
+         <ows:Parameter name="outputFormat">
+            <ows:Value>text/xml </ows:Value>
+         </ows:Parameter>
+         <ows:Parameter name="outputSchema">
+            <ows:Value>OGCCORE</ows:Value>
+         </ows:Parameter>
+         <ows:Parameter name="resultType">
+            <ows:Value>hits</ows:Value>
+            <ows:Value>results</ows:Value>
+            <ows:Value>validate</ows:Value>
+         </ows:Parameter>
+         <ows:Parameter name="ElementSetName">
+            <ows:Value>brief</ows:Value>
+            <ows:Value>summary</ows:Value>
+            <ows:Value>full</ows:Value>
+         </ows:Parameter>
+         <ows:Parameter name="CONSTRAINTLANGUAGE">
+            <ows:Value>Filter</ows:Value>
+         </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="GetRecordById">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+         <ows:Parameter name="ElementSetName">
+            <ows:Value>brief</ows:Value>
+            <ows:Value>summary</ows:Value>
+            <ows:Value>full</ows:Value>
+         </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="GetDomain">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+         <ows:Parameter name="ParameterName">
+            <ows:Value>GetRecords.resultType</ows:Value>
+            <ows:Value>GetRecords.outputFormat</ows:Value>
+            <ows:Value>GetRecords.outputRecType</ows:Value>
+            <ows:Value>GetRecords.typeNames</ows:Value>
+            <ows:Value>GetRecords.ElementSetName</ows:Value>
+            <ows:Value>GetRecords.ElementName</ows:Value>
+            <ows:Value>GetRecords.CONSTRAINTLANGUAGE</ows:Value>
+            <ows:Value>GetRecordById.ElementSetName</ows:Value>
+            <ows:Value>DescribeRecord.typeName</ows:Value>
+            <ows:Value>DescribeRecord.schemaLanguage</ows:Value>
+         </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="Transaction">
+         <ows:DCP>
+            <ows:HTTP>
+               <ows:Post xlink:href="http://www.myserver.com/post?"/>
+            </ows:HTTP>
+         </ows:DCP>
+      </ows:Operation>
+      <ows:Parameter name="service">
+         <ows:Value>CSW</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="version">
+         <ows:Value>2.0.0</ows:Value>
+      </ows:Parameter>
+    <ows:ExtendedCapabilities>
+     <ogc:Filter_Capabilities>
+  <ogc:Spatial_Capabilities>
+         <ogc:Spatial_Operators>
+            <ogc:BBOX/>
+            <ogc:Equals/>
+            <ogc:Disjoint/>
+            <ogc:Intersect/>
+            <ogc:Touches/>
+            <ogc:Crosses/>
+            <ogc:Within/>
+            <ogc:Contains/>
+            <ogc:Overlaps/>
+            <ogc:Beyond/>
+            <ogc:DWithin/>
+         </ogc:Spatial_Operators>
+      </ogc:Spatial_Capabilities>
+      <ogc:Scalar_Capabilities>
+         <ogc:Logical_Operators/>
+         <ogc:Comparison_Operators>
+            <ogc:Simple_Comparisons/>
+            <ogc:Like/>
+            <ogc:Between/>
+            <ogc:NullCheck/>
+         </ogc:Comparison_Operators>
+         <ogc:Arithmetic_Operators>
+            <ogc:Simple_Arithmetic/>
+         </ogc:Arithmetic_Operators>
+      </ogc:Scalar_Capabilities>
+     </ogc:Filter_Capabilities>
+   </ows:ExtendedCapabilities>
+   </ows:OperationsMetadata>
+</Capabilities>';
+begin
+  mdsys.SDO_CSW_PROCESS.insertCapabilitiesInfo (
+    xmltype(capabilitiesXML));
+end;
+/
+commit;

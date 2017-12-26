@@ -1,0 +1,28 @@
+Structure of a tin block
+
+Points are encoded in the POINTS blob, identical to the point cloud blocks
+
+Each point is encoded using one line:
+
+4111B0589999999A41507BB4A70A3D7140655851EB851EB80000003300000000
+4111B05170A3D70A41507BB4ACCCCCCD406559999999999A0000003300000001
+4111B0535C28F5C341507BB4BAE147AE406558F5C28F5C290000003300000003
+
+<--------------><--------------><--------------><------><------>
+  Dimension 1     Dimension 2     Dimension 3    BLK_ID   PT_ID
+  X               Y               Z
+
+X           4111B0535C28F5C3
+Y           41507BB4BAE147AE
+Z           406558F5C28F5C29
+BLK_ID      00000033
+PT_ID       00000003
+
+Triangles are encoded in the TRIANGLES blob
+
+<--------------><--------------><-------------->
+    point 1         point 2        point 3
+<------><------><------><------><------><------>
+ BLK_ID   PT_ID  BLK_ID   PT_ID  BLK_ID   PT_ID
+
+000000330000000000000033000000030000003300000001

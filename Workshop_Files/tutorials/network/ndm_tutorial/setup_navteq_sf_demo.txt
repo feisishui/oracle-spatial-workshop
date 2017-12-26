@@ -1,0 +1,106 @@
+Setting up NDM Demo
+-------------------
+Setting up data
+---------------
+Data setup involves the creation of two users, the demo user (ndmdemo) 
+and network user (navteq_sf).
+
+(1)Creation and set up of ndmdemo user
+--------------------------------------
+Requirements:
+-------------
+	ndmdemo.sql 
+         	SQL script that creates and sets up the user ndmdemo.
+	ndmdemo_util.sql 
+        	PL-SQL procedures to set up the network data. 
+                These procedures are later used in setting up navteq_sf  
+                network data for demo.
+	traffic_util.sql
+       		PL-SQL procedures to set up traffic related data. 
+                These are used to create traffic pattern tables required 
+                user data generation for navteq_sf network.
+	ndmtraffic.jar
+      		Jar file contains the java code for traffic user data generation.
+	styles_themes_maps.dmp
+        	This dmp file had the map viewer styles, themes, and maps 
+		required for displaying  the base map and network analysis results.
+
+ndmdemo.sql is the main script that sets up ndmdemo data. Make sure that 
+the files specified above are under the same directory as this script 
+and script is run from this directory.
+ndmdemo.sql, ndmdemo_util.sql, traffic_util.sql and styles_themes_maps.dmp 
+are available in ndm_tutotial\examples\data\ndmdemo directory and 
+ndmtraffic.jar is available in ndm_tutorial\examples\java\lib directory.
+
+Steps :
+-------
+(i) Login as sysdba.
+(ii) Run ndmdemo.sql
+
+(2)Creation and set up of navteq_sf user
+----------------------------------------
+Requirements:
+-------------
+	setup.sql 
+         	SQL script that creates and sets up the user navteq_sf.
+	NAVTEQ_SF_Sample.dmp
+         	Dmp file for navteq_sf network data.
+	demo.sql 
+        	SQL script that sets up network data and traffic user data for demo.  
+	setup_traffic_data.sql
+       		SQL script that creates traffic user data.
+
+Before running the scripts, make sure that the files mentioned above 
+are in the same directory as the scripts setup.sql and demo.sql and 
+scripts are run from this directory.
+setup.sql, demo.sql and setup_traffic_data.sql are available in 
+ndm_tutorial\examples\data\navteq_sf directory.
+
+Steps :
+-------
+(i)   Login as sysdba.
+(ii)  Run setup.sql
+(iii) Connect as sysdba;
+(iii) Run demo.sql 
+*** Make sure that the user ndmdemo has been created before running demo.sql ***
+
+Setting up web application components :
+---------------------------------------
+(1)Deploy  ndmdemo.ear 
+     ndmdemo.ear file has the NDM demo web application component.
+(2) Deploy mapviewer.ear 
+(3) Configure mapviewer
+     (i)    Log in as admin.
+     (ii)   Create the data source ndmdemo (NDM demo user)
+    (iii)   Create data source navteq_sf  (network  user)
+(4) Deploy geocoder.ear
+(5) Add the data source  navteq_sf (network user) to geocoder configuration file.
+
+Running the demo :
+------------------
+(1) Open the ndmdemo webpage 
+(2) Set the Mapviewer, Geocoder and database connection parameters using    
+    getConfiguration.jsp (first item  on the demo menu).
+
+Sample Configuration (for NAVTEQ_SF network)
+--------------------------------------------
+
+DB URL:				jdbc:oracle:thin:@localhost:1521:orcl
+Demo User			ndmdemo
+Demo Password			ndmdemo
+Network User			navteq_sf
+Network Name			NAVTEQ_SF
+Geocoder URL:			http://localhost:7001/geocoder/gcserver
+Mapviewer URL:			http://localhost:7001/mapviewer
+Base Map Tile URL:		http://localhost:7001/mapviewer
+Base Map Tile Layer Name:       navteq_sf.world_map
+Network SRID:			8307
+Map Center X:                   -122.45
+Map Center Y:                  	37.7706
+Zoom Level:         		13
+Max FOIs to Display:		1000
+Max Characters in Text Results:	100000
+Log Level:                     	INFO
+Click to Show:                  Nearest Node ID
+Show Partition Boundaries:     	NO
+Show Congested Links:          	NO

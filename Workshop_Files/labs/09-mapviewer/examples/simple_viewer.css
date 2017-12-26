@@ -1,0 +1,14 @@
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 80%;
+}
+
+#MAP_PANEL {
+  top:    0px;
+  left:   0px;
+  width:  100%;
+  height: 500px;
+  border: 1px solid black;
+}
+
+

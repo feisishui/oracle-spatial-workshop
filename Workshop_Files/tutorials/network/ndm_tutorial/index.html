@@ -1,0 +1,375 @@
+<html>
+<head>
+<title>Oracle Spatial Network Data Model Tutorial</title>
+<style>
+body, table, select, button, textarea
+{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+</style>
+</head>
+<body>
+<h1>Oracle Spatial Network Data Model Tutorial</h1>
+This tutorial outlines the steps required to set up and configure a network,
+and conduct the analysis. Sample pieces of code that illustrate the usage of 
+the analytic functions are provided. 
+
+<h2>Download the examples</h2>
+The <a href="examples">examples</a> folder contains the complete sample code package used in this tutorial, including data setup 
+scripts, Java and PL/SQL examples, and the ndmdemo.ear file.
+
+<h2>Major Steps</h2>
+The tutorial covers the following major steps: 
+<ol>
+<li><a href="#patch">Verify the NDM version</a></li>
+<li><a href="#setup">Set Up the Networks For Analysis</a></li>
+<li><a href="#partition">Partition the Networks</a></li>
+<li><a href="#partitionBlobs">Generate Partition BLOBs</a></li>
+<li><a href="#config">Configure LOD for Network Analysis</a></li>
+<li><a href="#connectedComponents">Precompute Connected Components</a></li>
+<li><a href="#analysis">Conduct Network Analysis</a></li>
+<li><a href="#integrate">Integrate NDM, Router, Geocoder, and MapViewer</a></li>
+</ol>
+
+<a name="patch">
+<h3>Verify the NDM Version</h3>
+Before proceeding with this tutorial, make sure the version of your Network Data Model is 11.2 or higher, regardless of your Oracle Database version. One simple way of verifying the version of NDM is to use the PL/SQL statement "DESCRIBE MDSYS.SDO_NET", and see whether the LOGICAL_PARTITION procedure exists. If so, then your NDM version is 11.2 or higher. Otherwise, you need to apply the NDM patch 7700528 to upgrade NDM to 11.2.
+
+<a name="setup">
+<h3>Set Up the Networks For Analysis</h3>
+In this example, steps are provided to install a NAVTEQ San Francisco sample network (NAVTEQ_SF) and 
+a network generated from topology data (HILLSBOROUGH_NETWORK). The .dmp file for NAVTEQ_SF can be 
+downloaded from the NAVTEQ website, while the .dmp file for HILLSBOROUGH_NETWORK is included in this example package. 
+The setup scripts are located under the <code>examples/data</code> directory. 
+Descriptions of the subdirectories can be found in the <a href="examples/data/README.txt">README.txt</a> file.
+<ul>
+<li>
+<b> Setting Up the ndmdemo User </b><p>
+The instructions assume that there is a user <code>ndmdemo</code> with password <code>ndmdemo</code>. The script to create the ndmdemo user, load the ndmdemo utility packages, and load ndmdemo data is <a href="examples/data/ndmdemo/ndmdemo.sql">ndmdemo.sql</a>.
+</li>
+<li>
+<b> Setting Up the NAVTEQ_SF Network </b><p>
+    The sample data for San Francisco can be downloaded from 
+    <a href="http://www.oracle.com/technology/products/spatial/htdocs/spatial_partners_data.html">NAVTEQ website</a>. 
+    You need to register to be able to download the data. This data includes
+    tables required for geocoding, mapping, and routing.<br>
+    Run the scripts setup.sql and demo.sql
+    to create the navteq_sf user, load the network data  and set up an NDM network called NAVTEQ_SF.
+<br>
+The <a href="examples/data/navteq_sf/setup.sql">setup.sql</a> script executes the following steps:
+ 
+<ol> 
+    <li>Create a user navteq_sf with navteq_sf as password.</li>
+    <li>Load the NAVTEQ_SF data from the .dmp file using the imp command: <br>
+         <code> imp navteq_sf/navteq_sf file=NAVTEQ_SF_Sample.dmp full=Y</code>
+    </li>
+</ol>
+The <a href="examples/data/navteq_sf/demo.sql">demo.sql</a> script executes the following step:
+ 
+<ol> 
+    <li>Create an NDM network with name NAVTEQ_SF for this data set.
+        <br>This step creates views on top of existing tables. No data replication occurs here.
+    </li>
+</ol>
+</li>
+<p>
+<li>
+<b>Setting Up other NAVTEQ Networks</b><p>
+    If you have other NAVTEQ data in ODF format, you can create setup scripts similar to the ones under examples/data/navteq_sf, by replacing <code>navteq_sf</code> with your own network name.
+</li>
+<p>
+<li>
+<b>Setting Up Hillsborough Network </b>
+<p> 
+<ol>
+    <li>Before installing the network remove all traces of Hillsborough network from the database. The script to remove Hillsborough network is <a href="examples/data/hillsborough_network/hillsborough_network_drop.sql">hillsborough_network_drop.sql</a>.</li>
+    <li>Load Hillsborough network using the imp command: <br>
+        <code>imp ndmdemo/ndmdemo FILE = hillsborough_network.dmp full=Y</code></li>
+    <li>Create metadata entry using the <a href="examples/data/hillsborough_network/hillsborough_network_create.sql">hillsborough_network_create.sql</a> script.</li>
+</ol> 
+</li>
+</ul>
+
+<a name="partition">
+<h3>Partition the Networks</h3>
+Large networks need to be partitioned in order to reduce memory consumption during network analysis.<p>
+NAVTEQ networks are already partitioned; therefore, you can skip this step for NAVTEQ networks.<p>
+NDM provides partition utilities for both spatial and logical networks.
+<ul>
+<li> 
+For spatial networks, such as Hillsborough network, <code>SDO_NET.SPATIAL_PARTITION</code> can be used to partition them. 
+The script to partition Hillsborough network is <a href=examples/plsql/spatial_partition.sql>spatial_partition.sql</a>.<p>
+<li>
+For logical networks, you can call <code>SDO_NET.LOGICAL_PARTITION</code> to partition them, as shown in the example script <a href="examples/plsql/logical_partition.sql">logical_partition.sql</a>.
+<br>
+For logical networks where node degree distribution follows <i>power law</i> structure 
+(standard deviation on node degree&gt;25), such as social networks, 
+you can use the <code>SDO_NET.LOGICAL_POWERLAW_PARTITION</code> procedure to partition them, as shown in the example script <a href="examples/plsql/logical_powerlaw_partition.sql">logical_powerlaw_partition.sql</a>.
+</ul>
+
+<a name="partitionBlobs">
+<h3>Generate Partition BLOBs</h3>
+Although this is an optional step, for large networks partition BLOBs should be generated to reduce partition loading time during network analysis.
+<p>
+NAVTEQ delivers partition BLOBs in ODF format, and NDM can interpret this format; therefore, you can skip this step for NAVTEQ networks.
+<p>
+For other spatial networks, such as Hillsborough network, call <code>SDO_NET.GENERATE_PARTITION_BLOBS</code> to generate the partition BLOBs. The script to generate partition BLOBs for Hillsborough network is <a href=examples/plsql/partitionblob.sql>partitionblob.sql</a>.
+
+<a name="config">
+<h3>Configure LOD for Network Analysis</h3>
+Before analysis functions can be run on the network, load-on-demand needs to be configured.
+NAVTEQ data for San Francisco network is in ODF format and NDM LOD
+API provides the support for this format through a data translator.
+In the XML configuration file, the BLOB translator should be set to 
+<code>oracle.spatial.network.lod.PartitionBlobTranslator11gR2</code> 
+for the Hillsborough network 
+and <code>oracle.spatial.router.ndm.RouterPartitionBlobTranslator10g</code> 
+for the NAVTEQ San Francisco network. To view a sample configuration, see 
+<a href=examples/java/src/lod/LODConfigs.xml>LODConfigs.xml</a>. <p>
+NDM LOD API provides the following method to load your configuration file:
+<code>ConfigManager.loadConfig(InputStream);</code><br>
+You can place the configuration file anywhere you want, as long as you know where to find it and how to construct an InputStream object for it. Sample Java code to load the configuration is in <a href=configure_network.html>configure_network.html</a>.
+
+<a name="connectedComponents">
+<h3>Precompute Connected Components</h3>
+You can call the PL/SQL procedure <code>SDO_NET.FIND_CONNECTED_COMPONENTS</code> 
+to compute and store the connected components result into the connected component table. 
+In this table, each node will be assigned a component ID. Nodes with the same component ID
+belong to the same connected component; Nodes with different component ID belong to 
+different connected components. Therefore having the same component ID is a necessary 
+condition for a path to exist between two nodes. Before you conduct shortest path analysis,
+you can do a quick query against the connected component table and see whether a path exists
+at all between the input nodes.
+<p>
+The script to precompute the connected components for Hillsborough network is <a href=examples/plsql/component.sql>component.sql</a>.
+
+<a name="analysis">
+<h3>Conduct Network Analysis</h3>
+The following table contains a representative list of analysis functions provided by NDM. In addition to basic
+analysis such as shortest path computation, it provides enhanced capabilities such
+as computation of network functions with various constraints. For example, shortest path
+computation can incorporate turn restrictions as well as turn penalties. Java code segments that 
+illustrate the usage of these analysis functions are also available. 
+<p>
+The sample code
+can be accessed by clicking on each name in the Analysis Function column. To access executable Java code for each analysis, 
+click on the asterisk (*) next to the name in the Link to Executable Code column. The code examples run tests on the NAVTEQ_SF network.
+<p>
+<table border="1" align="center" width="96%" cellspacing="1" cellpadding="3">
+	<th width="25%" align="center">Analysis Function</th> 
+	<th width="5%" align="center">Link to Executable Code</th> 
+	<th width="70" align="center">Description</th> 
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#spd">Shortest Path Analysis</a>
+                </td>
+		<td align="center">   
+                    <a href="examples/java/src/lod/ShortestPathAnalysis.java">*</a>
+                </td>
+                <td>Computes the shortest path from a start point
+                to an end point using Dijkstra's algorithm or A* algorithm.</td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#multiplelinklevels">Shortest Path With Multiple Link Levels</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/SpWithMultiLinkLevels.java">*</a>
+                </td>
+                <td>Computes shortest path from a start point to an end point
+                    exploiting different levels of links.
+                </td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#multiplelinkcosts">Shortest Path With Multiple Link Costs</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/SpWithMultiLinkCosts.java">*</a>
+                </td>
+                <td>Provides the capability to find the shortest path based on various link costs
+                    such as travel time and length. You can also find the shortest path from one
+                    point to another based on one cost as the primary cost and another as a
+                    constraining cost. For example, the shortest path can be found based on length
+                    as the cost, simultaneously imposing a constraint on the total travel time.
+                </td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#spprohibitedturn">Shortest Path With Turn Restrictions</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/SpWithProhibitedTurn.java">*</a>
+                </td>
+                <td>
+                    Finds the shortest path honoring turn restrictions. Prohibited turns from
+                    one link to another are specified using constraints, and the shortest path
+                    that avoids these turns is computed.
+                </td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#spturnpenalty">Shortest Path With Turn Penalties</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/SpWithTurnPenalties.java">*</a>
+                </td>
+                <td>
+                    Finds the shortest path while accounting for turn penalties (turn costs).
+                    Penalties are assigned to (start link, end link) pairs and these costs
+                    considered while computing the shortest path.
+                </td>
+        </tr>
+         <tr>
+                <td align="center">
+                    <a href="code_segments.html#dynamicdata">Shortest Path With Dynamic data</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/SpWithDynamicData.java">*</a>
+                </td>
+                <td>
+                    Provides facility to users to temporarily modify network status. The 
+                    example shows the case where the status of a link is made inactive and
+                    shortest path is computed based on this updated link information.
+                </td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#nn">Nearest Neighbors Analysis</a>
+                </td>
+		<td align="center">   
+                    <a href="examples/java/src/lod/NearestNeighborsAnalysis.java">*</a>
+                </td>
+		<td>Finds user-specified number of nodes that are nearest from (to) the given start point.</td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#nngoalnode">Nearest Neighbors Analysis With Goal Node Constraints</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/NnWithGoalNode.java">*</a>
+                </td>
+                <td>Finds the nearest nodes that satisfy a constraint, from the given start point. The
+                    code provided illustrates the formulation of a constraint where the nearest
+                    node must have an even ID.
+                </td>
+        </tr>
+        <tr>
+		<td align="center">
+                    <a href="code_segments.html#withincost">Within Cost Analysis</a>
+                </td>
+		<td align="center">   
+                    <a href="examples/java/src/lod/WithinCostAnalysis.java">*</a>
+		</td>
+		<td>Finds the nodes within a specified cost from (to) the given start point.
+		    Also computes the routes to these nodes. 
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#withincostpolygon">Within Cost Polygon Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/WithinCostPolygonAnalysis.java">*</a>
+                </td>
+                <td>Finds the polygon covering the network elements within a specified cost from (to) the given start point.
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#networkbuffer">Network Buffer Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/NetworkBufferAnalysis.java">*</a>
+                </td>
+                <td>Finds the network elements (nodes, links and partial links) within a specified cost from (to) the given start node.
+                    Also computes the cost to (from) each network elements.
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#tsp">TSP Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/TspAnalysis.java">*</a>
+                </td>
+                <td>Computes a TSP tour of the user-specified destinations. The nature
+                    of the tour, closed or open, is taken as an input.
+                </td>
+        </tr>
+        <tr>
+		<td align="center">
+                    <a href="code_segments.html#tspduration">TSP With Time Duration Constraints</a>
+                </td>
+		<td align="center">   
+                    <a href="examples/java/src/lod/TspTimeDuration.java">*</a>
+		</td>
+		<td>
+		    Finds a TSP tour (open or closed) with a time duration constraint. 
+		    The constraint specifies the time duration during which a destination must be
+		    visited. 
+		</td>
+        </tr>
+        <tr>
+		<td align="center">
+                    <a href="code_segments.html#tspnodeorder">TSP With Node Order Constraints</a>
+                </td>
+		<td align="center">   
+                    <a href="examples/java/src/lod/TspNodeOrder.java">*</a>
+		</td>
+		<td>
+		    Computes a TSP tour (open or closed) where a constraint is imposed
+		    on the order in which the destinations are visited. 
+		</td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#kshortestpaths">K Shortest Paths Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/KShortestPathsAnalysis.java">*</a>
+                </td>
+                <td>Finds <i>k</i> shortest paths from the start point to the end point.</td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#minspanningtree">Minimum Spanning Tree</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/MinimumSpanningTree.java">*</a>
+                </td>
+                <td>Finds the minimum spanning tree of the network.</td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#connectedcomponents">Connected Components Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/ConnectedComponentAnalysis.java">*</a>
+                </td>
+                <td>Finds the connected components in the network. (Note: The java function is better
+                    suited to find the connected components in small networks. For large networks, 
+                    use the PL/SQL function SDO_NET.FIND_CONNECTED_COMPONENTS, which stores the
+                    result in a database table.)
+                </td>
+        </tr>
+        <tr>
+                <td align="center">
+                    <a href="code_segments.html#reach">Reachability Analysis</a>
+                </td>
+                <td align="center">
+                    <a href="examples/java/src/lod/ReachabilityAnalysis.java">*</a>
+                </td>
+                <td>Finds nodes that are reachable from and nodes that can reach the given node
+                    using breadth-first or depth-first search from the specified node.</td>
+        </tr>
+</table>
+
+<a name="integrate">
+<h3>Integrate NDM, Router, Geocoder and Mapviewer</h3>
+<P>
+The <code>ndmdemo</code> web application shows how to use NDM, router, geocoder, and MapViewer together 
+to conduct network analysis and draw results on a map. 
+To run this demo, download the <a href="examples/ndmdemo.ear">ndmdemo.ear</a> file, 
+and deploy it to a web server using the application name <code>ndmdemo</code>. 
+After that, follow the instructions on the home page <code>http://&lt;server-name&gt;:&lt;http-port-number&gt;/ndmdemo</code>.
+</body>
+</html>

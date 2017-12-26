@@ -1,0 +1,91 @@
+<csw:Transaction service="CSW"  version="2.0.0"
+  xmlns:csw="http://www.opengis.net/cat/csw" >
+  <csw:Insert>
+    <Record xmlns="http://www.opengis.net/cat/csw" xmlns:dc="http://www.purl.org/dc/elements/1.1/"
+     xmlns:dct="http://www.purl.org/dc/terms/" xmlns:ows="http://www.opengis.net/ows" >
+      <dc:contributor scheme="http://www.altova.com">John</dc:contributor>
+      <dc:identifier >REC-2</dc:identifier>
+      <ows:WGS84BoundingBox crs="urn:opengis:crs:OGC:2:84" dimensions="2">
+        <ows:LowerCorner>12 12</ows:LowerCorner>
+        <ows:UpperCorner>102 102</ows:UpperCorner>
+      </ows:WGS84BoundingBox>
+    </Record>
+  </csw:Insert>
+</csw:Transaction>
+
+<csw:Transaction service="CSW"  version="2.0.0"
+  xmlns:csw="http://www.opengis.net/cat/csw" >
+  <csw:Insert>
+    <csw:Record xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:ows="http://www.opengis.net/ows" xmlns:dcterms="http://purl.org/dc/terms/"
+      xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:language>es</dc:language>
+      <dc:identifier>100000_full1000_es</dc:identifier>
+      <dc:description>Cartografía Topográfica que recubre todo el territorio de Cataluña.</dc:description>
+      <dc:language>Catalan</dc:language>
+      <dc:language>Spanish</dc:language>
+      <dc:language>English</dc:language>
+      <dc:subject/>
+      <dc:type/>
+    </csw:Record>
+  </csw:Insert>
+</csw:Transaction>
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<csw:Transaction service="CSW" version="2.0.0" xmlns:csw="http://www.opengis.net/cat/csw" xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19115brief="http://schemas.opengis.net/iso19115brief" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+  <csw:Insert>
+    <iso19115full:MD_Metadata>
+      <iso19115full:fileIdentifier>
+        <smXML:CharacterString>Example_2007_10_18</smXML:CharacterString>
+      </iso19115full:fileIdentifier>
+      <iso19115full:hierarchyLevel>
+        <smXML:MD_ScopeCode codeList="MD_ScopeCode" codeListValue="dataset"/>
+      </iso19115full:hierarchyLevel>
+      <iso19115full:hierarchyLevelName>
+        <smXML:CharacterString>dataset</smXML:CharacterString>
+      </iso19115full:hierarchyLevelName>
+      <iso19115full:contact>
+        <smXML:CI_ResponsibleParty>
+          <smXML:role>
+            <smXML:CI_RoleCode codeList="CI_RoleCode" codeListValue="author"/>
+          </smXML:role>
+        </smXML:CI_ResponsibleParty>
+      </iso19115full:contact>
+      <iso19115full:dateStamp>
+        <smXML:DateTime>2007-09-30T00:00:00</smXML:DateTime>
+      </iso19115full:dateStamp>
+      <iso19115full:identificationInfo>
+        <smXML:MD_DataIdentification>
+          <smXML:citation>
+            <smXML:CI_Citation>
+              <smXML:title>
+                <smXML:CharacterString>Topographische Karte 1 : 5 000</smXML:CharacterString>
+              </smXML:title>
+              <smXML:date>
+                <smXML:CI_Date>
+                  <smXML:date>
+                    <smXML:DateTime>2007-03-01T00:00:00</smXML:DateTime>
+                  </smXML:date>
+                  <smXML:dateType>
+                    <smXML:CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="revision"/>
+                  </smXML:dateType>
+                </smXML:CI_Date>
+              </smXML:date>
+            </smXML:CI_Citation>
+          </smXML:citation>
+          <smXML:abstract>
+            <smXML:CharacterString>This is an test dataset for the csw.</smXML:CharacterString>
+          </smXML:abstract>
+          <smXML:language>
+            <smXML:CharacterString>de</smXML:CharacterString>
+          </smXML:language>
+          <smXML:topicCategory>
+            <smXML:MD_TopicCategoryCode>imageryBaseMapsEarthCover</smXML:MD_TopicCategoryCode>
+          </smXML:topicCategory>
+        </smXML:MD_DataIdentification>
+      </iso19115full:identificationInfo>
+    </iso19115full:MD_Metadata>
+  </csw:Insert>
+</csw:Transaction>

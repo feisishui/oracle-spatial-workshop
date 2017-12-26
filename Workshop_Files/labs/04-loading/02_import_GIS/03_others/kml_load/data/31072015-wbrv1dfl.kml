@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+	<Document>
+		<name>Daft Logic Google Maps Area Calculator Tool</name>
+		<description>7022.92 m²  | 0.01 km² | 1.74 acres | 0.70 hectares | 75594.11 feet² |0.00 square miles | 0.00 square nautical miles</description>
+		<gx:balloonVisibility>1</gx:balloonVisibility>
+		<StyleMap id="msn_ylw-pushpin">
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#sn_ylw-pushpin</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#sh_ylw-pushpin</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id="sn_ylw-pushpin">
+			<PolyStyle>
+				<color>7fff0000</color>
+			</PolyStyle>
+		</Style>
+		<Style id="sh_ylw-pushpin">
+			<IconStyle>
+				<scale>1.2</scale>
+			</IconStyle>
+			<PolyStyle>
+				<color>7fff0000</color>
+			</PolyStyle>
+		</Style>
+	<Placemark>
+			<name>Polygon</name>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>31.15338345989585,-29.567838779038453,0 31.15337809547782,-29.568095398860557,0 31.15336200222373,-29.568174717582725,0 31.15358730778098,-29.568118727902945,0 31.153817977756262,-29.56805340657065,0 31.15408083423972,-29.567988085196095,0 31.154290046542883,-29.5678714397793,0 31.154504623264074,-29.567638148541526,0 31.15411838516593,-29.5675028393767,0 31.153769697993994,-29.567395525082578,0 31.15357657894492,-29.56734420081465,0 31.153410281985998,-29.56728821067444,0 31.153281535953283,-29.567232220503175,0 31.153201069682837,-29.56721355710586,0 31.15338345989585,-29.567838779038453,0</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Document>
+	</kml>

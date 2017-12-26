@@ -1,0 +1,9 @@
+LICENSE AGREEMENT:
+
+  The BLAST extension pack as well as LAStools require a license
+  for commercial use. Please contact martin.isenburg@gmail.com for
+  licensing terms.
+
+COPYRIGHT:
+  
+  (c) 2007-2011, Martin Isenburg, LASSO - tools to catch reality

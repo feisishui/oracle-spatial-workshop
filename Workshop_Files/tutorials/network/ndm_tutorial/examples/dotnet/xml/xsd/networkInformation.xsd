@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://xmlns.oracle.com/spatial/network"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:gml="http://www.opengis.net/gml"
+            xmlns="http://xmlns.oracle.com/spatial/network"
+            xmlns:ndm="http://xmlns.oracle.com/spatial/network"
+            elementFormDefault="qualified" version="11g Release 1">
+  <!--xsd:include schemaLocation="network-v2.xsd" /-->
+  <xsd:annotation>
+    <xsd:documentation>
+      <![CDATA[
+/* Copyright (c) 2004, 2011, Oracle and/or its affiliates. 
+All rights reserved. */
+/*                 NAME                                                          
+                   networkInformation.xsd                                                                                
+               DESCRIPTION                                                   
+                   XML Schema for Oracle Spatial NDM Network Analysis        
+               Functionality.                                                
+                                                                             
+               NOTES             
+                  
+                                                                             
+               MODIFIED        (MM/DD/YY)
+               hgong           06/16/10 - add tsp path related types
+               hgong           06/04/07 - clean up
+               hgong           03/21/07 - add subpath
+               hgong           01/04/07 - change node and link ids from int to
+                                          long
+               ningan          10/19/05 - Modify PathRequestType
+               ningan          10/18/05 - Creation                         
+            */
+            ]]>
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="DataSource">
+    <xsd:sequence>
+      <xsd:element name="URL" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string" />
+      <xsd:element name="password" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PathRequestType">
+    <xsd:sequence>
+      <xsd:element name="pathID" type="xsd:long"/>
+      <xsd:element name="pathRequestParameter" type="ndm:PathRequestParameterType"
+                   nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LinkRequestType">
+    <xsd:sequence>
+      <xsd:element name="linkID" type="xsd:long"/>
+      <xsd:element name="linkRequestParameter" type="LinkRequestParameterType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LinksRequestType">
+    <xsd:sequence>
+      <xsd:element name="linkIDs" type="IDListType"/>
+      <xsd:element name="linkRequestParameter" type="LinkRequestParameterType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="NodeRequestType">
+    <xsd:sequence>
+      <xsd:element name="nodeID" type="xsd:long"/>
+      <xsd:element name="nodeRequestParameter" type="NodeRequestParameterType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="NodesRequestType">
+    <xsd:sequence>
+      <xsd:element name="nodeIDs" type="IDListType"/>
+      <xsd:element name="nodeRequestParameter" type="NodeRequestParameterType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--************************NodesParameterType*****************************-->
+  <xsd:complexType name="NodesRequestParameterType">
+    <xsd:choice>
+      <xsd:element name="onlyNodeID" type="xsd:boolean"/>
+      <xsd:element name="nodeRequestParameter"
+                   type="ndm:NodeRequestParameterType" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************NodeParameterType*****************************-->
+  <xsd:complexType name="NodeRequestParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what properties of Node to be returned. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="cost" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="isActive" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="maxLinkLevel" type="xsd:boolean" minOccurs="0"/> 
+      <xsd:element name="geometry" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="userData" type="xsd:boolean" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************LinksParameterType*****************************-->
+  <xsd:complexType name="LinksRequestParameterType">
+    <xsd:choice>
+      <xsd:element name="onlyLinkID" type="xsd:boolean"/>
+      <xsd:element name="linkRequestParameter" 
+        type="ndm:LinkRequestParameterType"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>  
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <xsd:complexType name="LinkRequestParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what properties of Link to be returned. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="cost" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="isActive" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="isBidirected" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="startNodeID" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="endNodeID" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="linkLevel" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="geometry" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="userData" type="xsd:boolean" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************PathRequestParameterType***********************-->
+  <xsd:complexType name="PathRequestParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what properties of Path to be returned.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="cost" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="isSimple" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="startNodeID" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="endNodeID" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="noOfLinks" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="linksRequestParameter" type="LinksRequestParameterType"
+                   minOccurs="0"/>
+      <xsd:element name="nodesRequestParameter" type="NodesRequestParameterType"
+                   minOccurs="0"/>
+      <!--xsd:element name="linkIDs" type="xsd:boolean" minOccurs="0"/-->
+      <!--xsd:element name="nodeIDs" type="xsd:boolean" minOccurs="0"/-->
+      <xsd:element name="geometry" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="userData" type="xsd:boolean" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************SavePathParameterType***********************-->
+  <xsd:complexType name="SavePathParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what path ID to be used to save the path. If not specified, a 
+        default ID will be assigned.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************SubPathRequestParameterType***********************-->
+  <xsd:complexType name="SubPathRequestParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what properties of Path to be returned.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="cost" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="isFullPath" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="startLinkIndex" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="startPercentage" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="endLinkIndex" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="endPercentage" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="geometry" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="userData" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="pathRequestParameter" type="PathRequestParameterType"
+                   minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************SaveSubPathParameterType***********************-->
+  <xsd:complexType name="SaveSubPathParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what path and subapth IDs to be used to save the subpath. If not specified, a 
+        default ID will be assigned.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="savePath" type="SavePathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************TspPathRequestParameterType***********************-->
+  <xsd:complexType name="TspPathRequestParameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Specify what properties of TSP Path to be returned.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="cost" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="tspOrder" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" type="SubPathRequestParameterType"
+                   minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--**************************NodesResponseType****************************-->  
+  <xsd:complexType name="NodesResponseType">
+    <xsd:choice>
+      <xsd:element name="IDList" type="ndm:IDListType"/>
+      <xsd:element name="nodeResponse" type="ndm:NodeResponseType"
+                   maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+         namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--**************************LinksResponseType****************************-->
+  <xsd:complexType name="LinksResponseType">
+    <xsd:choice>
+      <xsd:element name="IDList" type="ndm:IDListType"/>
+      <xsd:element name="linkResponse" type="ndm:LinkResponseType"
+                   maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+         namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--***************************NodeResponseType****************************-->
+  <xsd:complexType name="NodeResponseType">
+    <xsd:complexContent>
+      <xsd:extension base="NodeType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--***************************LinkResponseType****************************-->
+  <xsd:complexType name="LinkResponseType">
+    <xsd:complexContent>
+      <xsd:extension base="LinkType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--***************************PathResponseType****************************-->
+  <xsd:complexType name="PathResponseType">
+    <xsd:complexContent>
+      <xsd:extension base="PathType">
+        <xsd:sequence>
+            <xsd:element name="linksResponse" type="LinksResponseType"
+                         minOccurs="0"/>
+            <xsd:element name="nodesResponse" type="NodesResponseType"
+                         minOccurs="0"/>
+            <xsd:element name="pathSaved" type="xsd:boolean" minOccurs="0"/>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--***************************SubPathResponseType****************************-->
+  <xsd:complexType name="SubPathResponseType">
+    <xsd:complexContent>
+      <xsd:extension base="SubPathType">
+        <xsd:sequence>
+          <xsd:element name="subPathSaved" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--***************************TspPathResponseType****************************-->
+  <xsd:complexType name="TspPathResponseType">
+    <xsd:complexContent>
+      <xsd:extension base="TspPathType">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>        
+        

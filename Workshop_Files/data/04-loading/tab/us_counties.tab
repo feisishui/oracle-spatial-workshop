@@ -1,0 +1,15 @@
+!table
+!version 300
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 8
+    COUNTY Char (254) ;
+    FIPSSTCO Char (254) ;
+    STATE Char (254) ;
+    STATE_ABRV Char (254) ;
+    FIPSST Char (254) ;
+    LANDSQMI Float ;
+    TOTPOP Float ;
+    POPPSQMI Float ;

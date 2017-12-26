@@ -1,0 +1,1837 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <title>Oracle Elocation Geocoder Tests - Results in XML</title>
+</head>
+<body>
+<h1>Oracle Elocation Geocoder Tests - Results in XML</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#US"> United States </a></td>
+  <td> <a href="#CA"> Canada        </a></td>
+  <td> <a href="#FR"> France        </a></td>
+  <td> <a href="#ES"> Spain         </a></td>
+  <td> <a href="#IT"> Italy         </a></td>
+  <td> <a href="#PT"> Portugal      </a></td>
+  <td> <a href="#DE"> Germany       </a></td>
+  <td> <a href="#UK"> UK            </a></td>
+  <td> <a href="#IE"> Ireland       </a></td>
+  <td> <a href="#NL"> Netherlands   </a></td>
+  <td> <a href="#BE"> Belgium       </a></td>
+  <td> <a href="#CZ"> Czech Republic</a></td>
+  <td> <a href="#PL"> Poland        </a></td>
+  <td> <a href="#FI"> Finland       </a></td>
+  <td> <a href="#TR"> Turkey        </a></td>
+  <td> <a href="#BG"> Bulgaria      </a></td>
+  <td> <a href="#RU"> Russia        </a></td>
+  <td> <a href="#REVERSE"> Reverse Geocoding </a></td>
+  <td> <a href="#FORMATTED"> Formatted Addresses </a></td>
+</tr>
+</table>
+
+<a name="US">
+<H3>United States</H3>
+<h4>US-1: Unformated address</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA 94103" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<h4>US-2: Using US-specific address formatting - multiple matches</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;us_form2 street="Howard Street" city="San Francisco" state="CA"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<h4>US-3: City name only - multiple matches</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="Springfield" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="CA">
+<H3>Canada</H3>
+<h4>CA-1: Address in Quebec (french)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1300 Boulevard Rene Levesque" /&gt;
+          &lt;address_line value="Quebec, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-2: Address in Quebec (french with accents)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1300 Boulevard René Lévesque" /&gt;
+          &lt;address_line value="Québec, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-3: Address in Quebec (with suffix)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1300 Boulevard Rene Levesque Ouest" /&gt;
+          &lt;address_line value="Quebec, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-4: POI in Quebec (with and without accents)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="Grand Théatre de Québec" /&gt;
+          &lt;address_line value="Quebec, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="Grand Theatre de Quebec" /&gt;
+          &lt;address_line value="Quebec, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-6: Address in Montreal (english)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1200 University Street" /&gt;
+          &lt;address_line value="Montreal, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-7: Same address in Montreal (french with accents)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1200 rue University" /&gt;
+          &lt;address_line value="Montréal, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>CA-8: Same address in Montreal (french without accents)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1200 rue University" /&gt;
+          &lt;address_line value="Montreal, QC" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="FR">
+<H3>France</H3>
+
+<h4>FR-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="13 rue Royale" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-2: Road name with aprostrophes</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="12 rue de l'arcade" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-3: Road name with accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="2 rue bergère" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-4: Road name without accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="2 cite bergere" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-5: City Name with and without hyphens</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="19 avenue de la Paix" /&gt;
+          &lt;address_line value="Villiers-le-Bel" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="19 avenue de la Paix" /&gt;
+          &lt;address_line value="Villiers le Bel" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-6: City Name with and without accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="19 rue Mesly" /&gt;
+          &lt;address_line value="Créteil" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="19 rue Mesly" /&gt;
+          &lt;address_line value="Creteil" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-7: Road name without accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="12, Avenue Robert Soleau" /&gt;
+          &lt;address_line value="Antibes" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-8: Road name with accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="Place du Général de Gaulle" /&gt;
+          &lt;address_line value="Antibes" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-9: Road name with accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="60 Boulevard du Président Wilson" /&gt;
+          &lt;address_line value="Antibes" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FR-10: POI Name with and without accents</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="Musée du Louvre" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="Musee du Louvre" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+
+<h4>FR-11: Structured address</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form
+          street="13 rue Royale"
+          city="Paris"
+          postal_code="75008"
+          country="FR"
+        /&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="ES">
+<H3>Spain</H3>
+
+<h4>ES-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Calle de Alberto Aguilera, 18" /&gt;
+          &lt;address_line value="Madrid" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-2: Spelling mistake on street name and incomplete street type</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="C/Alberto Aguellera, 18" /&gt;
+          &lt;address_line value="Madrid" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-3</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="calle palestina 8" /&gt;
+          &lt;address_line value="28100 Alcobendas" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-4: City not found</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="C/José Echegaray, 6" /&gt;
+          &lt;address_line value="28230 Las Rozas" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Calle de José Echegaray, 6" /&gt;
+          &lt;address_line value="28230 Las Rozas de Madrid" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="28230 Las Rozas de Madrid" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form
+          street="C/José Echegaray, 6"
+          city="Las Rozas"
+          region="Madrid"
+          postal_code="28230"
+          country="ES"
+        /&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form
+          street="C/José Echegaray, 6"
+          city="Las Rozas"
+          region="Madrid"
+          postal_code="28230"
+          country="ES"
+        /&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-5: Street type in catalan</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Avinguda Diagonal, 615" /&gt;
+          &lt;address_line value="Barcelona" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-6: Street name in catalan</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Carrer de Sant Pau, 5" /&gt;
+          &lt;address_line value="Valencia" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>ES-6: Same address in Spanish: not found (not listed in Navteq database)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Calle San Pablo, 5" /&gt;
+          &lt;address_line value="Valencia" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="IT">
+<H3>Italy</H3>
+
+<h4>IT-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IT" &gt;
+          &lt;address_line value="Via Melchiorre Gioia 73" /&gt;
+          &lt;address_line value="Milano" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IT-2:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IT" &gt;
+          &lt;address_line value="Via Aurelia Antica 415" /&gt;
+          &lt;address_line value="Roma" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IT-3:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IT" &gt;
+          &lt;address_line value="Corso Umberto I, 43" /&gt;
+          &lt;address_line value="Mantova" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="PT">
+<H3>Portugal</H3>
+
+<h4>PT-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="PT" &gt;
+          &lt;address_line value="Avenida da Liberdade 124" /&gt;
+          &lt;address_line value="Lisboa" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="DE">
+<H3>Germany</H3>
+
+<h4>DE-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Arabellastrasse 6" /&gt;
+          &lt;address_line value="Munchen" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>DE-2: Using "ß"</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="2"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Arabellastraße 6" /&gt;
+          &lt;address_line value="Munchen" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>DE-3: Accent in city name </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="2"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Arabellastraße 6" /&gt;
+          &lt;address_line value="Munchen" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>DE-4:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="3"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Holzstraße 2" /&gt;
+          &lt;address_line value="Darmstadt" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>DE-5:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="4"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Kranichsteiner Mühlweg 252" /&gt;
+          &lt;address_line value="Darmstadt" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="UK">
+<H3>UK</H3>
+
+<h4>UK-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Oracle Parkway" /&gt;
+          &lt;address_line value="Thames Valley Park (TVP)" /&gt;
+          &lt;address_line value="Reading" /&gt;
+          &lt;address_line value="Berkshire" /&gt;
+          &lt;address_line value="RG6 1RA" /&gt;
+          &lt;address_line value="" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>UK-2:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="One South Place" /&gt;
+          &lt;address_line value="London EC2M 2RB" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>UK-3:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Oracle House" /&gt;
+          &lt;address_line value="6 Lochside Avenue " /&gt;
+          &lt;address_line value="Edinburgh Park" /&gt;
+          &lt;address_line value="Edinburgh " /&gt;
+          &lt;address_line value="EH12 9DJ" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>UK-4:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Southgate Centre Two " /&gt;
+          &lt;address_line value="321 Wilmslow Road " /&gt;
+          &lt;address_line value="Heald Green " /&gt;
+          &lt;address_line value="Cheadle " /&gt;
+          &lt;address_line value="Cheshire " /&gt;
+          &lt;address_line value="SK8 3PW" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>UK-5: Structured address</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form
+          name="Unit Design Ltd"
+          street="Squires Gate Lane"
+          city="Blackpool"
+          region="Lancashire"
+          postal_code="FY4 3RL"
+          country="GB"
+        /&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>UK-6: Structured address with postcode only</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form
+          postal_code="FY4 3RL"
+          country="GB"
+        /&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="IE">
+<H3>Ireland</H3>
+
+<h4>IE-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Oracle office in Dublin: approximate location --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Block H" /&gt;
+          &lt;address_line value="East Point Business Park " /&gt;
+          &lt;address_line value="Clontarf " /&gt;
+          &lt;address_line value="Dublin 3" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-2:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Dublin Hilton - first match--&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Charlemont Place" /&gt;
+          &lt;address_line value="Dublin 2" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-3:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Holiday Inn Dublin - street not found --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="99 Pearse Street" /&gt;
+          &lt;address_line value="Dublin" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-4:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Morgan Hotel Dublin - street found, but no number --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="10 Fleet St" /&gt;
+          &lt;address_line value="Temple Bar" /&gt;
+          &lt;address_line value="Dublin 2" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-5:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Jurys Cork Hotel, Cork - road not found --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Western Road" /&gt;
+          &lt;address_line value="Cork" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-6:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Donovan House" /&gt;
+          &lt;address_line value="The Long Walk" /&gt;
+          &lt;address_line value="Dundalk" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-7:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Mentec, Dublin - found the road --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Mentec House" /&gt;
+          &lt;address_line value="Pottery Road" /&gt;
+          &lt;address_line value="Dun Laoghaire" /&gt;
+          &lt;address_line value="Dublin" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>IE-8:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;!-- Cyantel, Cork - Road not found --&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="IE" &gt;
+          &lt;address_line value="Unit 1" /&gt;
+          &lt;address_line value="Centrepoint" /&gt;
+          &lt;address_line value="Centre Park Road" /&gt;
+          &lt;address_line value="Cork" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="NL">
+<H3>Netherlands</H3>
+
+<h4>NL-1: </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="NL" &gt;
+          &lt;address_line value="Blokhoeve 1" /&gt;
+          &lt;address_line value="Nieuwegein" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>NL-2:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="NL" &gt;
+          &lt;address_line value="Buizerdlaan 10" /&gt;
+          &lt;address_line value="Nieuwegein" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="BE">
+<H3>Belgium</H3>
+
+<h4>BE-1: Address in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="rue de la Loi, 10" /&gt;
+          &lt;address_line value="Bruxelles" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BE-2: Same address in Flemish</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="wetstraat 10" /&gt;
+          &lt;address_line value="Brussel" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BE-3: Address in Flemish without house number </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="kunstlaan" /&gt;
+          &lt;address_line value="Brussel" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BE-4: Address in Flemish with house number</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="kunstlaan 10" /&gt;
+          &lt;address_line value="Brussel" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BE-5: More addresses in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="boulevard du nord 8" /&gt;
+          &lt;address_line value="Namur" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BE-6:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="rue du premier lanciers, 10" /&gt;
+          &lt;address_line value="Namur" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="CZ">
+<H3>Czech Republic</H3>
+
+<h4>CZ-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="CZ" &gt;
+          &lt;address_line value="Freyova 33" /&gt;
+          &lt;address_line value="Praha" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="PL">
+<H3>Poland</H3>
+
+<h4>PL-1:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="PL" &gt;
+          &lt;address_line value="Ulica Jasnogorska 23" /&gt;
+          &lt;address_line value="Krakow" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>PL-2:</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="PL" &gt;
+          &lt;address_line value="Przyokopowa 31" /&gt;
+          &lt;address_line value="Warszawa" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<a name="FI">
+
+<H3>Finland</H3>
+
+<h4>FI-1:Address in Finnish </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FI" &gt;
+          &lt;address_line value="Mäkelänkatu 10" /&gt;
+          &lt;address_line value="Helsinki" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FI-2: Address in Finnish  (without accents) </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FI" &gt;
+          &lt;address_line value="Makelankatu 10" /&gt;
+          &lt;address_line value="Helsinki" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>FI-3: Same address in Swedish </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FI" &gt;
+          &lt;address_line value="Backasgatan 10" /&gt;
+          &lt;address_line value="Helsinki" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="TR">
+<H3>Turkey</H3>
+
+<h4>TR-1: </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="TR" &gt;
+          &lt;address_line value="Tahran Caddesi No 12" /&gt;
+          &lt;address_line value="Ankara" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>TR-2: </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="TR" &gt;
+          &lt;address_line value="Turgut Özal Caddesi 200" /&gt;
+          &lt;address_line value="Istanbul" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="BG">
+<H3>Bulgaria</H3>
+
+<h4>BG-1: Address in Latin alphabet</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BG" &gt;
+          &lt;address_line value="Ulitsa Hvoyna 3" /&gt;
+          &lt;address_line value="Sofia" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>BG-2: Address in Cyrillic</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BG" &gt;
+          &lt;address_line value="Sofia" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="RU">
+<H3>Russia</H3>
+
+<h4>RU-1: Address in Cyrillic</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="RU" &gt;
+          &lt;address_line value="&#1043;&#1056;&#1040;&#1060;&#1057;&#1050;&#1048;&#1049; &#1055;&#1045;&#1056;&#1045;&#1059;&#1051;&#1054;&#1050; 14" /&gt;
+          &lt;address_line value="&#1052;&#1054;&#1057;&#1050;&#1042;&#1040;" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>RU-2: Same address in latin</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="RU" &gt;
+          &lt;address_line value="Grafskiy pereulok, 14" /&gt;
+          &lt;address_line value="Moscow" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="REVERSE">
+<H3>Reverse Geocoding</H3>
+<h4>US: Longitude, latitude, no SRID</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+    country="US"
+    longitude="-122.41837" latitude="37.80598"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>US: Easting, northing, SRID</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+    country="US"
+    x="-2274355.9" y="1959197.12" srid="32775"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>France: Longitude, latitude, no SRID</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="FR"
+      longitude="2.322855" latitude="48.867909999999995"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>France: Easting, northing, SRID</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="FR"
+      x="598997.994" y="2429954.32" srid="41014"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Belgium: Longitude, latitude, no SRID, no language</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="BE"
+      longitude="4.365225000000001" latitude="50.846265"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Belgium: Longitude, latitude, no SRID, French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="BE"
+      longitude="4.365225000000001" latitude="50.846265" language="FRE"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Belgium: Longitude, latitude, no SRID, Dutch</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="BE"
+      longitude="4.365225000000001" latitude="50.846265" language="DUT"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="FORMATTED">
+<H3>Formatted Addresses</H3>
+<h4>F-US-1: us_form1: US-specific address formatting (US is implicit as country)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;us_form1 street="1300 Howard Street" lastline="San Francisco, CA 94103"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>F-US-2: us_form2: US-specific address formatting (US is implicit as country)</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;us_form2 street="1300 Howard Street" city="San Francisco" state="CA" zip_code="94103"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>F-US-3: gen_form: generic address formatting</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form street="1300 Howard Street" city="San Francisco" region="CA" 
+          postal_code="94103" country="US"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>F-US-4: gdf_form: generic GDF address formatting</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gdf_form street="1300 Howard Street" builtup_area="San Francisco" order1_area="CA" 
+          postal_code="94103" country="US"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>F-FR-1: gen_form: generic address formatting</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gen_form street="13 rue Royale" city="Paris" postal_code="75008" country="FR"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>F-FR-2: gdf_form: generic GDF address formatting</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;gdf_form street="13 rue Royale" builtup_area="Paris" postal_code="75008" country="FR"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#US"> United States </a></td>
+  <td> <a href="#CA"> Canada        </a></td>
+  <td> <a href="#FR"> France        </a></td>
+  <td> <a href="#ES"> Spain         </a></td>
+  <td> <a href="#IT"> Italy         </a></td>
+  <td> <a href="#PT"> Portugal      </a></td>
+  <td> <a href="#DE"> Germany       </a></td>
+  <td> <a href="#UK"> UK            </a></td>
+  <td> <a href="#IE"> Ireland       </a></td>
+  <td> <a href="#NL"> Netherlands   </a></td>
+  <td> <a href="#BE"> Belgium       </a></td>
+  <td> <a href="#CZ"> Czech Republic</a></td>
+  <td> <a href="#PL"> Poland        </a></td>
+  <td> <a href="#FI"> Finland       </a></td>
+  <td> <a href="#TR"> Turkey        </a></td>
+  <td> <a href="#BG"> Bulgaria      </a></td>
+  <td> <a href="#RU"> Russia        </a></td>
+  <td> <a href="#REVERSE"> Reverse Geocoding </a></td>
+  <td> <a href="#FORMATTED"> Formatted Addresses </a></td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Examples of XML non-map requests</title>
+</head>
+<body>
+<h1>Examples of XML non-map requests</h1>
+
+<HR>
+<TABLE cellpadding="5" cellspacing="3" border="0" summary="">
+<TR>
+  <TD> <A HREF="#list-datasources">List Data Sources</A></TD>
+  <TD> <A HREF="#info-request">Info Request</A></TD>
+</TR>
+</TABLE>
+
+<A NAME="list-datasources">
+<H2>List Data Sources</H2>
+<FORM action=http://localhost:8080/mapviewer/omserver method=get><TEXTAREA cols=80 rows=4 name=xml_request>
+&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;list_data_sources /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<A NAME="info-request">
+<H2>Info Requests</H2>
+<H3>Strict (XML) format</H3>
+<FORM action=http://localhost:8080/mapviewer/omserver method=get><TEXTAREA cols=80 rows=6 name=xml_request>
+&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;info_request 
+  datasource="scott"  
+  format="strict"&gt;
+    SELECT city, pop90 population, state_abrv state FROM us_cities
+&lt;/info_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Non-strict (CSV) format</H3>
+<FORM action=http://localhost:8080/mapviewer/omserver method=get><TEXTAREA cols=80 rows=6 name=xml_request>
+&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;info_request 
+  datasource="scott"  
+  format="non-strict"&gt;
+    SELECT city, pop90 population, state_abrv state FROM us_cities
+&lt;/info_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<HR>
+<TABLE cellpadding="5" cellspacing="3" border="0" summary="">
+<TR>
+  <TD> <A HREF="#list-datasources">List Data Sources</A></TD>
+  <TD> <A HREF="#info-request">Info Request</A></TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

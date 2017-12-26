@@ -1,0 +1,525 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: LASlib - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+LASlib.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: LASlib - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+LASlib.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: blast2dem - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56A.tmp" with contents
+[
+../laslib/lib/LASlib.lib img_api/libimg.lib jpg_api/libjpeg.lib png_api/libpng.lib zlib_api/zlib.lib tiff_api/tiff.lib geotiff_api/geotiff.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/blast2dem.pdb" /machine:I386 /out:"Release/blast2dem.exe" 
+.\Release\blast2dem.obj
+.\Release\geoprojectionconverter.obj
+.\Release\srbufferinmemory.obj
+.\Release\srbufferrowbands.obj
+.\Release\srbufferrows.obj
+.\Release\srbuffersimple.obj
+.\Release\srbuffertiles.obj
+.\Release\srwriteopener.obj
+.\Release\srwriter_asc.obj
+.\Release\srwriter_bil.obj
+.\Release\srwriter_img.obj
+.\Release\srwriter_jpg.obj
+.\Release\srwriter_png.obj
+.\Release\srwriter_tif.obj
+.\Release\srwritetiled.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56A.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+blast2dem.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2dem - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56B.tmp" with contents
+[
+../laslib/lib/LASlib.lib img_api/libimg.lib jpg_api/libjpeg.lib png_api/libpng.lib zlib_api/zlib.lib tiff_api/tiff.lib geotiff_api/geotiff.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/las2dem.pdb" /machine:I386 /out:"Release/las2dem.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\las2dem.obj
+.\Release\predicates.obj
+.\Release\srbufferinmemory.obj
+.\Release\srbufferrowbands.obj
+.\Release\srbufferrows.obj
+.\Release\srbuffersimple.obj
+.\Release\srbuffertiles.obj
+.\Release\srwriteopener.obj
+.\Release\srwriter_asc.obj
+.\Release\srwriter_bil.obj
+.\Release\srwriter_img.obj
+.\Release\srwriter_jpg.obj
+.\Release\srwriter_png.obj
+.\Release\srwriter_tif.obj
+.\Release\srwritetiled.obj
+.\Release\triangulate.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56B.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+las2dem.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2iso - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56C.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/las2iso.pdb" /machine:I386 /out:"Release/las2iso.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\kmlwriter.obj
+.\Release\las2iso.obj
+.\Release\linewriter.obj
+.\Release\predicates.obj
+.\Release\shpwriter.obj
+.\Release\triangulate.obj
+.\Release\txtwriter.obj
+.\Release\wktwriter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56C.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+las2iso.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2las - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+las2las.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2shp - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+las2shp.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2tin - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+las2tin.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: las2txt - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+las2txt.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasboundary - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56D.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasboundary.pdb" /machine:I386 /out:"Release/lasboundary.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\kmlwriter.obj
+.\Release\lasboundary.obj
+.\Release\linewriter.obj
+.\Release\predicates.obj
+.\Release\shpwriter.obj
+.\Release\triangulate.obj
+.\Release\txtwriter.obj
+.\Release\wktwriter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56D.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lasboundary.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasclip - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56E.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasclip.pdb" /machine:I386 /out:"Release/lasclip.exe" 
+.\Release\contriangulate.obj
+.\Release\lasclip.obj
+.\Release\predicates.obj
+.\Release\shpreader.obj
+.\Release\shpwriter.obj
+.\Release\txtreader.obj
+.\Release\geoprojectionconverter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56E.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\contriangulate.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lasclip.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasdiff - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasdiff.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasduplicate - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasduplicate.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasgrid - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56F.tmp" with contents
+[
+../laslib/lib/LASlib.lib img_api/libimg.lib jpg_api/libjpeg.lib png_api/libpng.lib zlib_api/zlib.lib tiff_api/tiff.lib geotiff_api/geotiff.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasgrid.pdb" /machine:I386 /out:"Release/lasgrid.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\lasgrid.obj
+.\Release\lasraster.obj
+.\Release\srbufferinmemory.obj
+.\Release\srbufferrowbands.obj
+.\Release\srbufferrows.obj
+.\Release\srbuffersimple.obj
+.\Release\srbuffertiles.obj
+.\Release\srreader_tif.obj
+.\Release\srwriteopener.obj
+.\Release\srwriter_asc.obj
+.\Release\srwriter_bil.obj
+.\Release\srwriter_bil_fseek.obj
+.\Release\srwriter_img.obj
+.\Release\srwriter_jpg.obj
+.\Release\srwriter_png.obj
+.\Release\srwriter_tif.obj
+.\Release\srwritetiled.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP56F.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lasgrid.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasgrid_old - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP570.tmp" with contents
+[
+../laslib/lib/LASlib.lib img_api/libimg.lib jpg_api/libjpeg.lib png_api/libpng.lib zlib_api/zlib.lib tiff_api/tiff.lib geotiff_api/geotiff.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasgrid_old.pdb" /machine:I386 /out:"Release/lasgrid_old.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\lasgrid_old.obj
+.\Release\srbufferinmemory.obj
+.\Release\srbufferrowbands.obj
+.\Release\srbufferrows.obj
+.\Release\srbuffersimple.obj
+.\Release\srbuffertiles.obj
+.\Release\srreader_tif.obj
+.\Release\srwriteopener.obj
+.\Release\srwriter_asc.obj
+.\Release\srwriter_bil.obj
+.\Release\srwriter_bil_fseek.obj
+.\Release\srwriter_img.obj
+.\Release\srwriter_jpg.obj
+.\Release\srwriter_png.obj
+.\Release\srwriter_tif.obj
+.\Release\srwritetiled.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP570.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lasgrid_old.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasheight - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP571.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasheight.pdb" /machine:I386 /out:"Release/lasheight.exe" 
+.\Release\lasheight.obj
+.\Release\predicates.obj
+.\Release\triangulate.obj
+.\Release\geoprojectionconverter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP571.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lasheight.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasindex - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasindex.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasinfo - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasinfo.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasmerge - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP572.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lasmerge.pdb" /machine:I386 /out:"Release/lasmerge.exe" 
+.\Release\lasmerge.obj
+.\Release\geoprojectionconverter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP572.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP574.bat" with contents
+[
+@echo off
+copy Release\lasmerge.exe ..\bin\lasmerge.exe
+]
+Creating command line "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP574.bat"
+
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+lasmerge.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasprecision - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasprecision.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lassort - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP575.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lassort.pdb" /machine:I386 /out:"Release/lassort.exe" 
+.\Release\lasquadtree.obj
+.\Release\lassort.obj
+.\Release\geoprojectionconverter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP575.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\lassort.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lassort.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasthin - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasthin.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lastile - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lastile.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lastool - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP576.tmp" with contents
+[
+../laslib/lib/LASlib.lib glut_api/glut32.lib glui_api/glui32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/lastool.pdb" /machine:I386 /out:"Release/lastool.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\lastool.obj
+.\Release\shpreader.obj
+.\Release\txtreader.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP576.tmp"
+<h3>Output Window</h3>
+Linking...
+LINK : fatal error LNK1181: cannot open input file ".\Release\geoprojectionconverter.obj"
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+lastool.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: lasview - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+lasview.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: laszip - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP577.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/laszip.pdb" /machine:I386 /out:"Release/laszip.exe" 
+.\Release\laszip.obj
+.\Release\geoprojectionconverter.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP577.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP579.bat" with contents
+[
+@echo off
+copy Release\laszip.exe ..\bin\laszip.exe
+]
+Creating command line "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP579.bat"
+
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+laszip.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: laszippertest - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+laszippertest.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: shp2las - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57A.tmp" with contents
+[
+/nologo /ML /w /W0 /GX /O2 /I "..\laslib\inc" /I "..\src" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /Fp"Release/shp2las.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\released_code\lastools\src_full\shp2las.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57A.tmp" 
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57B.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/shp2las.pdb" /machine:I386 /out:"Release/shp2las.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\shp2las.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57B.tmp"
+<h3>Output Window</h3>
+Compiling...
+shp2las.cpp
+C:\released_code\lastools\src_full\shp2las.cpp(369) : error C2660: 'get_geo_keys_from_projection' : function does not take 2 parameters
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+shp2las.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: txt2las - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57C.tmp" with contents
+[
+../laslib/lib/LASlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/txt2las.pdb" /machine:I386 /out:"Release/txt2las.exe" 
+.\Release\geoprojectionconverter.obj
+.\Release\txt2las.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ISENBU~1.ISE\LOCALS~1\Temp\RSP57C.tmp"
+<h3>Output Window</h3>
+Linking...
+txt2las.obj : error LNK2001: unresolved external symbol "public: int __thiscall GeoProjectionConverter::get_geo_keys_from_projection(struct GeoProjectionGeoKeys * *,bool)" (?get_geo_keys_from_projection@GeoProjectionConverter@@QAEHPAPAUGeoProjectionGeoKeys@@_N@Z)
+Release/txt2las.exe : fatal error LNK1120: 1 unresolved externals
+Error executing link.exe.
+
+
+
+<h3>Results</h3>
+txt2las.exe - 2 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<networkAnalysisRequest 
+    xmlns="http://xmlns.oracle.com/spatial/network" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gml="http://www.opengis.net/gml">
+  <networkName>HILLSBOROUGH_NETWORK</networkName>
+  <shortestPath>
+    <startPoint>
+      <nodeID>65</nodeID>
+    </startPoint> 
+    <endPoint>
+      <nodeID>115</nodeID>
+    </endPoint> 
+    <subPathRequestParameter>
+      <isFullPath> true </isFullPath>
+      <startLinkIndex> true </startLinkIndex>
+      <startPercentage> true </startPercentage>
+      <endLinkIndex> true </endLinkIndex>
+      <endPercentage> true </endPercentage>
+      <geometry>true</geometry> 
+    <pathRequestParameter>
+      <cost> true </cost>
+      <isSimple> true </isSimple>
+      <startNodeID>true</startNodeID>
+      <endNodeID>true</endNodeID>
+      <noOfLinks>true</noOfLinks>
+      <linksRequestParameter> 
+        <onlyLinkID>true</onlyLinkID>
+      </linksRequestParameter> 
+      <nodesRequestParameter> 
+        <onlyNodeID>true</onlyNodeID>
+      </nodesRequestParameter> 
+      <geometry>true</geometry> 
+    </pathRequestParameter>
+    </subPathRequestParameter>
+  </shortestPath>
+</networkAnalysisRequest>

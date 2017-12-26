@@ -1,0 +1,11 @@
+!table
+!version 300
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 4
+    CITY Char (254) ;
+    STATE_ABRV Char (254) ;
+    POP90 Float ;
+    RANK90 Float ;

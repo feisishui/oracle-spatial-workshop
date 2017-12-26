@@ -1,0 +1,241 @@
+  <!-- ****************************************************************** -->
+  <!-- ***************** WMS Configuration File ************************* -->
+  <!-- ****************************************************************** -->
+  <!-- From MapViewer 12c version this file will define custom parameters
+       for MapViewer embedded WMS server, that can be used for
+       GetCapabilties and GetFeatureInfo responses.
+       The previous <wms_config> section in MapViewer's configuration file
+       (mapViewerConfig.xml) continues to be read, and the contents of
+       this new configuration file will overwrite any WMS configuration
+       parameter previously set. It is recommended from now on to use
+       this configuration file for custom WMS parameters, as the <wms_config>
+       section in MapViewer's configuration file may be deprecated in the
+       future.
+   -->
+
+<wms_config>
+
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom WMS Capabilities Parameters ***************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to use
+       them in GetCapabilities response. This tag is optional.
+
+	  host: specifies the host part of the service request URL that the 
+              client should use for future WMS requests made to this MapViewer server.
+
+        port: specifies the port part of the service request URL that the client 
+              should use for future WMS requests made to this MapViewer server.
+
+        protocol: specifies the protocol part of the service request URL that the 
+                  client should use for future WMS requests made to this MapViewer server.
+
+        default_datasource = specifies the base data source to be used 
+                             for retrieving the capabilities response. If this attribute is not defined, 
+                             the data source WMS is used, and that data source must exist in this MapViewer server.
+
+        public_datasources = specifies which data source contents are to be listed in the GetCapabilities response. 
+                             If this attribute is not defined, all data source contents that exist in server will be listed.
+
+        use_text_xml = default is always to use standard text/xml even for getCapabilities.
+                       If set to false, then we will use OGC 1.1.1 spec such as application/vnd.ogc.wms_xml
+   -->
+
+  <!--
+    <custom_parameters  
+            host="www.my_corp.com" port="80" protocol="http" 
+            default_datasource="mvdemo"
+            public_datasources="mvdemo, wms">
+    </custom_parameters>
+  -->
+              
+
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom WMS Capabilities Service Attributes ********* -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       use the following information in its getCapabilities response.
+       Note: all attributes and elements of <wms_config> are optional.       
+  -->
+
+  <!--
+   <service_attributes>              
+    <title>
+        WMS interface provided by OracleFMW MapViewer
+    </title>
+    <abstract>
+        This WMS service is for bird lovers.
+    </abstract>
+    <keyword_list>
+       <keyword>bird</keyword>
+       <keyword>roadrunner</keyword>
+       <keyword>ambush</keyword>
+    </keyword_list>    
+    <online_resource>
+        http://www.my_corp.com/wms-help
+    </online_resource>
+    <contact_information>
+       <ContactPersonPrimary>
+       		<ContactPerson>John Doe</ContactPerson>
+       		<ContactOrganization>My Corp.</ContactOrganization>
+       </ContactPersonPrimary>
+       <ContactPosition>Sr. Manager</ContactPosition>
+       <ContactAddress>
+       		<AddressType>US Street</AddressType>
+       		<Address>1 MyCorp drv</Address>
+       		<City>Nashua</City>
+       		<StateOrProvince>NH</StateOrProvince>
+       		<PostCode>03062</PostCode>
+       		<Country>USA</Country>
+       </ContactAddress>
+       <ContactVoiceTelephone>18001122333</ContactVoiceTelephone>
+       <ContactFacsimileTelephone></ContactFacsimileTelephone>
+       <ContactElectronicMailAddress>jdoe@my_corp.com</ContactElectronicMailAddress>
+    </contact_information>
+    <Fees>None</Fees>
+    <AccessConstraints>None whatsoever</AccessConstraints>
+   </service_attributes>
+  --> 
+		
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom Layer Attributes **************************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       use the following information to add it to Layers in 
+       GetCapabilities responses. WMS Layers can be associated with
+       MapViewer themes and basemaps. On <metadata> tag use "theme"
+       for MapViewer themes and "basemap" for MapViewer base maps in
+       type attribute. If type attribute is not defined or value is
+       not equal to "theme" and "basemap", then "theme" is used as default.
+       All Layer attributes are optional and they will complement the
+       attributes that are automatically generated by MapViewer WMS server.
+       
+  --> 
+
+  <!--
+   <layer_attributes>
+     <datasource name="mvdemo">
+        <metadata name="THEME_US_STATES"  type="theme"
+               queryable="1" cascaded="0" opaque="1" noSubsets="0"
+               fixedWidth="500" fixedHeight="400">
+
+           <abstract>Abstract text</abstract>
+
+           <keywordlist>keyword1,keyword2,keyword3</keywordlist>
+
+           <srs>EPSG:4474,EPSG:4471</srs>
+
+           <style>
+              <title>Style title</title>
+              <name>Style name</name>
+              <abstract>Style abstract</abstract>
+              <stylesheeturl>
+                 <format>Stylesheet format</format>
+                 <onlineresource>
+                    <href>http://www.yoururl.com/styledata.html</href>
+                    <type>simple</type>
+                 </onlineresource>
+              </stylesheeturl>
+              <styleurl>
+                 <format>Styles format</format>
+                 <onlineresource>
+                    <href>http://www.yoururl.com/style.html</href>
+                    <type>simple</type>
+                 </onlineresource>
+              </styleurl>
+              <legendurl>
+                <format>Legend format</format>
+                <width>500</width>
+                <height>500</height>
+                <onlineresource>
+                   <href>http://www.yoururl.com/legendurl.html</href>
+                   <type>simple</type>
+                </onlineresource> 
+              </legendurl>    
+            </style>
+
+            <attribution>
+              <title>Attribution title</title>
+              <logourl>
+                <format>Logo format</format>
+                <width>500</width>
+                <height>500</height>
+                <onlineresource>
+                   <href>http://www.yoururl.com/logourl.html</href>
+                   <type>simple</type>
+                </onlineresource> 
+              </logourl>    
+              <onlineresource>
+                 <href>http://www.yoururl.com/attribution.html</href>
+                 <type>simple</type>
+              </onlineresource>
+            </attribution>
+
+            <authorityurl>
+               <name>Authority name</name>
+               <onlineresource>
+                 <href>http://www.yoururl.com/autority.html</href>
+                 <type>simple</type>
+               </onlineresource>
+            </authorityurl>
+
+            <identifier>
+              <authority>Identifier authority</authority>
+              <value>Identifier value</value>
+            </identifier>
+
+            <metadataurl>
+              <format>Metadata format</format>
+              <type>Metadata type</type>
+              <onlineresource>
+                <href>http://www.yoururl.com/metaurl.html</href>
+                <type>simple</type>
+              </onlineresource>
+            </metadataurl>
+
+            <dataurl>
+              <format>Data format</format>
+              <onlineresource>
+                <href>http://www.yoururl.com/dataurl.html</href>
+                <type>simple</type>
+              </onlineresource>
+            </dataurl>              
+
+            <featurelisturl>
+              <format>Feature list format</format>
+              <onlineresource>
+                <href>http://www.yoururl.com/featlisturl.html</href>
+                <type>simple</type>
+              </onlineresource>
+            </featurelisturl>
+
+       </metadata>
+     </datasource>
+   </layer_attributes>
+  -->
+
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom WMS GetFeatureInfo ************************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       use the following information in its getFeatureInfo response.
+
+       The section <get_feature_info> applies to GetFeatureInfo requests
+       and can be used to define default radius (value and unit) for
+       predefined MapViewer themes. The parameters are:
+       name: predefined theme name
+       datasource: MapViewer data source
+       radius: default radius value for theme to be used in 
+               within_radius GetFeatureInfo requests when radius parameter
+               is not defined.
+       unit: default radius unit. Optional parameter, if not defined meters 
+             'm' is assumed.
+  --> 
+
+  <!--  
+    <get_feature_info>
+      <theme name="theme_demo_states" datasource="mvdemo" radius="500" unit="km" />
+    </get_feature_info>
+  -->
+
+</wms_config>

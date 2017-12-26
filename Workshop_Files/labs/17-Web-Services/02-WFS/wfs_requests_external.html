@@ -1,0 +1,228 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle WFS Tests</title>
+</head>
+<body>
+<h1>Oracle WFS Tests</h1>
+<hr>
+
+<H2>Basic Operations (WFS)</H2>
+
+<H3>GetCapabilities KVP</H3>
+
+<a href="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS?request=GetCapabilities&service=WFS&version=1.0.0">
+http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS?request=GetCapabilities&service=WFS&version=1.0.0
+</a>
+
+<h3>GetCapabilities</h3>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=5 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetCapabilities
+  service="WFS"
+  version="1.0.0"
+  xmlns:wfs="http://www.opengis.net/wfs"/&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>DescribeFeatureType</h3>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=11 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:DescribeFeatureType
+  service="WFS"
+  version="1.0.0"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"
+  xsi:schemaLocation="http://www.opengis.net/wfs ../wfs/1.0.0/WFS-basic.xsd"&gt;
+  &lt;wfs:TypeName&gt;sfbdl:WestminsterConstituency&lt;/wfs:TypeName&gt;
+&lt;/wfs:DescribeFeatureType&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>GetFeature </h3>
+
+<h4>Find features based on attribute values</h4>
+<h5>No schemalocation specified</h5>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=18 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"&gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsEqualTo&gt;
+        &lt;ogc:PropertyName&gt;name&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt;Southampton, Itchen Boro Const&lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsEqualTo&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h5>Schemalocation specified and used</h5>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=18 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd"   
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"&gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsEqualTo&gt;
+        &lt;ogc:PropertyName&gt;name&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt;Southampton, Itchen Boro Const&lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsEqualTo&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h5>Schemalocation used but not defined</h5>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=18 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd"   
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"&gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsEqualTo&gt;
+        &lt;ogc:PropertyName&gt;name&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt;Southampton, Itchen Boro Const&lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsEqualTo&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features within a geographic region</h4>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"
+  &gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:BBOX&gt;
+        &lt;ogc:PropertyName&gt;extent&lt;/ogc:PropertyName&gt;
+        &lt;gml:Box srsName="EPSG:27700" xmlns:gml="http://www.opengis.net/gml"&gt;
+          &lt;gml:coordinates decimal="." cs="," ts=" "&gt;
+            440000,110000 445000,120000
+            &lt;/gml:coordinates&gt;
+        &lt;/gml:Box&gt;
+      &lt;/ogc:BBOX&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features based on attribute values and a spatial region</h4>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"&gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:And&gt;
+        &lt;ogc:PropertyIsGreaterThanOrEqualTo&gt;
+          &lt;ogc:PropertyName&gt;area&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;10000&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsGreaterThanOrEqualTo&gt;
+        &lt;ogc:BBOX&gt;
+          &lt;ogc:PropertyName&gt;extent&lt;/ogc:PropertyName&gt;
+          &lt;gml:Box srsName="EPSG:27700" xmlns:gml="http://www.opengis.net/gml"&gt;
+            &lt;gml:coordinates decimal="." cs="," ts=" "&gt;
+              440000,110000 445000,120000
+            &lt;/gml:coordinates&gt;
+          &lt;/gml:Box&gt;
+        &lt;/ogc:BBOX&gt;
+      &lt;/ogc:And&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features within a distance from a point</h4>
+<form name=wfsform
+  action="http://demo.snowflakesoftware.com:8080/WestminsterBoundaryLine/GOPublisherWFS"
+  method="post">
+<textarea name=xml rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:sfbdl="http://www.snowflakesoftware.com/osopendata/boundaryline"&gt;
+  &lt;wfs:Query typeName="sfbdl:WestminsterConstituency"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:DWithin&gt;
+        &lt;ogc:PropertyName&gt;extent&lt;/ogc:PropertyName&gt;
+        &lt;gml:Point srsName="EPSG:27700"&gt;
+          &lt;gml:coordinates&gt;
+            425082.6 104146.7
+          &lt;/gml:coordinates&gt;
+        &lt;/gml:Point&gt;
+        &lt;Distance units="km"&gt;10&lt;/Distance&gt;
+      &lt;/ogc:DWithin&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+</body>
+</html>

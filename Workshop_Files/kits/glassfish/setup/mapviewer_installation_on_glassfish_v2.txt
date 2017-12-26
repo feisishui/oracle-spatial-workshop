@@ -1,0 +1,142 @@
+Installing MapViewer in Glassfish server
+========================================
+
+Version: 2.0
+Last updated by: Albert Godfrind
+On: 9-Sep-2011
+
+Requirements
+------------
+
+You need a running Java 1.6 installation
+
+Those instructions are for GlassFish version 3.1.
+
+
+Installing glassfish
+--------------------
+
+1) Download glassfish from http://www.oracle.com/technetwork/java/javaee/downloads/ogs-3-1-1-downloads-439803.html
+
+ogs-3.1.1.zip (86MB) is the basic, platform-independant kit.
+
+2) Unzip ogs-3.1.1.zip into a directory called  "ogs".
+
+This will create a directory structure like this:
+
+  .../ogs
+      /glassfish3
+        /bin
+        /glassfish
+          /bin
+          /domains
+          /lib
+          ...
+        ...
+        /oracle-jdbc-drivers
+
+3) Setup the JDBC driver
+
+The default configuration does not include any Oracle JDBC driver. The driver is however included with the installation. All you need is to copy the driver into the "lib" directory:
+
+  copy glassfish3\oracle-jdbc-drivers\ojdbc6.jar glassfish3\glassfish\lib
+
+4) Start the default glassfish domain
+
+The default installation comes with a pre-configured domain called "domain1". Start it using the "asadmin" command:
+
+  glassfish3\bin\asadmin start-domain
+
+5) Create an administration account for MapViewer
+
+  glassfish3\bin\asadmin create-file-user --groups asadmin --authrealmname file mapadmin
+
+You will be prompted for the password of the new "mapadmin" user (entered twice)
+
+  Enter the user password> *********
+  Enter the user password again> *********
+  Command create-file-user executed successfully.
+
+Note: by default, GlassFish's admin account is installed without any password. If you modified that account to use a password, then you will also be prompted for that password:
+
+  Enter admin password for user "admin">
+
+You can also create the user via the admin console:
+
+- start the console:  http://localhost:4848/
+- log in if requested (if you set a password for the admin userr)
+- expand the "Configurations" item in the "Common tasks" menu, then "server-config", then "Security", then "Realms", then on the "file" realm (or go directly to http://localhost:4848/common/security/realms/realmEdit.jsf?name=file&configName=server-config)
+- click the "Manage Users" button
+- click "New"
+- fill the form with:
+  User ID = mapadmin
+  Group List= asadmin
+  New Password = the password for the mapadmin account
+- click "OK"
+
+
+Installing MapViewer
+--------------------
+
+1) Fixup the MapViewer kit
+
+The current MapViewer kit (Version 11g ps4 (11.1.1.5.1)) does not contain the deployment descriptor for Glassfish that maps MapViewr's administrative role (map_admin_role) to Glassfish's administrative group (asadmin). This prevents access to any administrative functions of MapViewer (changing configuration parameters, managing map caches, etc).
+
+To enable this, you need to perform the following:
+- decompress the ear file (mapviewer.ear)
+- decompress the war file (web.war)
+- add file glassfish-web.xml to the WEB-INF directory
+- recompress the war file
+- recompress the ear file
+
+Here is the content of glassfish-web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<glassfish-web-app error-url="">
+  <context-root>/mapviewer</context-root>
+  <security-role-mapping>
+    <role-name>map_admin_role</role-name>
+    <group-name>asadmin</group-name>
+  </security-role-mapping>
+  <class-loader delegate="true"/>
+  <jsp-config>
+    <property name="keepgenerated" value="true">
+      <description>Keep a copy of the generated servlet class' java code.</description>
+    </property>
+  </jsp-config>
+</glassfish-web-app>
+
+
+2) Deploy MapViewer
+
+You can do this automatically, via the asadmin tool, or using the Glassfish console.
+
+- Automatically:
+
+Copy the mapviewer.ear file into the "autodeploy" directory of the default domain:
+
+  copy mapviewer.ear glassfish3\glassfish\domains\domain1\autodeploy
+
+The glasfish server will automatically deploy the application. If it is not running, it will deploy the application at the next restart.
+
+- Using the command line administration tool
+
+  glassfish3\bin\asadmin deploy mapviewer.ear
+
+  (if necessary, you will be prompted for the password of the "admin" user)
+
+- Using the admin console:
+
+  - start the console:  http://localhost:4848/
+  - log in if requested
+  - click the "Applications" item in the "Common tasks" menu (or go directly to http://localhost:4848/common/applications/applications.jsf)
+  - click on "Deploy"
+  - browse to the mapviewer.ear file
+  - click "OK".
+
+3) Manage mapviewer
+
+Use the mapadmin user and its password to manage MapViewer.
+
+WARNING: Deployment of applications on Glassfish 3.1.1 on Windows is very slow: it can take over 5 minutes. This is a known problem (http://java.net/jira/browse/GLASSFISH-17094) to be fixed in 3.1.2 and 3.2.

@@ -1,0 +1,69 @@
+/
+/ $Header: sdo/demo/network/examples/data/navteq_sf/truckingDemo.txt /main/1 2009/11/05 12:59:11 hgong Exp $
+/
+/ truckingDemo.txt
+/
+/ Copyright (c) 2009, Oracle. All Rights Reserved.
+/
+/   NAME
+/     truckingDemo.txt - <one-line expansion of the name>
+/
+/   DESCRIPTION
+/     <short description of component this file declares/defines>
+/
+/   NOTES
+/     <other useful comments, qualifications, etc.>
+/
+/   MODIFIED   (MM/DD/YY)
+/   hgong       11/02/09 - Creation
+/
+
+This file contains a list of addresses to demonstrate trucking
+constaints.
+
+# Auto vs truck, no parameters.
+#    Start Address
+#    End Address
+
+800 N POINT ST, 94109
+3643 BALBOA ST, 94121
+-- 
+3521 20TH ST, 94110
+625 MONTEREY BLVD, 94127
+-- 
+2800 OAKDALE AVE, 94124
+2656 OCEAN AVE, 94132
+-- 
+1600 GUERRERO ST, 94110
+3137 LAGUNA ST, 94123
+-- 
+401 GENEVA AVE, 94112
+2650 42ND AVE, 94116
+-- 
+648201 VAN NESS AVE, 94102
+1312 CHESTNUT ST, 94123
+
+
+# Auto vs truck w/parameters
+# Height=13.6, length=75, per axle weight=10,weight=30, width=8
+# Here the results differ from auto and truck without parameters meaning
+# one of paramter constraints is being violated.
+
+1940 TARAVAL ST, 94116
+3898 24TH ST, 94114
+-- 
+518 BRANNAN ST, 94107
+708 MONTGOMERY ST, 94111
+-- 
+1750 DIVISADERO ST, 94115
+511 HARRISON ST, 94105
+-- 
+3701 NORIEGA ST, 94122
+180 FAIR OAKS ST, 94110
+-- 
+471 3RD ST, 94107
+2201 VAN NESS AVE, 94109
+-- 
+237 COLUMBUS AVE, 94133
+5201 3RD ST, 94124
+

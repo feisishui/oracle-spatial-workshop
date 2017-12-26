@@ -1,0 +1,45 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html" charset=UTF-8">
+<TITLE>A sample Oracle Maps application</TITLE>
+<script language="Javascript" src="/mapviewer/fsmc/jslib/oraclemaps.js"></script>
+<script language=javascript>
+var themebasedfoi=null
+function on_load_mapview() 
+{	
+  var baseURL  = "http://"+document.location.host+"/mapviewer";
+  // Create an MVMapView instance to display the map
+  var mapview = new MVMapView(document.getElementById("map"), baseURL);
+  // Add a map tile layer as background.
+  mapview.addMapTileLayer(new MVMapTileLayer("mvdemo.demo_map"));   
+  // Add a theme-based FOI layer to display customers on the map
+  themebasedfoi = new MVThemeBasedFOI('themebasedfoi1','mvdemo.customers');
+  themebasedfoi.setBringToTopOnMouseOver(true);
+  mapview.addThemeBasedFOI(themebasedfoi);
+  // Set the initial map center and zoom level
+  mapview.setCenter(MVSdoGeometry.createPoint(-122.45,37.7706,8307));   
+  mapview.setZoomLevel(4);    
+  // Add a navigation panel on the right side of the map
+  mapview.addNavigationPanel('east');
+  // Add a scale bar
+  mapview.addScaleBar();
+  // Display the map.
+  mapview.display();
+}
+function setLayerVisible(checkBox)
+{
+  // Show the theme-based FOI layer if the check box is checked and
+  // hide the theme-based FOI layer otherwise.
+  if(checkBox.checked)
+    themebasedfoi.setVisible(true) ;
+  else
+    themebasedfoi.setVisible(false);
+}
+</script>
+</head>
+<body onload= javascript:on_load_mapview() >
+<h2>A Sample Oracle Maps Application</h2>
+<INPUT TYPE="checkbox" onclick="setLayerVisible(this)" checked/>Show customers
+<div id="map" style="width: 600px; height: 500px"></div> 
+</body>
+</html>

@@ -1,0 +1,94 @@
+Statistics in the US_STATES table
+
+totpop   total persons
+landsqmi land area in sq miles
+poppsqmi persons per square mile (land)
+female   female pop
+rural    persons in rural areas
+onfarms  persons on farms
+infamily persons in families
+alone    persons living alone
+groupqtr persons in group quarters
+pctfemal pct female
+pctgq    pct persons in grp qtrs
+
+white    white pop
+black    black pop
+asianpi  asian & pac islandr pop
+amindian am indian, esk, aleuts pop
+hispanic persons of hispanic origin
+pctwhite % white pop
+pctblack % black pop
+pctasian % asian + pi pop
+pctamind % am indian, esk, aleuts
+pcthisp  % hispanic pop
+
+AGE STRUCTURE BREAKDOWN ... PERCENTAGES:
+pct0_4    pct5_9    pct10_13  pct14_17  pct18_24
+pct25_34  pct35_44  pct45_54  pct55_59  pct60_64
+pct65_74  pct75_84  pct85_up
+pct0_19   pct20_39  pct40_64  pct65_up
+
+AGE STRUCTURE BREAKDOWN ... COUNTS
+age0_4    age5_9    age10_13  age14_17  age18_24
+age25_34  age35_44  age45_54  age55_59  age60_64
+age65_74  age75_84  age85_up
+age0_19   age20_39  age40_64  age65_up
+age0_17   age18_44  age45_64
+
+medage   median age
+tothhs   total households
+avghhsz  persons per household
+
+hhs1ov65 1-person hshlds age 65+
+hhs1     1-person hshlds
+hhs2     2-person households
+hhs3_4   3-4 person households
+hhs5_up  5+ person households
+
+pcthhs1  % 1-person households
+pcthhs2  % 2-person households
+pcthhs3_ % 3-4 person households
+pcthhs5_ % 5+ person households
+
+families total families
+mcfams   married couples
+mcwchild : with related children
+femhead  female headed family, no husband present
+femheadc : with related children
+nonfhhs  non-family households
+
+pctmcfam % of families, married couples
+pctmcwch % :with related children
+pctfemhe % female headed fam, no husbnad present
+pctfemhc % :with related chldren
+pctnfhhs % non-family households
+
+INCOME BREAKDOWNS ... COUNTS
+hhi0_10  households with income < $10000 1989
+hhi10_15 households with income $10k - $14,999
+hhi15_25 households with income $15k - $24,999
+hhi25_35 households with income $25k - $34,999
+hhi35_50 households with income $35k - $49,999
+hhi50_75 households with income $50k - $74,999
+hhi75_99 households with income $75k - $99,999
+hhi100up households with income $100,000 & up
+
+INCOME BREAKDOWNS ... PERCENTAGES
+phi0_10  % househlds with income < $10k '89
+phi10_15 % househlds with income $10k - $14,999
+phi15_25 % househlds with income $15k - $24,999
+phi25_35 % househlds with income $25k - $34,999
+phi35_50 % househlds with income $35k - $49,999
+phi50_75 % househlds with income $50k - $74,999
+phi75_99 % househlds with income $75k - $99,999
+phi100up % househlds with income $100,000 & up
+phi0_15  % househlds with income < $14,999
+phi0_25  % househlds with income < $24,999
+phi0_35  % househlds with income < $34,999
+phi0_50  % househlds with income < $49,999
+phi0_75  % househlds with income < $74,999
+phi0_99  % househlds with income < $99,999
+
+medhhinc median household income 1989
+avghhinc average household income 1989

@@ -1,0 +1,61 @@
+
+SQL*Loader: Release 12.1.0.1.0 - Production on Fri Dec 12 15:42:13 2014
+
+Copyright (c) 1982, 2013, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   point_table.ctl
+Data File:      Serpent_Mound_Model_LAS_Data.dat
+  Bad File:     Serpent_Mound_Model_LAS_Data.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Continuation:    none specified
+Path used:      Direct
+
+Table POINTS, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+X                                   FIRST     *   ,       CHARACTER            
+Y                                    NEXT     *   ,       CHARACTER            
+Z                                    NEXT     *   ,       CHARACTER            
+INTENSITY                            NEXT     *   ,       CHARACTER            
+RETURN_NUMBER                        NEXT     *   ,       CHARACTER            
+NUMBER_OF_RETURNS                    NEXT     *   ,       CHARACTER            
+SCAN_DIRECTION                       NEXT     *   ,       CHARACTER            
+EDGE_OF_FLIGHT_LINE                  NEXT     *   ,       CHARACTER            
+CLASSIFICATION                       NEXT     *   ,       CHARACTER            
+SCAN_ANGLE                           NEXT     *   ,       CHARACTER            
+USER_DATA                            NEXT     *   ,       CHARACTER            
+POINT_SOURCE_ID                      NEXT     *   ,       CHARACTER            
+GPSTIME                              NEXT     *   ,       CHARACTER            
+
+
+Table POINTS:
+  3265110 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+Bind array size not used in direct path.
+Column array  rows :   20000
+Stream buffer bytes: 2560000
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:       3265110
+Total logical records rejected:         0
+Total logical records discarded:        0
+Total stream buffers loaded by SQL*Loader main thread:      212
+Total stream buffers loaded by SQL*Loader load thread:        0
+
+Run began on Fri Dec 12 15:42:13 2014
+Run ended on Fri Dec 12 15:42:45 2014
+
+Elapsed time was:     00:00:32.08
+CPU time was:         00:00:04.57

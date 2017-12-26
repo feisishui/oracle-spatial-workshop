@@ -1,0 +1,382 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle WFS Tests</title>
+</head>
+<body>
+<h1>Oracle WFS Tests</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#BA"> Basic Operations </a></td>
+  <td> <a href="#UP"> Updates (WFS-T) </a></td>
+</tr>
+</table>
+
+<hr>
+<H2>SOAP Access</H2>
+
+<a href="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSSoapHttpPort">
+http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSSoapHttpPort
+</a>
+<hr>
+<a name="BA">
+<H2>Basic Operations (WFS)</H2>
+
+<H3>GetCapabilities</H3>
+
+<a href="http://localhost:7001/SpatialWS-SpatialWS-context-root/xmlwfsservlet?request=GetCapabilities&service=WFS&version=1.0.0">
+http://localhost:7001/SpatialWS-SpatialWS-context-root/xmlwfsservlet?request=GetCapabilities&service=WFS&version=1.0.0
+</a>
+
+<h3>GetCapabilities</h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=shit rows=5 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetCapabilities
+  service="WFS"
+  version="1.0.0"
+  xmlns:wfs="http://www.opengis.net/wfs"/&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>DescribeFeatureType</h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=11 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:DescribeFeatureType
+  service="WFS"
+  version="1.0.0"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:scottns="http://www.myserver.com/scott"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xsi:schemaLocation="http://www.opengis.net/wfs ../wfs/1.0.0/WFS-basic.xsd"&gt;
+  &lt;wfs:TypeName>scottns:UsCities</wfs:TypeName&gt;
+&lt;/wfs:DescribeFeatureType&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>GetFeature </h3>
+
+<h4>Find features within a geographic region</h4>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Query typeName="scottns:UsCities"&gt;
+    &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+    &lt;ogc:PropertyName&gt;scottns:CITY&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:Within&gt;
+        &lt;ogc:PropertyName&gt;scottns:LOCATION&lt;/ogc:PropertyName&gt;
+        &lt;gml:Box srsName="SDO:8307"&gt;
+          &lt;gml:coordinates&gt;
+            -109.059, 36.99241 -102.0411, 41.00295
+            &lt;/gml:coordinates&gt;
+        &lt;/gml:Box&gt;
+      &lt;/ogc:Within&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features based on attribute values</h4>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Query typeName="scottns:UsCities"&gt;
+    &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+    &lt;ogc:PropertyName&gt;scottns:CITY&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:And&gt;
+        &lt;ogc:PropertyIsGreaterThanOrEqualTo&gt;
+          &lt;ogc:PropertyName&gt;scottns:POP90&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;300000&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsGreaterThanOrEqualTo&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;CA&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:And&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features based on attribute values and a spatial region</h4>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Query typeName="scottns:UsCities"&gt;
+    &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+    &lt;ogc:PropertyName&gt;scottns:CITY&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:And&gt;
+        &lt;ogc:PropertyIsGreaterThanOrEqualTo&gt;
+          &lt;ogc:PropertyName&gt;scottns:POP90&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;280000&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsGreaterThanOrEqualTo&gt;
+        &lt;ogc:Within&gt;
+          &lt;ogc:PropertyName&gt;scottns:LOCATION&lt;/ogc:PropertyName&gt;
+          &lt;gml:Box srsName="SDO:8307"&gt;
+            &lt;gml:coordinates&gt;
+              -109.059, 36.99241 -102.0411, 41.00295
+            &lt;/gml:coordinates&gt;
+          &lt;/gml:Box&gt;
+        &lt;/ogc:Within&gt;
+      &lt;/ogc:And&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Find features within a distance from a point</h4>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeature
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Query typeName="scottns:UsCities"&gt;
+    &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+    &lt;ogc:PropertyName&gt;scottns:CITY&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:DWithin&gt;
+        &lt;ogc:PropertyName&gt;scottns:LOCATION&lt;/ogc:PropertyName&gt;
+        &lt;gml:Point srsName="SDO:8307"&gt;
+          &lt;gml:coordinates&gt;
+            -109.059, 36.99241
+          &lt;/gml:coordinates&gt;
+        &lt;/gml:Point&gt;
+        &lt;Distance units="km"&gt;100&lt;/Distance&gt;
+      &lt;/ogc:DWithin&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<a name="UP">
+<H2>Update Operations (WFS-T)</H2>
+
+<h3>GetFeatureWithLock </h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=22 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:GetFeatureWithLock
+  service="WFS"
+  version="1.0.0"
+  expiry="5"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Query typeName="scottns:UsCities"&gt;
+    &lt;ogc:PropertyName&gt;scottns:STATE_ABRV&lt;/ogc:PropertyName&gt;
+    &lt;ogc:PropertyName&gt;scottns:CITY&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:Within&gt;
+        &lt;ogc:PropertyName&gt;scottns:LOCATION&lt;/ogc:PropertyName&gt;
+        &lt;gml:Box srsName="SDO:8307"&gt;
+          &lt;gml:coordinates&gt;-105.11, 38.86 -104.72, 39.76&lt;/gml:coordinates&gt;
+        &lt;/gml:Box&gt;
+      &lt;/ogc:Within&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Query&gt;
+&lt;/wfs:GetFeatureWithLock&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>LockFeature </h3>
+<p>This will fail if you do it right after the GetFeatureWithLock request since the rows will still be locked</p>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:LockFeature
+  service="WFS"
+  version="1.0.0"
+  expiry="5"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Lock typeName="scottns:UsCities"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:Within&gt;
+        &lt;ogc:PropertyName&gt;scottns:LOCATION&lt;/ogc:PropertyName&gt;
+        &lt;gml:Box srsName="SDO:8307"&gt;
+          &lt;gml:coordinates&gt;-105.11, 38.86 -104.72, 39.76&lt;/gml:coordinates&gt;
+        &lt;/gml:Box&gt;
+      &lt;/ogc:Within&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Lock&gt;
+&lt;/wfs:LockFeature&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Update - with locking (pessimistic locking)</h3>
+<p>Make sure to replace the lock identifier with that you received from the GetFeatureWithLock or LockFeature requests</p>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:Transaction
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:LockId>12&lt;/wfs:LockId&gt;
+  &lt;wfs:Update handle="UPDATE-01" typeName="scottns:UsCities"&gt;
+    <wfs:Property>
+      &lt;wfs:Name&gt;scottns:RANK90&lt;/wfs:Name&gt;
+      &lt;wfs:Value&gt;10054&lt;/wfs:Value&gt;
+    </wfs:Property>
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsEqualTo&gt;
+        &lt;ogc:PropertyName&gt;scottns:ID&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt; 54 &lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsEqualTo&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Update&gt;
+&lt;/wfs:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Update - without locking (optimistic locking)</h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:Transaction
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Update handle="UPDATE-01" typeName="scottns:UsCities"&gt;
+    <wfs:Property>
+      &lt;wfs:Name&gt;scottns:POP90&lt;/wfs:Name&gt;
+      &lt;wfs:Value&gt;30000&lt;/wfs:Value&gt;
+    </wfs:Property>
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsGreaterThan&gt;
+        &lt;ogc:PropertyName&gt;scottns:RANK90&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt; 200 &lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsGreaterThan&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Update&gt;
+&lt;/wfs:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Delete - without locking (optimistic locking) </h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=17 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:Transaction
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Delete handle="DELETE-01" typeName="scottns:UsCities"&gt;
+    &lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsGreaterThan&gt;
+        &lt;ogc:PropertyName&gt;scottns:RANK90&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt; 200 &lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsGreaterThan&gt;
+    &lt;/ogc:Filter&gt;
+  &lt;/wfs:Delete&gt;
+&lt;/wfs:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Insert </h3>
+<form name=wfsform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=25 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;wfs:Transaction
+  service="WFS"
+  version="1.0.0"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:wfs="http://www.opengis.net/wfs"
+  xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:scottns="http://www.myserver.com/scott"&gt;
+  &lt;wfs:Insert handle="INSERT-01"&gt;
+    &lt;scottns:UsCities&gt;
+      &lt;scottns:ID&gt;196&lt;/scottns:ID&gt;
+      &lt;scottns:CITY&gt;Bismarck&lt;/scottns:CITY&gt;
+      &lt;scottns:STATE_ABRV&gt;ND&lt;/scottns:STATE_ABRV&gt;
+      &lt;scottns:POP90&gt;280000&lt;/scottns:POP90&gt;
+      &lt;scottns:RANK90&gt;212&lt;/scottns:RANK90&gt;
+      &lt;scottns:LOCATION&gt;
+        &lt;gml:Point srsName="SDO:8307" xmlns:gml="http://www.opengis.net/gml"&gt;
+          &lt;gml:coordinates decimal="." cs="," ts=" "&gt;
+            -100.74869 46.7666667
+          &lt;/gml:coordinates&gt;
+        &lt;/gml:Point&gt;
+      &lt;/scottns:LOCATION&gt;
+    &lt;/scottns:UsCities&gt;
+  &lt;/wfs:Insert&gt;
+&lt;/wfs:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+</body>
+</html>

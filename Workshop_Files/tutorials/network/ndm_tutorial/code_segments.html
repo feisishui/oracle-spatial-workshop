@@ -1,0 +1,1132 @@
+<html>
+<title>NDM Analysis Java Code Segments</title>
+<h3><span style="color:blue">SAMPLE CODE SEGMENTS FOR NDM ANALYSIS FUNCTIONS.</span></h3>
+<body bgcolor="#d8d8d8">
+	<a name="sp">
+	<h4><span style="color:blue">Shortest Path Analysis</span></h4>
+	<pre>
+	long startNodeId = .....; <br>
+	long endNodeId   = .....; <br>
+	
+	System.out.println("*****BEGIN: testShortestPathDijkstra*****");
+	LogicalSubPath subPath = 
+     		analyst.shortestPathDijkstra(new PointOnNet(startNodeId), new PointOnNet(endNodeId), null);
+	PrintUtility.print(System.out, subPath, true, 20, 0); 
+	System.out.println("*****END: testShortestPathDijkstra*****"); 
+	</pre>
+	</a>
+
+    	<a name="spprohibitedturn">
+    	<h4><span style="color:blue">Shortest Path Analysis With Turn Restrictions</span></h4>
+    	<pre>
+      	int linkLevel = ..; 
+      	int geometryUserDataIndex = -1;
+      	int xCoordUserDataIndex = 0;
+      	int yCoordUserDataIndex = 1;
+
+       	System.out.println("Begin: Shortest Path With Prohibited Turns");
+
+       	System.out.println("Dijkstra Shortest Path WITH prohibited turns : ");
+
+       	//Construct the prohibited turn constraint
+       	ProhibitedTurnConstraint turnConstraint= new ProhibitedTurnConstraint();
+
+       	LogicalSubPath path =  analyst.shortestPathDijkstra( new PointOnNet(startNodeId),
+                              new PointOnNet(endNodeId), turnConstraint);
+       	PrintUtility.print(System.out, path, true, Integer.MAX_VALUE, 0);
+       	turnConstraint.reset();
+
+       	System.out.println("AStar Shortest Path WITH Prohibited Turns");
+       
+       	HeuristicCostFunction ascf = new GeodeticCostFunction(
+             	UserDataMetadata.DEFAULT_USER_DATA_CATEGORY,
+             	xCoordUserDataIndex, yCoordUserDataIndex, geometryUserDataIndex);
+       	LinkLevelSelector lls = new DynamicLinkLevelSelector(
+             	analyst, linkLevel, ascf, costThresholds,
+             	numHighLevelNeighbors, costMultiplier, turnConstraint);
+       	path = analyst.shortestPathAStar( new PointOnNet(startNodeId), new PointOnNet(endNodeId),
+                                     	turnConstraint, ascf, lls);
+       	PrintUtility.print(System.out, path, true, Integer.MAX_VALUE, 0);
+	
+       	System.out.println("End: Shortest Path With Prohibited Turns");
+
+    	/**
+     	*  Construct prohibited turns as (start link, end link) pairs
+     	*  can be from a database table, a file, or constructed in memory
+     	*  use a hashMap to represent prohibited turns
+     	*  startLink IDs as keys and a set of prohibited end Links ID as values
+     	*/
+
+    	private static class ProhibitedTurnConstraint implements LODNetworkConstraint
+    	{
+      	// prohibited turns information
+      	private Map<Long, long[]> pTurnMap = null;
+
+      	// partial expansion information
+      	// A map from node id to a boolean array of length equal to the number of
+      	// this node's outgoing links. For links that have NOT been expanded, 
+      	// the boolean value is set to false, 
+      	private Map<Long, boolean[]> partiallyExpandedNodes = new HashMap<Long, boolean[]>();
+
+      	// construct prohibited turns information
+      	public ProhibitedTurnConstraint() {
+          pTurnMap = new HashMap();
+          // add prohibited turns as start link : prohibited end links
+
+          long [] startLinkIDs = {...,...};
+          long [][] prohibitedEndLinkIDs = {{...},{...}};
+          for ( int i = 0; i &lt startLinkIDs.length ;i++)
+            pTurnMap.put(startLinkIDs[i], prohibitedEndLinkIDs[i]);
+      	}
+
+      	/**
+       	* Clears the partially expanded node list.
+       	*/
+      	public void reset()
+      	{
+        	partiallyExpandedNodes.clear();
+      	}
+ 
+           // check if the given turn (start link ID, end link ID) is allowed
+      	private boolean isTurnValid(long startLinkID, long endLinkID) {
+           if ( pTurnMap == null ) // no prohibited turns
+               return true;
+           else {
+              long [] prohibitedEndLinks =
+              pTurnMap.get(startLinkID);
+           if ( prohibitedEndLinks == null )
+              return true;
+           else {
+              for ( int i = 0; i &lt prohibitedEndLinks.length;i++) {
+              if ( prohibitedEndLinks[i] == endLinkID)
+                  return false; // prohibited turn found
+           }
+            return true; // OK
+          }
+        }
+      	}
+
+      	public boolean isSatisfied(LODAnalysisInfo info) {
+        boolean isTurnValid = false;
+        LogicalLink currentLink = info.getCurrentLink();
+        LogicalLink nextLink    = info.getNextLink();
+        if ( currentLink == null )
+          return true; // start node, current link == null
+        else
+          //check whether it is a valid turn
+          isTurnValid = isTurnValid(currentLink.getId(), nextLink.getId());
+
+        //update partiallyExpandedNodes
+        LogicalNetNode currNode = info.getCurrentNode();
+        boolean isCurrentLinkInMap = pTurnMap.containsKey(currentLink.getId());
+        if(!isCurrentLinkInMap)   //no pturn involved
+          partiallyExpandedNodes.remove(currNode.getId());
+        else
+        {
+          LogicalNetLink[] outLinks = currNode.getOutLinks(true);
+          boolean[] isOutLinksExpanded = partiallyExpandedNodes.get(currNode.getId());
+          if(isOutLinksExpanded==null)
+          {
+            isOutLinksExpanded = new boolean[currNode.getNumberOfOutLinks()];
+            partiallyExpandedNodes.put(currNode.getId(), isOutLinksExpanded);
+          }
+         boolean isFullyExpanded = true;
+         for(int i=0; i outLinks.length; i++)
+         {
+            if(outLinks[i].getId()==nextLink.getId())
+            {
+              if(isTurnValid)
+              {
+                isOutLinksExpanded[i] = true;
+              }
+         }
+         isFullyExpanded = isFullyExpanded && isOutLinksExpanded[i];
+         }
+         if(isFullyExpanded)
+            partiallyExpandedNodes.remove(currNode.getId());
+          }
+         return isTurnValid;
+      	}
+
+      	public int getNumberOfUserObjects() { return 0 ; }
+
+      	public boolean isCurrentNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+            long currNodeId = info.getCurrentNode().getId();
+            return partiallyExpandedNodes.containsKey(currNodeId);
+      	}
+
+      	public boolean isNextNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+           long nextNodeId = info.getNextNode().getId();
+           return partiallyExpandedNodes.containsKey(nextNodeId);
+      	}
+
+      	public int[] getUserDataCategories()
+      	{
+           return null;
+      	}
+    	}
+
+   	</pre>
+   	</a>
+
+   	<a name="spturnpenalty">
+    	<h4><span style="color:blue">Shortest Path Analysis With Turn Penalties</span></h4>
+   	<pre>
+   	long startNodeId  = ...;
+   	long endNodeId    = ...;
+
+   	System.out.println("Shortest Path Analysis WITH Turn Penalties.");
+   	addTurnPenaltiesToCost();
+   	turnPenaltyPath = analyst.shortestPathDijkstra(
+                   	new PointOnNet(startNodeId), new PointOnNet(endNodeId), null);
+   	PrintUtility.print(System.out, turnPenaltyPath, true, Integer.MAX_VALUE, 0);
+   	System.out.println("*****End: Shortest Path with Turn Penalties.");
+	
+  	// Adds turn penalties to the path cost
+  	private static void addTurnPenaltiesToCost() {
+           // set link cost calculators to add turn penalties wherever applicable
+           LinkCostCalculator [] lccs = {new TurnPenaltyCalculator() };
+           analyst.setLinkCostCalculators(lccs);
+           // Use default node cost calculator
+          NodeCostCalculator [] nccs = {
+              DefaultNodeCostCalculator.getNodeCostCalculator() };
+          analyst.setNodeCostCalculators(nccs);
+  	}
+
+     	/**
+     	*  Construct turns as (start link, end link) pairs
+     	*  use a hashMap to represent turns with penalties
+     	*  startLink IDs as keys and the pairs (end Link Id, penalty) as values
+     	*/
+
+    	private static class TurnPenaltyCalculator implements LinkCostCalculator
+    	{
+      	// prohibited turns information
+       	private Map &lt Long, long[] &gt pTurnPenaltyMap = new HashMap();
+
+      	// construct prohibited turns information
+      	// add start link and end links of turns with penalty
+
+          long [] startLinkIDs = {...,...};
+          long [][] endLinkIDPenalty = {{...,..},{...,..}};
+          public double getLinkCost(LODAnalysisInfo analysisInfo)
+          {
+          for ( int i = 0; i &lt  startLinkIDs.length ;i++)
+            pTurnPenaltyMap.put(startLinkIDs[i], endLinkIDPenalty[i]);
+
+         // check if the given turn (start link ID, end link ID) has a 
+         // turn penalty; if so, return the penalty
+         if (analysisInfo.getCurrentLink() != null) {
+             LogicalLink Link = analysisInfo.getCurrentLink();
+             long currentLinkId = Link.getId();
+             LogicalLink NextLink = analysisInfo.getNextLink();
+             long nextLinkId = NextLink.getId();
+             double linkCost = NextLink.getCost();
+             if ( pTurnPenaltyMap == null ) // no turn penalty
+                return linkCost;
+             else {
+                long [] turnPenalties =
+                       pTurnPenaltyMap.get(currentLinkId);
+             if ( turnPenalties == null )
+                 return linkCost;
+             else {
+                 for ( int i = 0; i  turnPenalties.length; i++) {
+                 if ( turnPenalties[i] == nextLinkId)
+                      return linkCost+turnPenalties[i+1]; // return turn penalty
+             }
+             return linkCost;
+           }
+           }
+          }
+          else    {
+           LogicalLink NextLink = analysisInfo.getNextLink();
+           double linkCost = NextLink.getCost();
+           return linkCost;
+          }
+         }
+
+         public int getNumberOfUserObjects() { return 0 ; }
+
+         public int[] getUserDataCategories()
+         {
+         return null;
+         }
+    	}
+ 
+   	</pre>
+   	</a>
+
+   	<a name="dynamicdata">
+    	<h4><span style="color:blue">Shortest Path With Dynamic data</span></h4>
+   	<pre>
+	long startNodeId   = .........;
+        long endNodeId     = .........;
+        long linkId        = .........;
+	
+	NetworkUpdate networkUpdate = new NetworkUpdate();
+        LogicalLink oldLink = reader.readLogicalLink(linkId, udc);
+        LogicalLink newLink = (LogicalLink) oldLink.clone();
+        newLink.setIsActive(false);
+        int pid = reader.readNodePartitionId(newLink.getStartNodeId(), 1);
+        networkUpdate.updateLink(newLink, pid);
+        pid = reader.readNodePartitionId(newLink.getEndNodeId(), 1);
+        networkUpdate.updateLink(newLink, pid);
+
+        //get network analyst
+        analyst = LODNetworkManager.getNetworkAnalyst(reader);
+ 
+        System.out.println("*****BEGIN: testShortestPath*****");
+	HashMap &lt Integer, NetworkUpdate &gt networkUpdates = new HashMap &lt Integer, NetworkUpdate &gt ();
+        networkUpdates.put(1, networkUpdate);
+        analyst.setNetworkUpdates(networkUpdates);
+        LogicalSubPath path = analyst.shortestPathDijkstra(
+                  new PointOnNet(startNodeId), new PointOnNet(endNodeId), null);
+
+        PrintUtility.print(System.out, path, true, 20, 0);
+        System.out.println("*****END: testShortestPath*****");
+	</pre>
+	</a>
+
+       	<a name="multiplelinklevels">
+        <h4><span style="color:blue">Shortest Path With Multiple Link Levels</span></h4>
+	<pre>
+        long   startNodeId   = .......;
+        long   endNodeId     = .......;
+        double costThreshold = .......;
+        int    linkLevel     = ..;
+
+	System.out.println("*****Begin: Shortest Path With Multiple Link Levels");
+
+        System.out.println("*****Shortest Path Using Dijkstra");
+        String algorithm = "DIJKSTRA";
+        LogicalSubPath subPath = analyst.shortestPathDijkstra(new PointOnNet(startNodeId),
+                                   new PointOnNet(endNodeId), linkLevel,null);
+        PrintUtility.print(System.out, subPath, true, 20, 0);
+        System.out.println("*****End: Shortest path using Dijkstra");
+
+        System.out.println("*****Shortest Path using Astar");
+        algorithm = "ASTAR";
+        HeuristicCostFunction costFunction =
+            	new GeodeticCostFunction(UserDataMetadata.DEFAULT_USER_DATA_CATEGORY, 0, 1, -1);
+        LinkLevelSelector lls = new DynamicLinkLevelSelector(
+                                      analyst, linkLevel, costFunction, costThresholds,
+                                      numHighLevelNeighbors, costMultiplier, null);
+        subPath = analyst.shortestPathAStar(
+               new PointOnNet(startNodeId), new PointOnNet(endNodeId), null, costFunction, lls);
+        PrintUtility.print(System.out, subPath, true, 20, 0);
+        System.out.println("*****End: Shortest Path Using Astar");
+
+        System.out.println("*****End: Shortest Path With Multiple Link Levels");
+        </pre>
+        </a>
+
+        <a name="multiplelinkcosts">
+        <h4><span style="color:blue">Shortest Path Analysis With Multiple Link Costs</span></h4>
+        <pre>
+        double maxTravelTime = ..;
+        long   startNodeId   = ....;
+        long   endNodeId     = ....;
+
+        System.out.println("*****Begin: Network analysis with multiple link costs");
+
+        System.out.println("Shortest path analysis using default cost as the only cost");
+        testShortestPath(startNodeId, endNodeId, null);
+
+        System.out.println("Shortest path analysis using travel time as the only cost");
+        setTravelTimeAsCost();
+        testShortestPath(startNodeId, endNodeId, null);
+
+        System.out.println("Shortest path analysis using default cost as primary cost");
+        setDefaultCostAsPrimaryCost();
+        testShortestPath(startNodeId, endNodeId, null);
+
+        System.out.println("Shortest path analysis using travel time as primary cost");
+        setTravelTimeAsPrimaryCost();
+        testShortestPath(startNodeId, endNodeId, null);
+
+        System.out.println("Shortest path analysis using travel time as constraint cost");
+        setDefaultCostAsPrimaryCost();
+        LODNetworkConstraint constraint = new TravelTimeConstraint(maxTravelTime);
+        testShortestPath(startNodeId, endNodeId, constraint);
+        System.out.println("*****End: Network Analysis with Multiple Costs");
+
+       // The following segment illustrates how to implement a link travel time calculator.
+       // In this segment, travel times are computed based on the speed limit
+       // which in turn is determined by the link level.
+
+        private static class TravelTimeCalculator implements LinkCostCalculator
+        {
+  	   double SPEED_LIMIT_1 = ..;
+           double SPEED_LIMIT_2 = ..;
+
+           public double getLinkCost(LODAnalysisInfo analysisInfo)
+           {
+             LogicalLink link = analysisInfo.getNextLink();
+             int linkLevel    = link.getLevel();
+             double linkCost  = link.getCost();
+             switch(linkLevel)
+             {
+              case 2:
+              return linkCost/SPEED_LIMIT_2;
+              default:
+              return linkCost/SPEED_LIMIT_1;
+             }
+           }
+          public int[] getUserDataCategories()
+          {
+              return null;
+          }
+       	}
+
+      	private static class TravelTimeConstraint implements LODNetworkConstraint
+      	{
+        double maxTravelTime;
+
+        TravelTimeConstraint(double maxTravelTime)
+        {
+          this.maxTravelTime = maxTravelTime;
+        }
+
+        public boolean isSatisfied(LODAnalysisInfo info)
+        {
+          	double[] nextCosts = info.getNextCosts();
+          	if(nextCosts[1] &gt  maxTravelTime)
+            	return false;
+          	else
+            	return true;
+      	}
+
+      	public int getNumberOfUserObjects()
+      	{
+          	return 0;
+      	}
+
+      	public boolean isCurrentNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+          	return false;
+      	}
+
+      	public boolean isNextNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+          	return false;
+      	}
+
+      	public int[] getUserDataCategories()
+      	{
+          	return null;
+      	}
+
+      	public void reset()
+      	{
+      	}
+     	}
+   	</pre>
+   	</a>
+ 
+    	<a name="nn">
+    	<h4><span style="color:blue">Nearest Neighbors Analysis</span></h4>
+     	<pre>
+     	long nnStartNodeId = .......;
+     	int numNeighbors   = ....;
+
+        System.out.println("*****BEGIN: testNearestNeighbors without Constraints *****");
+        LogicalSubPath[] paths =
+            analyst.nearestNeighbors(new PointOnNet(nnStartNodeId), numNeighbors,null, null);
+        PrintUtility.print(System.out, paths, false, 0, 0);
+        System.out.println("*****END: testNearestNeighbors without Constraints *****");
+    
+     	long nRnEndNodeId = .......;
+     	int numNeighbors  = ....;
+
+        System.out.println("*****BEGIN: testNearestReachingNeighbors*****");
+        LogicalSubPath[] paths = 
+             analyst.nearestReachingNeighbors(new PointOnNet(nRnEndNodeId), numNeighbors, null, null);
+        int numPaths = paths.length;
+        PrintUtility.print(System.out, paths, false, 0, 0);
+        System.out.println("Number of paths : " + numPaths);
+        System.out.println("*****END: testNearestReachingNeighbors*****");
+     	</pre>
+    	</a>
+
+   	<a name="nngoalnode">
+    	<h4><span style="color:blue">Nearest Neighbors Analysis With Goal Node Constraints</span></h4>
+    	<pre>
+    	long  targetNodeId   = .......;
+    	int   numNeighbors   = ..;
+	
+     	System.out.println("Begin: Nearest neighbor analysis WITH Goal Node Constraint");
+     	GoalNodeFilter goalNodeFilter = new GoalNodeFilter();
+     	paths = analyst.nearestNeighbors(new PointOnNet(targetNodeId), numNeighbors, 
+                                      	null, goalNodeFilter);
+     	PrintUtility.print(System.out, paths, false, 0,  0);
+     	System.out.println("End: Nearest Neighbor Analysis WITH Goal Node Constraint");
+
+     	// The following segment shows the implementation of a goal node constraint. 
+     	// In this example, goal nodes are restricted to be ones with even IDs.
+	
+     	public static class GoalNodeFilter implements LODGoalNode
+     	{
+      	//even nodes are goal nodes
+      	    public boolean isGoal(LogicalNetNode node)
+            {
+       		if(node.getId()%2==0)
+          	    return true;
+        	else
+          	    return false;
+      	    }
+
+            public int[] getUserDataCategories()
+            {
+        	   return null;
+      	    }
+    	}
+   
+    	</pre>
+   	</a>
+
+      	<a name="withincost">
+      	<h4><span style="color:blue">Within Cost Analysis</span></h4>
+      	<pre>
+       	long startNodeId = ........;
+       	long endNodeId = ........;
+	
+        System.out.println("*****BEGIN: testWithinCost*****");
+        LogicalSubPath [] paths = analyst.withinCost(new PointOnNet(startNodeId),
+                                 costThreshold, null, null);
+        PrintUtility.print(System.out, paths, false, 0, 0);
+        System.out.println("*****END: testWithinCost*****");
+
+        System.out.println("*****BEGIN: testWithinReachingCost*****");
+        paths = analyst.withinReachingCost(new PointOnNet(endNodeId),
+                                   costThreshold, null, null);
+        numPaths = paths.length;
+        System.out.println("No of paths : " + numPaths);
+
+        if (paths != null && numPaths > 0) {
+             PrintUtility.print(System.out, paths, false, 0, 0);
+        }
+        else {
+              System.out.println("Paths is null.");
+        }
+
+        //  PrintUtility.print(System.out, paths, false, 0, 0);
+        System.out.println("*****END: testWithinReachingCost*****");
+       	</pre>
+       	</a>
+
+      	<a name="withincostpolygon">
+      	<h4><span style="color:blue">Within Cost Polygon Analysis</span></h4>
+      	<pre>
+	long startNodeId = .......;
+	long endNodeId   = .......;
+
+        System.out.println("*****BEGIN: testWithinCostPolygon*****");
+        PointOnNet startPoint = new PointOnNet(startNodeId);
+        PointOnNet[] startPoints = {startPoint};
+        resultPolygon = analyst.withinCostPolygon(startPoints,
+                                   costThreshold, null, null);
+        String resultStr = resultPolygon.toStringFull();
+        System.out.println("Within Cost Polygon : ");
+        System.out.println(resultStr);
+        System.out.println("*****END: testWithinCostPolygon*****");
+
+	System.out.println("*****BEGIN: testWithinReachingCostPolygon*****");
+        PointOnNet endPoint = new PointOnNet(endNodeId);
+        PointOnNet[] endPoints = {endPoint};
+        resultPolygon = analyst.withinReachingCostPolygon(endPoints,
+                                   costThreshold, null, null);
+        resultStr =  resultPolygon.toStringFull();
+        System.out.println("Within Reaching Cost Polygon : ");
+        System.out.println(resultStr);
+        System.out.println("*****END: testWithinReachingCostPolygon*****");
+      	</pre>
+      	</a>
+
+      	<a name="networkbuffer">
+      	<h4><span style="color:blue">Network Buffer Analysis</span></h4>
+      	<pre>
+       	long startNodeId = ........;
+	
+        System.out.println("*****BEGIN: Network Buffer*****");
+        PointOnNet[] startPoint = {new PointOnNet(startNodeId)};
+        NetworkBuffer buffer = analyst.networkBuffer(startPoint, 2000, null);
+        PrintUtility.print(System.out, buffer, true, 20, 20, 0);
+        System.out.println("*****END: Network Buffer");
+        </pre>
+       	</a>
+
+	<a name="trace_in_out">
+	<h4><span style="color:blue">Trace_in and Trace_out Analysis</span></h4>
+	<pre>
+	long startNodeId = .......;
+	long endNodeId	 = .......;
+
+	System.out.println("*****BEGIN: testTraceIn*****");
+        paths = analyst.traceIn(new PointOnNet(endNodeId),
+                                   withinCost, null, null);
+        numPaths = paths.length;
+        System.out.println("No of paths : " + numPaths);
+
+        if (paths != null &amp &amp numPaths &gt 0) {
+             PrintUtility.print(System.out, paths, false, 0, 0);
+        }
+        else {
+              System.out.println("Paths is null.");
+        }
+        System.out.println("*****END: testTraceIn*****");
+
+	System.out.println("*****BEGIN: testTraceOut*****");
+        paths = analyst.traceOut(new PointOnNet(startNodeId),
+                                   withinCost, null, null);
+        numPaths = paths.length;
+        System.out.println("No of paths : " + numPaths);
+
+        if (paths != null &amp &amp numPaths &gt 0) {
+             PrintUtility.print(System.out, paths, false, 0, 0);
+        }
+        else {
+              System.out.println("Paths is null.");
+        }
+        System.out.println("*****END: testTraceOut*****");
+	</pre>
+	</a>	  	
+
+    	<a name="tsp">
+    	<h4><span style="color:blue">TSP Analysis</span></h4>
+     	<pre>
+      	long[] tspNodeIds = {...,...,...};
+
+        System.out.println("*****BEGIN: testTSP (Dijkstra) without constraints*****");
+        PointOnNet[][] tspNodes = nodeIdsToPoints(tspNodeIds);
+
+        // Open TSP tour (Dijkstra)
+        TSP.TourFlag tourFlag = TSP.TourFlag.OPEN;
+        System.out.println("Open TSP tour without constraints");
+        TspPath tspPath = analyst.tsp(tspNodes, tourFlag, linkLevel, null);
+        PrintUtility.print(System.out, tspPath, tspNodes, true, 20, 0);
+
+        // Closed TSP tour (Dijkstra)
+        tourFlag = TSP.TourFlag.CLOSED;
+        System.out.println("Closed TSP tour wihtout constraints");
+        tspPath = analyst.tsp(tspNodes, tourFlag, linkLevel, null);
+        PrintUtility.print(System.out, tspPath, tspNodes, true, 20, 0);
+        System.out.println("*****END: testTSP (Dijkstra) without constraints*****");
+
+	// TSP using Astar
+        System.out.println("*****BEGIN: testTSP (AStar) without constraints*****");
+               	NetworkExplorer ne = new NetworkExplorer(networkIO);
+        LinkCostCalculator[] lccs = analyst.getLinkCostCalculators();
+        NodeCostCalculator[] nccs = analyst.getNodeCostCalculators();
+        HeuristicCostFunction astarCostFunction =
+           	new GeodeticCostFunction(
+                                   	UserDataMetadata.DEFAULT_USER_DATA_CATEGORY,
+                                  	xUserDataIndex, yUserDataIndex, -1);
+
+        LinkLevelSelector lls = new DynamicLinkLevelSelector(
+                                     analyst, linkLevel, astarCostFunction, costThresholds,
+                                     numHighLevelNeighbors, costMultiplier, null);
+        ShortestPath astar = new AStar(ne, lccs, nccs, astarCostFunction, lls);
+
+        PairwiseCostCalculator pwcc = new DefaultPairwiseCostCalculator
+                                      (new DefaultPairwiseShortestPaths(ne, lccs, nccs, astar));
+        TSP tspAlgorithm = new TspOp2(lccs, nccs, astar, pwcc);
+
+        // Open TSP tour (Astar)
+        tourFlag = TSP.TourFlag.OPEN;
+        System.out.println("Open TSP tour without constraints");
+        tspPath = analyst.tsp(tspNodes, tourFlag, linkLevel, null, tspAlgorithm);
+        PrintUtility.print(System.out, tspPath, tspNodes, true, 20, 0);
+
+        // Closed TSP tour (Astar)
+        tourFlag = TSP.TourFlag.CLOSED;
+        System.out.println("Closed TSP tour without constraints");
+        tspPath = analyst.tsp(tspNodes, tourFlag, linkLevel, null, tspAlgorithm);
+        PrintUtility.print(System.out, tspPath, tspNodes, true, 20, 0);
+
+        System.out.println("*****END: testTSP (AStar) without constraints*****");
+      	</pre>
+     	</a>
+
+   	<a name="tspduration">
+    	<h4><span style="color:blue">TSP Analysis With Time Duration Constraints</span></h4>
+    	<pre>
+     	int costMultiplier              = ..;
+     	double costThreshold            = ..;
+     	int numHighLevelNeighbors       = ..;
+     	// nodesToVisit is the list of nodes visited in TSP tour.
+     	long [] nodesToVisit            = {...,...,...,...};
+	
+     	// constraintNodeIds are the IDs of the nodes that follow the time duration constraints.
+     	long[] constraintNodeIds        =  {...,...};
+	
+     	// constraintDurations are time duration constraints for the nodes specified in the list above.
+     	double[][] constraintDurations  = { {...,....},{...,...}};
+     	
+     	TspPath tspPathWithConstraint;
+
+     	System.out.println("*****BEGIN: TSP (Dijkstra) with Time Duration Constraints ***** ");
+      	LinkCostCalculator[] lccs = new LinkCostCalculator[2];
+      	lccs[0] = DefaultLinkCostCalculator.getLinkCostCalculator();
+      	lccs[1] = new TravelTimeCalculator();
+	
+      	NodeCostCalculator [] nccs = new NodeCostCalculator[2];
+      	nccs[0] = DefaultNodeCostCalculator.getNodeCostCalculator();
+      	nccs[1] = DefaultNodeCostCalculator.getNodeCostCalculator();
+	
+      	analyst.setLinkCostCalculators(lccs);
+      	analyst.setNodeCostCalculators(nccs);
+      
+      	PointOnNet[][] nodePointsToVisit = nodeIdsToPoints(nodesToVisit);
+
+      	// Construct tsp duration constraint
+       	TspDurationConstraint constraint = new TspDurationConstraint(
+              	nodePointsToVisit, constraintNodeIds, constraintDurations);
+
+       	System.out.println("Test open tsp tour with constraint 2");
+       	TSP.TourFlag tourFlag = TSP.TourFlag.OPEN;
+       	tspPath = analyst.tsp(nodePointsToVisit, tourFlag, linkLevel, constraint);
+       	PrintUtility.print(System.out,tspPath, nodePointsToVisit, true, 0, 0);
+       	System.out.println("End: Test open tsp tour WITH Time Duration Constraint");
+	
+       	System.out.println("Test closed tsp tour with constraint");       
+       	tourFlag = TSP.TourFlag.CLOSED;
+       	tspPath = analyst.tsp(nodePointsToVisit, tourFlag, linkLevel, constraint);
+       	PrintUtility.print(System.out,tspPath, nodePointsToVisit, true, 0, 0);
+       	System.out.println("End: Test CLOSED tsp tour WITH Constraint");
+       
+       	private static class TspDurationConstraint implements LODNetworkConstraint
+    	{
+       	Map<PointOnNet, double[]> durationMap = new HashMap<PointOnNet, double[]>();
+       	PointOnNet[][] pointsToVisit;
+
+       	   private TspDurationConstraint(
+         		PointOnNet[][] pointsToVisit,
+         		long[] nodeIds,
+         		double[][] nodeDurations)
+      	  {
+           this.pointsToVisit = pointsToVisit;
+           for(int i=0; i nodeIds.length; i++)
+           {
+           durationMap.put(new PointOnNet(nodeIds[i]), nodeDurations[i]);
+           }
+         }
+
+         public boolean isSatisfied(LODAnalysisInfo info)
+         {
+           if(!(info instanceof TspAnalysisInfo))
+           return true;
+
+           TspAnalysisInfo ai = (TspAnalysisInfo)info;
+
+           int[] tspOrder = ai.getTspOrder();
+           for(int i=0; i &lt tspOrder.length; i++)
+           {
+             PointOnNet point = pointsToVisit[tspOrder[i]][0];
+             double[] durationWindow = durationMap.get(point);
+             if(durationWindow==null)
+               continue;
+
+             double[] tspCosts = ai.getTspCosts(tspOrder[i]);
+             //second cost is duration
+             double duration = tspCosts[1];
+             if( duration   durationWindow[0] || duration   durationWindow[1] )
+                return false;
+           }
+
+         return true;
+         }
+
+         public int getNumberOfUserObjects()
+         {
+           return 0;
+         }
+
+         public boolean isCurrentNodePartiallyExpanded(LODAnalysisInfo info)
+         {
+           return false;
+         }
+
+         public boolean isNextNodePartiallyExpanded(LODAnalysisInfo info)
+         {
+           return false;
+         }
+
+         public int[] getUserDataCategories()
+         {
+           return null;
+         }
+
+         public String toString()
+         {
+           StringBuffer sb = new StringBuffer();
+           for(Iterator<PointOnNet> it = durationMap.keySet().iterator(); it.hasNext(); )
+           {
+             PointOnNet point = it.next();
+             double[] duration = durationMap.get(point);
+             sb.append(point+": ["+duration[0]+", "+duration[1]+"]\n");
+           }
+           return sb.toString();
+         }
+
+         public void reset()
+         {
+         }
+     	}
+
+    	private static class TravelTimeCalculator implements LinkCostCalculator
+    	{
+      	double SPEED_LIMIT_1 = ..;
+      	double SPEED_LIMIT_2 = ..;
+
+      	public double getLinkCost(LODAnalysisInfo analysisInfo)
+      	{
+           LogicalLink link = analysisInfo.getNextLink();
+           int linkLevel= link.getLevel();
+           double linkCost = link.getCost();
+           switch(linkLevel)
+           {
+            case 2:
+              return linkCost/SPEED_LIMIT_2;
+            default:
+              return linkCost/SPEED_LIMIT_1;
+           }
+      	}
+
+      	public int[] getUserDataCategories()
+      	{
+           return null;
+      	}
+    	}
+
+
+    	private static class TravelTimeConstraint implements LODNetworkConstraint
+    	{
+      	  double maxTravelTime;
+
+         TravelTimeConstraint(double maxTravelTime)
+         {
+           this.maxTravelTime = maxTravelTime;
+         }
+
+      	public boolean isSatisfied(LODAnalysisInfo info)
+      	{
+            double[] nextCosts = info.getNextCosts();
+            if(nextCosts[1] &gt maxTravelTime)
+               return false;
+            else
+               return true;
+      	}
+
+    	public int getNumberOfUserObjects()
+      	{
+            return 0;
+      	}
+
+      	public boolean isCurrentNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+            return false;
+      	}
+
+      	public boolean isNextNodePartiallyExpanded(LODAnalysisInfo info)
+      	{
+           return false;
+      	}
+
+      	public int[] getUserDataCategories()
+      	{
+           return null;
+      	}
+
+      	public void reset()
+      	{
+      	}
+    	}
+    	</pre>
+    	</a>
+
+   	<a name="tspnodeorder">
+    	<h4><span style="color:blue">TSP Analysis With Node Order Constraints</span></h4>
+    	<pre>
+        long [] tspNodesToVisit = {......,......,......,......};
+     	long [] tspNodesInOrder1 = {......,......};
+    	long [] tspNodesInOrder2 = {......,......};
+
+	TSP.TourFlag tourFlag = TSP.TourFlag.OPEN;
+ 	System.out.println("*****BEGIN: TSP (Astar) with Node Order Constraints ***** ");
+
+        PointOnNet [][] tspNodePointsToVisit = nodeIdsToPoints(tspNodesToVisit);
+        PointOnNet [][] tspNodePointsInOrder1 = nodeIdsToPoints(tspNodesInOrder1);
+
+        PointOnNet [][] tspNodePointsInOrder2 = nodeIdsToPoints(tspNodesInOrder2);
+
+        System.out.println("TSP tour on link level "+linkLevel+ " for points [");
+        for (int i=0; i &lt tspNodePointsToVisit.length; i++) {
+            System.out.print(tspNodePointsToVisit[i][0]+" ");
+        }
+        System.out.println("]");
+
+        //construct tsp node order constraint 
+        TspNodeOrderConstraint orderConstraint1 = new TspNodeOrderConstraint(
+        		 tspNodePointsToVisit, tspNodePointsInOrder1);
+        TspNodeOrderConstraint orderConstraint2 = new TspNodeOrderConstraint(
+           		 tspNodePointsToVisit, tspNodePointsInOrder2);
+
+        //construct 2op tsp algorithm using A* shortest path to compute pairwise distance.
+        NetworkExplorer ne = new NetworkExplorer(networkIO);
+        LinkCostCalculator[] lccs = analyst.getLinkCostCalculators();
+        NodeCostCalculator[] nccs = analyst.getNodeCostCalculators();
+        HeuristicCostFunction astarCostFunction =
+                                      new GeodeticCostFunction(
+                                      UserDataMetadata.DEFAULT_USER_DATA_CATEGORY,
+                                      xUserDataIndex, yUserDataIndex, -1);
+	LinkLevelSelector lls = new DynamicLinkLevelSelector(
+                                        analyst, linkLevel, astarCostFunction, costThresholds,
+                                        numHighLevelNeighbors, costMultiplier, null);
+        ShortestPath astar = new AStar(ne, lccs, nccs, astarCostFunction, lls);
+
+        PairwiseCostCalculator pwcc = new DefaultPairwiseCostCalculator
+                                      (new DefaultPairwiseShortestPaths(ne, lccs, nccs, astar));
+        TSP tspAlgorithm = new TspOp2(lccs, nccs, astar, pwcc);
+
+        System.out.println("Test open tsp tour without constraint");
+        TspPath tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.OPEN, linkLevel,
+        		    null, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test open tsp tour without constraint");
+
+        System.out.println("Test open tsp tour WITH Constraint1 ");
+        tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.OPEN, linkLevel,
+            			orderConstraint1, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test open tsp tour WITH Constraint1");
+
+        System.out.println("Test open tsp tour WITH Constraint2 ");
+        tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.OPEN, linkLevel,
+        		    orderConstraint2, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test open tsp tour WITH Constraint2");
+
+        System.out.println("Test closed tsp tour without constraint");
+        tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.CLOSED, linkLevel,
+            			null, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test closed tsp tour without constraint");
+
+        System.out.println("Test closed tsp tour WITH Constraint1");
+        tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.CLOSED, linkLevel,
+        		    orderConstraint1, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test closed tsp tour WITH Constraint1");
+
+        System.out.println("Test closed tsp tour WITH Constraint2");
+        tspPath = analyst.tsp(tspNodePointsToVisit, TSP.TourFlag.CLOSED, linkLevel,
+         		   orderConstraint2, tspAlgorithm);
+        PrintUtility.print(System.out,tspPath, tspNodePointsToVisit, true, 0, 0);
+        System.out.println("End: Test closed tsp tour WITH Constraint2");
+
+        System.out.println("*****END : TSP (Astar) with Node Order Constraints ");
+
+	/**
+     	*  Construct node order constraint as an ordered list of nodes
+     	*  The  TSP tour will maintain the specified order
+     	*/
+    	private static class TspNodeOrderConstraint implements LODNetworkConstraint
+        {
+           Map<PointOnNet, Integer> inputNodePositionMap = new HashMap<PointOnNet, Integer>();
+           Map<Integer, Integer> nodePositionMap = new HashMap<Integer, Integer>();
+           PointOnNet[][] pointsToVisit;
+           PointOnNet [][] nodeList;
+           int [] nodePositions;
+
+           private TspNodeOrderConstraint(
+             PointOnNet[][] pointsToVisit,
+             PointOnNet [][] nodeList
+             )
+           {
+             PointOnNet point;
+             this.pointsToVisit = pointsToVisit;
+             this.nodeList = nodeList;
+
+             nodePositions = new int[nodeList.length];
+
+             for (int i=0; i &lt pointsToVisit.length; i++)
+             {
+                inputNodePositionMap.put(pointsToVisit[i][0],i);
+             }
+
+             for (int i=0; i &lt nodeList.length; i++ )
+             {
+                point = nodeList[i][0];
+                nodePositions[i] =  inputNodePositionMap.get(point);
+             }
+
+           }
+           public boolean isSatisfied(LODAnalysisInfo info)
+           {
+
+             if(!(info instanceof TspAnalysisInfo))
+               return true;
+
+             TspAnalysisInfo ai = (TspAnalysisInfo)info;
+
+             int[] tspOrder = ai.getTspOrder();
+
+             // node positions in the tsp results stored in hash map
+             for(int i=0; i &lt tspOrder.length; i++)
+             {
+                nodePositionMap.put(tspOrder[i], i);
+             }
+
+               for(int i=1; i &lt nodePositions.length; i++)
+               {
+               if (nodePositionMap.containsKey(nodePositions[i-1]) &amp &amp
+                   nodePositionMap.containsKey(nodePositions[i]))
+               {
+               if(nodePositionMap.get(nodePositions[i]) &lt
+                                   nodePositionMap.get(nodePositions[i-1]))
+                 return false;
+               }
+               else
+                 return true;
+              }
+
+             return true;
+           }
+
+           public int getNumberOfUserObjects()
+           {
+             return 0;
+           }
+
+           public boolean isCurrentNodePartiallyExpanded(LODAnalysisInfo info)
+           {
+             return false;
+           }
+
+           public boolean isNextNodePartiallyExpanded(LODAnalysisInfo info)
+           {
+             return false;
+           }
+          public int[] getUserDataCategories()
+           {
+             return null;
+           }
+
+           public String toString()
+           {
+             StringBuffer sb = new StringBuffer();
+             for(Iterator &lt Integer &gt it = nodePositionMap.keySet().iterator(); it.hasNext(); )
+             {
+               int point = it.next();
+               int duration = nodePositionMap.get(point);
+               sb.append(point+": ["+duration + "]\n");
+             }
+             return sb.toString();
+           }
+
+           public void reset()
+           {
+           }
+         }
+	</pre>
+	</a>
+
+       	<a name="kshortestpaths">
+       	<h4><span style="color:blue">K Shortest Paths Analysis</span></h4>
+       	<pre>
+       	long startNodeId = ........;
+       	long endNodeId   = ........;
+       	int k            = ..;
+
+       	PointOnNet[] startPoint = {new PointOnNet(startNodeId)};
+       	PointOnNet[] endPoint = {new PointOnNet(endNodeId)};
+
+       	System.out.println("*****BEGIN: testKShortestPathsDijkstra*****");
+       	LogicalSubPath[] paths =
+            	analyst.kShortestPaths(startPoint, endPoint, k, null, null);
+
+       	PrintUtility.print(System.out, paths, true, 20, 0);
+       	System.out.println("*****END: testKShortestPathsDijkstra*****");
+
+       	System.out.println("*****BEGIN: testKShortestPathsAStar*****");
+
+       	int xUserDataIndex = 0;
+       	int yUserDataIndex = 1;
+	
+       	NetworkExplorer ne = new NetworkExplorer(networkIO);
+       	LinkCostCalculator[] lccs = analyst.getLinkCostCalculators();
+       	NodeCostCalculator[] nccs = analyst.getNodeCostCalculators();
+       	HeuristicCostFunction astarCostFunction =
+                	new GeodeticCostFunction(
+                	UserDataMetadata.DEFAULT_USER_DATA_CATEGORY,
+                	xUserDataIndex, yUserDataIndex, -1);
+       	LinkLevelSelector lls = new DynamicLinkLevelSelector(
+                	analyst, linkLevel, astarCostFunction, costThresholds,
+                	numHighLevelNeighbors, costMultiplier, null);
+       	ShortestPath spAlgorithm = new AStar(ne, lccs, nccs, astarCostFunction, lls);
+       	KShortestPaths kspAlgorithm = new YenDeviation(ne, lccs, nccs, spAlgorithm);
+       	paths =
+              	analyst.kShortestPaths(startPoint, endPoint, k, null, kspAlgorithm);
+       	PrintUtility.print(System.out, paths, true, 20, 0);
+       	System.out.println("*****END: testKShortestPathsAStar*****");
+       	</pre>
+       	</a>
+
+       	<a name="minspanningtree">
+       	<h4><span style="color:blue">Minimum Spanning Tree</span></h4>
+       	<pre>
+       	System.out.println("*****BEGIN: testMinimumSpanningTree*****");
+        long [] linkIds =
+          	analyst.mcst(linkLevel,null,null);
+        for (int i=0; i &lt  linkIds.length; i++)
+                System.out.println(linkIds[i]);
+        System.out.println("*****END: testMinimumSpanningTree*****");
+        </pre>
+        </a>
+
+	<a name="reach">
+    	<h4><span style="color:blue">Reachability Analysis</span></h4>
+     	<pre>
+     	long nnStartNodeId = .......;
+     	int numNeighbors   = ....;
+	System.out.println("*****BEGIN: testReachableNodesBfs*****");
+        ids = analyst.findReachableNodes(
+        	    NetworkAnalyst.BREADTH_FIRST_SEARCH, startNodeId, linkLevel, null, null);
+        PrintUtility.print(System.out, ids, true, 10, 0);
+        System.out.println("*****END: testReachableNodesBfs*****");
+
+       	System.out.println("*****BEGIN: testReachableNodesDfs*****");
+       	ids = analyst.findReachableNodes(
+           	NetworkAnalyst.DEPTH_FIRST_SEARCH, startNodeId, linkLevel, null, null);
+       	PrintUtility.print(System.out, ids, true, 10, 0);
+       	System.out.println("*****END: testReachableNodesDfs*****");
+	
+       	System.out.println("*****BEGIN: testReachingNodesBfs*****");
+       	ids = analyst.findReachingNodes(
+           	NetworkAnalyst.BREADTH_FIRST_SEARCH, startNodeId, linkLevel, null, null);
+       	PrintUtility.print(System.out, ids, true, 10, 0);
+       	System.out.println("*****END: testReachingNodesBfs*****");
+	
+       	System.out.println("*****BEGIN: testReachingNodesDfs*****");
+       	ids = analyst.findReachingNodes(
+           	NetworkAnalyst.DEPTH_FIRST_SEARCH, startNodeId, linkLevel, null, null);
+       	PrintUtility.print(System.out, ids, true, 10, 0);
+       	System.out.println("*****END: testReachingNodesDfs*****");
+     	</pre>
+    	</a>
+
+        <a name="connectedcomponents">
+	<h4><span style="color:blue">Connected Components Analysis</span></h4>
+	<pre>
+	System.out.println("*****BEGIN: testConnectedComponents*****");
+        OrderedLongSet [] ids =
+          analyst.findConnectedComponents(linkLevel);
+        PrintUtility.print(System.out, ids, false, 0, 0);
+        System.out.println("*****END: testConnectedComponents*****");
+        </pre>
+        </a>
+
+</body>
+</html>

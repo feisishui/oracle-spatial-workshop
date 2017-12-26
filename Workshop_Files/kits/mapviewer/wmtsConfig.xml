@@ -1,0 +1,110 @@
+  <!-- ****************************************************************** -->
+  <!-- ***************** WMTS Configuration File ************************* -->
+  <!-- ****************************************************************** -->
+  <!-- This file defines parameters for MapViewer embedded WMTS server, 
+       that can be used for GetCapabilties and GetTile responses.
+   -->
+
+<wmts_config>
+
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom WMTS Capabilities Parameters ***************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to use
+       them in GetCapabilities response. This tag is optional.
+
+        public_datasources = specifies which data source' which tile layers are to be listed in the GetCapabilities response. 
+                             If this attribute is not defined, all data sources' contents that exist in the server will be listed.
+       Some scenarios:                             
+       1) To make all data sources' tile layers accessible to WMTS server, comment out <public_datasources> element
+       2) To make all data sources' tile layers NOT accessible to WMTS server, comment out all <public_datasource> elements, so
+             <public_datasources> element contains no sub-element.
+       3) To make a data sourc's all tile layers accessible to WMTS server, set include_all_tile_layers attribute value to true as:
+             <public_datasource name="DS1" include_all_tile_layers="true"/>
+       4) To make a data sourc's selected tile layers accessible to WMTS service, only list the selected tile layers.
+  -->
+     
+     <public_datasources>
+        <!--<public_datasource name="TILSMENV" include_all_tile_layers="true"/> -->
+        <!--<public_datasource name="mvdemo" include_all_tile_layers="true"/> -->
+        <!-- <public_datasource name="MVDEMO">
+          <tile_layers>
+            <tile_layer name="TEST_TL"/>
+            <tile_layer name="WMTS_E1"/>
+            <tile_layer name="WMTS_E2"/>
+            <tile_layer name="WMTS_E3"/>
+            <tile_layer name="WMTS_E4"/>-->
+            <!-- <tile_layer name="DEMO_MAP"/>
+           </tile_layers>
+        </public_datasource>-->
+        
+        <!-- 
+        <public_datasource name="ELOCATION">
+          <tile_layers>
+            <tile_layer name="WORLD_MAP"/>
+            <tile_layer name="WORLD_MAP_2"/>
+          </tile_layers>
+        </public_datasource>-->
+         
+     </public_datasources>
+    
+    <!-- uncomment the following and create a mapping of a epsg to srid only when necessary-->
+    <!--
+    <sdo_epsg_mapfile>
+      ../config/epsg_srid.properties
+    </sdo_epsg_mapfile>
+    -->
+  <!-- ****************************************************************** -->
+  <!-- ************* Custom WMTS Capabilities Service Attributes ********* -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following tag if you want MapViewer to
+       use the following information in its getCapabilities response.
+       Note: all attributes and elements of <wmts_config> are optional.       
+  -->
+
+   <ServiceAttributes>              
+    <ServiceIdentification> 
+	    <Title>Web Map Tile Service by myCorp</Title> 
+	    <Abstract> U.S. maps for state and county boundaries, highway networks, and big cities.</Abstract>
+	    <Keywords> 
+	       <Keyword>Maps</Keyword>
+	       <Keyword>U.S. State and County Boundaries</Keyword>
+	       <Keyword>U.S. Interstate Highways</Keyword>
+	       <Keyword>U.S. Cities</Keyword>
+	    </Keywords> 
+	   
+	    <!-- do not edit the following two lines-->
+	    <!-- 
+	    <ServiceType>OGC WMTS</ServiceType>   
+	    <ServiceTypeVersion>1.0.0</ServiceTypeVersion>
+	     -->
+	     <!-- do not edit the above two lines -->
+
+	    <Fees>none</Fees> 
+	    <AccessConstraints>none</AccessConstraints> 
+    </ServiceIdentification>     
+    <ServiceProvider> 
+      <ProviderName>provider's name</ProviderName> 
+        <ProviderSite url="http://www.myCorp.com/mySite"/> 
+        <ServiceContact> 
+          <IndividualName>my name</IndividualName> 
+          <PositionName>technical support specialist</PositionName> 
+          <ContactInfo> 
+            <Phone> 
+              <Voice>+1 800 321 1234</Voice> 
+              <Facsimile>+1 800 321 1235</Facsimile> 
+            </Phone> 
+            <Address> 
+              <DeliveryPoint>123 my street</DeliveryPoint> 
+              <City>Nashua</City> 
+              <AdministrativeArea>my state</AdministrativeArea> 
+              <PostalCode>12345-abcd</PostalCode> 
+              <Country>my country</Country> 
+              <ElectronicMailAddress>myname@mycompany.com</ElectronicMailAddress> 
+            </Address> 
+          </ContactInfo> 
+      </ServiceContact> 
+    </ServiceProvider> 
+  </ServiceAttributes>
+
+</wmts_config>

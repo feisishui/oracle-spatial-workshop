@@ -1,0 +1,1165 @@
+<OGRWFSDataSource>
+  <URL>http://v2.suite.opengeo.org/geoserver/ows</URL>
+  <Timeout>10</Timeout>
+  <wfs:WFS_Capabilities version="1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wfs http://v2.suite.opengeo.org/geoserver/schemas/wfs/1.1.0/wfs.xsd" xmlns:cookbook="http://opengeo.org/#cookbook" xmlns:medford="http://medford.opengeo.org" xmlns:usa="http://usa.opengeo.org" xmlns:world="http://world.opengeo.org" updateSequence="71">
+    <ows:ServiceIdentification>
+      <ows:Title>GeoServer Web Feature Service</ows:Title>
+      <ows:Abstract>This is the reference implementation of WFS 1.0.0 and WFS 1.1.0, supports all WFS operations including Transaction.</ows:Abstract>
+      <ows:Keywords>
+        <ows:Keyword>WFS</ows:Keyword>
+        <ows:Keyword>WMS</ows:Keyword>
+        <ows:Keyword>GEOSERVER</ows:Keyword>
+      </ows:Keywords>
+      <ows:ServiceType>WFS</ows:ServiceType>
+      <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+      <ows:Fees>NONE</ows:Fees>
+      <ows:AccessConstraints>NONE</ows:AccessConstraints>
+    </ows:ServiceIdentification>
+    <ows:ServiceProvider>
+      <ows:ProviderName>OpenGeo</ows:ProviderName>
+      <ows:ServiceContact>
+        <ows:IndividualName>OpenGeo</ows:IndividualName>
+        <ows:PositionName>Outreach</ows:PositionName>
+        <ows:ContactInfo>
+          <ows:Phone>
+            <ows:Voice />
+            <ows:Facsimile />
+          </ows:Phone>
+          <ows:Address>
+            <ows:City>New York</ows:City>
+            <ows:AdministrativeArea />
+            <ows:PostalCode />
+            <ows:Country>USA</ows:Country>
+          </ows:Address>
+        </ows:ContactInfo>
+      </ows:ServiceContact>
+    </ows:ServiceProvider>
+    <ows:OperationsMetadata>
+      <ows:Operation name="GetCapabilities">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="AcceptVersions">
+          <ows:Value>1.0.0</ows:Value>
+          <ows:Value>1.1.0</ows:Value>
+        </ows:Parameter>
+        <ows:Parameter name="AcceptFormats">
+          <ows:Value>text/xml</ows:Value>
+        </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="DescribeFeatureType">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="outputFormat">
+          <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+        </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="GetFeature">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="resultType">
+          <ows:Value>results</ows:Value>
+          <ows:Value>hits</ows:Value>
+        </ows:Parameter>
+        <ows:Parameter name="outputFormat">
+          <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          <ows:Value>GML2</ows:Value>
+          <ows:Value>GML2-GZIP</ows:Value>
+          <ows:Value>SHAPE-ZIP</ows:Value>
+          <ows:Value>csv</ows:Value>
+          <ows:Value>gml3</ows:Value>
+          <ows:Value>json</ows:Value>
+          <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+        </ows:Parameter>
+        <ows:Constraint name="LocalTraverseXLinkScope">
+          <ows:Value>2</ows:Value>
+        </ows:Constraint>
+      </ows:Operation>
+      <ows:Operation name="GetGmlObject">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+      </ows:Operation>
+      <ows:Operation name="LockFeature">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="releaseAction">
+          <ows:Value>ALL</ows:Value>
+          <ows:Value>SOME</ows:Value>
+        </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="GetFeatureWithLock">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="resultType">
+          <ows:Value>results</ows:Value>
+          <ows:Value>hits</ows:Value>
+        </ows:Parameter>
+        <ows:Parameter name="outputFormat">
+          <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          <ows:Value>GML2</ows:Value>
+          <ows:Value>GML2-GZIP</ows:Value>
+          <ows:Value>SHAPE-ZIP</ows:Value>
+          <ows:Value>csv</ows:Value>
+          <ows:Value>gml3</ows:Value>
+          <ows:Value>json</ows:Value>
+          <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+        </ows:Parameter>
+      </ows:Operation>
+      <ows:Operation name="Transaction">
+        <ows:DCP>
+          <ows:HTTP>
+            <ows:Get xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+            <ows:Post xlink:href="http://v2.suite.opengeo.org/geoserver/wfs" />
+          </ows:HTTP>
+        </ows:DCP>
+        <ows:Parameter name="inputFormat">
+          <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+        </ows:Parameter>
+        <ows:Parameter name="idgen">
+          <ows:Value>GenerateNew</ows:Value>
+          <ows:Value>UseExisting</ows:Value>
+          <ows:Value>ReplaceDuplicate</ows:Value>
+        </ows:Parameter>
+        <ows:Parameter name="releaseAction">
+          <ows:Value>ALL</ows:Value>
+          <ows:Value>SOME</ows:Value>
+        </ows:Parameter>
+      </ows:Operation>
+    </ows:OperationsMetadata>
+    <FeatureTypeList>
+      <Operations>
+        <Operation>Query</Operation>
+        <Operation>Insert</Operation>
+        <Operation>Update</Operation>
+        <Operation>Delete</Operation>
+        <Operation>Lock</Operation>
+      </Operations>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:bikelanes</Name>
+        <Title>Medford, OR - Bike Lanes</Title>
+        <Abstract>Bike lanes in Jackson County, Oregon as of December 2008.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.946 42.256</ows:LowerCorner>
+          <ows:UpperCorner>-122.762 42.415</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:buildings</Name>
+        <Title>Medford, OR - Buildings</Title>
+        <Abstract>The building outlines for Medford, Oregon as of March 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.915 42.287</ows:LowerCorner>
+          <ows:UpperCorner>-122.777 42.404</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:citylimits</Name>
+        <Title>Medford, OR - City Limits</Title>
+        <Abstract>Local Jurisdiction of Medford, Oregon as of July 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.911 42.289</ows:LowerCorner>
+          <ows:UpperCorner>-122.777 42.398</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:firestations</Name>
+        <Title>Medford, OR - Firestations</Title>
+        <Abstract>Location of Fire Stations in Jackson County as April 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-123.042 42.251</ows:LowerCorner>
+          <ows:UpperCorner>-122.772 42.438</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:hospitals</Name>
+        <Title>Medford, OR - Hospitals</Title>
+        <Abstract>Location of Hospitals in Jackson County, Oregon as of October 2006.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.863 42.317</ows:LowerCorner>
+          <ows:UpperCorner>-122.831 42.34</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:hydro</Name>
+        <Title>Medford, OR - Hydro</Title>
+        <Abstract>US Fish &amp; Wildlife National Wetlands Inventory of wetland linear features as of October 2000.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.904 42.29</ows:LowerCorner>
+          <ows:UpperCorner>-122.777 42.397</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:libraries</Name>
+        <Title>Medford, OR - Libraries</Title>
+        <Abstract>Location of Libraries in Jackson County, Oregon as of August 2006.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.969 42.245</ows:LowerCorner>
+          <ows:UpperCorner>-122.789 42.431</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:parks</Name>
+        <Title>Medford, OR - Parks</Title>
+        <Abstract>Open parks within Medford, Oregon.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.91 42.289</ows:LowerCorner>
+          <ows:UpperCorner>-122.758 42.404</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:police</Name>
+        <Title>Medford, OR - Police</Title>
+        <Abstract>The Jackson County Sheriff's listing of law enforcement providers as of March 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.967 42.239</ows:LowerCorner>
+          <ows:UpperCorner>-122.778 42.43</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:schools</Name>
+        <Title>Medford, OR - Schools</Title>
+        <Abstract>Location of Jackson County, Oregon schools as of March 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.962 42.24</ows:LowerCorner>
+          <ows:UpperCorner>-122.792 42.438</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:stormdrains</Name>
+        <Title>Medford, OR - Storm Drains</Title>
+        <Abstract>Storm drains within Medford, Oregon.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.91 42.295</ows:LowerCorner>
+          <ows:UpperCorner>-122.783 42.397</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:streets</Name>
+        <Title>Medford, OR - Streets</Title>
+        <Abstract>All public streets within Jackson County, Oregon as of September 2009.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-123.039 42.253</ows:LowerCorner>
+          <ows:UpperCorner>-122.718 42.425</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:taxlots</Name>
+        <Title>Medford, OR - Taxlots</Title>
+        <Abstract />
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.909 42.294</ows:LowerCorner>
+          <ows:UpperCorner>-122.777 42.398</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:wetlands</Name>
+        <Title>Medford, OR - Wetlands</Title>
+        <Abstract>US Fish &amp; Wildlife National Wetlands Inventory of Jackson County, Oregon wetland areas as of October 2000.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.906 42.294</ows:LowerCorner>
+          <ows:UpperCorner>-122.791 42.396</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:medford="http://medford.opengeo.org">
+        <Name>medford:zoning</Name>
+        <Title>Medford, OR - Zoning</Title>
+        <Abstract>City Zones from the Jackson County City Planning as of April 2008.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.911 42.291</ows:LowerCorner>
+          <ows:UpperCorner>-122.787 42.398</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:usa="http://usa.opengeo.org">
+        <Name>usa:states</Name>
+        <Title>States, USA - Population</Title>
+        <Abstract />
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-124.731 24.956</ows:LowerCorner>
+          <ows:UpperCorner>-66.97 49.372</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:world="http://world.opengeo.org">
+        <Name>world:borders</Name>
+        <Title>World - Borders</Title>
+        <Abstract>Borders of world continents.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>
+          <ows:UpperCorner>180.0 83.624</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:world="http://world.opengeo.org">
+        <Name>world:cities</Name>
+        <Title>World - Cities</Title>
+        <Abstract>Location of some major international cities.</Abstract>
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-122.42 -37.818</ows:LowerCorner>
+          <ows:UpperCorner>151.207 52.516</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:cookbook="http://opengeo.org/#cookbook">
+        <Name>cookbook:sld_cookbook_line</Name>
+        <Title>sld_cookbook_line</Title>
+        <Abstract />
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-153.554 -75.899</ows:LowerCorner>
+          <ows:UpperCorner>89.616 100.185</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:cookbook="http://opengeo.org/#cookbook">
+        <Name>cookbook:sld_cookbook_point</Name>
+        <Title>sld_cookbook_point</Title>
+        <Abstract />
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-86.617 -23.892</ows:LowerCorner>
+          <ows:UpperCorner>7.571 59.54</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+      <FeatureType xmlns:cookbook="http://opengeo.org/#cookbook">
+        <Name>cookbook:sld_cookbook_polygon</Name>
+        <Title>sld_cookbook_polygon</Title>
+        <Abstract />
+        <DefaultSRS>urn:x-ogc:def:crs:EPSG:4326</DefaultSRS>
+        <ows:WGS84BoundingBox>
+          <ows:LowerCorner>-142.152 -72.075</ows:LowerCorner>
+          <ows:UpperCorner>87.654 103.162</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+      </FeatureType>
+    </FeatureTypeList>
+    <ogc:Filter_Capabilities>
+      <ogc:Spatial_Capabilities>
+        <ogc:GeometryOperands>
+          <ogc:GeometryOperand>gml:Envelope</ogc:GeometryOperand>
+          <ogc:GeometryOperand>gml:Point</ogc:GeometryOperand>
+          <ogc:GeometryOperand>gml:LineString</ogc:GeometryOperand>
+          <ogc:GeometryOperand>gml:Polygon</ogc:GeometryOperand>
+        </ogc:GeometryOperands>
+        <ogc:SpatialOperators>
+          <ogc:SpatialOperator name="Disjoint" />
+          <ogc:SpatialOperator name="Equals" />
+          <ogc:SpatialOperator name="DWithin" />
+          <ogc:SpatialOperator name="Beyond" />
+          <ogc:SpatialOperator name="Intersects" />
+          <ogc:SpatialOperator name="Touches" />
+          <ogc:SpatialOperator name="Crosses" />
+          <ogc:SpatialOperator name="Contains" />
+          <ogc:SpatialOperator name="Overlaps" />
+          <ogc:SpatialOperator name="BBOX" />
+        </ogc:SpatialOperators>
+      </ogc:Spatial_Capabilities>
+      <ogc:Scalar_Capabilities>
+        <ogc:LogicalOperators />
+        <ogc:ComparisonOperators>
+          <ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>GreaterThan</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>GreaterThanEqualTo</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>EqualTo</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>NotEqualTo</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>Like</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>Between</ogc:ComparisonOperator>
+          <ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>
+        </ogc:ComparisonOperators>
+        <ogc:ArithmeticOperators>
+          <ogc:SimpleArithmetic />
+          <ogc:Functions>
+            <ogc:FunctionNames>
+              <ogc:FunctionName nArgs="1">abs</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">abs_2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">abs_3</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">abs_4</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">acos</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Area</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">asin</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">atan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">atan2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">between</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">boundary</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">boundaryDimension</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">buffer</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">bufferWithSegments</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">Categorize</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">ceil</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">centroid</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">classify</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Average</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Bounds</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Count</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Max</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Median</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Min</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Sum</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">Collection_Unique</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">Concatenate</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">contains</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">convert</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">convexHull</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">cos</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">crosses</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">dateFormat</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">dateParse</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">difference</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">dimension</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">disjoint</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">distance</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">double2bool</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">endPoint</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">env</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">envelope</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">EqualInterval</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">equalsExact</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">equalsExactTolerance</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">equalTo</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">exp</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">exteriorRing</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">floor</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">geometryType</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">geomFromWKT</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">geomLength</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">getGeometryN</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">getX</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">getY</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">getZ</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">greaterEqualThan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">greaterThan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">id</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">IEEEremainder</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">if_then_else</ogc:FunctionName>
+              <ogc:FunctionName nArgs="11">in10</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">in2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="4">in3</ogc:FunctionName>
+              <ogc:FunctionName nArgs="5">in4</ogc:FunctionName>
+              <ogc:FunctionName nArgs="6">in5</ogc:FunctionName>
+              <ogc:FunctionName nArgs="7">in6</ogc:FunctionName>
+              <ogc:FunctionName nArgs="8">in7</ogc:FunctionName>
+              <ogc:FunctionName nArgs="9">in8</ogc:FunctionName>
+              <ogc:FunctionName nArgs="10">in9</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">int2bbool</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">int2ddouble</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">interiorPoint</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">interiorRingN</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">Interpolate</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">intersection</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">intersects</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isClosed</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isEmpty</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">isLike</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isNull</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">isometric</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isRing</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isSimple</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">isValid</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">isWithinDistance</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">length</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">lessEqualThan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">lessThan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">log</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">max</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">max_2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">max_3</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">max_4</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">min</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">min_2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">min_3</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">min_4</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">not</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">notEqualTo</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">numberFormat</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">numGeometries</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">numInteriorRing</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">numPoints</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">offset</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">overlaps</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">parseBoolean</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">parseDouble</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">parseInt</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">parseLong</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">pi</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">pointN</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">pow</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">PropertyExists</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">Quantile</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">random</ogc:FunctionName>
+              <ogc:FunctionName nArgs="0">Recode</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">relate</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">relatePattern</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">rint</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">round</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">round_2</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">roundDouble</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">sin</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">sqrt</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">StandardDeviation</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">startPoint</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">strCapitalize</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strConcat</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strEndsWith</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strEqualsIgnoreCase</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strIndexOf</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strLastIndexOf</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">strLength</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strMatches</ogc:FunctionName>
+              <ogc:FunctionName nArgs="4">strReplace</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strStartsWith</ogc:FunctionName>
+              <ogc:FunctionName nArgs="3">strSubstring</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">strSubstringStart</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">strToLowerCase</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">strToUpperCase</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">strTrim</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">symDifference</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">tan</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">toDegrees</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">toRadians</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">touches</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">toWKT</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">union</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">UniqueInterval</ogc:FunctionName>
+              <ogc:FunctionName nArgs="1">vertices</ogc:FunctionName>
+              <ogc:FunctionName nArgs="2">within</ogc:FunctionName>
+            </ogc:FunctionNames>
+          </ogc:Functions>
+        </ogc:ArithmeticOperators>
+      </ogc:Scalar_Capabilities>
+      <ogc:Id_Capabilities>
+        <ogc:FID />
+        <ogc:EID />
+      </ogc:Id_Capabilities>
+    </ogc:Filter_Capabilities>
+  </wfs:WFS_Capabilities>
+  <OGRWFSLayer name="medford:bikelanes">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="bikelanesType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiLineStringPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="streetname" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="lane_type" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="stage" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="bike_plan" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="len" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="bikelanes" substitutionGroup="gml:_Feature" type="medford:bikelanesType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:buildings">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="buildingsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="layer" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="elevation" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="shape_leng" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="shape_area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="key" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="zone" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="buildings" substitutionGroup="gml:_Feature" type="medford:buildingsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:citylimits">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="citylimitsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="acres" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="perimeter" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="area" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="citylimits" substitutionGroup="gml:_Feature" type="medford:citylimitsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:firestations">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="firestationsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="objectid_1" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="objectid" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="district" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="legend" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="station" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="firestations" substitutionGroup="gml:_Feature" type="medford:firestationsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:hospitals">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="hospitalsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="hospitals" substitutionGroup="gml:_Feature" type="medford:hospitalsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:hydro">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="hydroType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiLineStringPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="LENGTH" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="STREAM" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="STREAM_NAM" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="LINE_ID" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="len" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="hydro" substitutionGroup="gml:_Feature" type="medford:hydroType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:libraries">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="librariesType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="use" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="location" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="libraries" substitutionGroup="gml:_Feature" type="medford:librariesType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:parks">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="parksType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="owner" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="agency" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="usage" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="parktype" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="number_fac" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="len" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="parks" substitutionGroup="gml:_Feature" type="medford:parksType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:police">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="policeType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="objectid" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="location" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="police" substitutionGroup="gml:_Feature" type="medford:policeType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:schools">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="schoolsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="grade" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="office" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="dist" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="category" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="address" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="city" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="zipcode" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="phone_num" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="students" nillable="true" type="xsd:long" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="schools" substitutionGroup="gml:_Feature" type="medford:schoolsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:stormdrains">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="stormdrainsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiLineStringPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="gid" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="pipe_gradi" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="pipe_dia" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="pipe_type" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="pipe_matrl" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="start_node" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="end_node" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="start_gl" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="end_gl" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="start_il" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="end_il" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="geom_lengt" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="comments" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="tag_x" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="tag_y" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="tag_value" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="tag_size" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="tag_angle" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="tag_just" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="sdsegs_id" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="facil_id" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="s_mode" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="descrip" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="block" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="x_coord" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="y_coord" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="obj_date" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="obj_time" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="id_oper" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="node_fm" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="node_to" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="lngth" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="size_1" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="size_2" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="matl" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="plan_no" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="ie_dn" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="ie_up" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="cadlng" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="datav" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="basin" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="from_to" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="dup" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="upd_commen" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="seg_no" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="pipe_id" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="data_sourc" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="jurisdicti" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="len" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="stormdrains" substitutionGroup="gml:_Feature" type="medford:stormdrainsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:streets">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="streetsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiLineStringPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="idnum" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="prefix" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="streetname" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="streettype" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="suffix" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="cfcc" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="city_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="city_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="fromleft" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="toleft" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="fromright" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="toright" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="zip_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="zip_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="police_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="police_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="fire_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="fire_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="ems_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="ems_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="p_beat_l" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="p_beat_r" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="map_page1" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="map_page2" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="map_page3" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="x1" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="y1" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="x2" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="y2" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="labeltype" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="lesn" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="resn" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="street" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="legalname" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="surf_type" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="speed" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="lcity" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="rcity" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="oneway" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="named" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="addressed" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="namelow" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="length" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="county" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="reversed" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="blm" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="usfs" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="mp_dist" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="mp_beg" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="mp_end" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="roadnumb" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="flipme" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="shape_leng" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="cross2" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="cross1" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="sld_type" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="streets" substitutionGroup="gml:_Feature" type="medford:streetsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:taxlots">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="taxlotsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="gid" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="mapnumber" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="shape_area" nillable="true" type="xsd:decimal" />
+              <element maxOccurs="1" minOccurs="0" name="shape_len" nillable="true" type="xsd:decimal" />
+              <element maxOccurs="1" minOccurs="0" name="mapnum" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="gis_area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="maplot" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="account" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="lottype" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="feeowner" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="contract" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="incareof" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="address1" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="address2" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="city" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="state" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="zipcode" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="commsqft" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="acreage" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="impvalue" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="landvalue" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="lotdepth" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="lotwidth" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="propclass" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="addressnum" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="streetname" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="buildcode" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="yearblt" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="taxcode" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="assessimp" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="assessland" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="maintenanc" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="tm_maplot" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="scheduleco" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="neighborho" nillable="true" type="xsd:short" />
+              <element maxOccurs="1" minOccurs="0" name="ownersort" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="addsort" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="trssort" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="siteadd" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="taxlot" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:GeometryPropertyType" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="taxlots" substitutionGroup="gml:_Feature" type="medford:taxlotsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:wetlands">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="wetlandsType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="wetland_id" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="square_ft" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="acres" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="field_ver" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="dsl_det_" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="vernal_p" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="mosaic" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="z5_lwi__" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="nwitype1" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="nwitype2" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="hgm" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="nwitype3" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="poly_id" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="ofwam_id" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="significan" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="delineated" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="site" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="zone" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="overlay" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="planmap" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="area_1" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="len" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="wetlands" substitutionGroup="gml:_Feature" type="medford:wetlandsType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="medford:zoning">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://medford.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="zoningType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="objectid" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="cityzone" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="zone" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="revdate" nillable="true" type="xsd:dateTime" />
+              <element maxOccurs="1" minOccurs="0" name="finord" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="filenum" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="acres" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="misc" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="shape_leng" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="perimeter" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="shape_le_1" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="shape_area" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="hectares" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="zoning" substitutionGroup="gml:_Feature" type="medford:zoningType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="usa:states">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://usa.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="statesType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="STATE_NAME" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="STATE_FIPS" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="SUB_REGION" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="STATE_ABBR" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="LAND_KM" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="WATER_KM" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="PERSONS" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="FAMILIES" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="HOUSHOLD" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="MALE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="FEMALE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="WORKERS" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="DRVALONE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="CARPOOL" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="PUBTRANS" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="EMPLOYED" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="UNEMPLOY" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="SERVICE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="MANUAL" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="P_MALE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="P_FEMALE" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="SAMP_POP" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="states" substitutionGroup="gml:_Feature" type="usa:statesType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="world:borders">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://world.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="bordersType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="FIPS" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="ISO2" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="ISO3" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="UN" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="NAME" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="AREA" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="POP2005" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="REGION" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="SUBREGION" nillable="true" type="xsd:int" />
+              <element maxOccurs="1" minOccurs="0" name="LON" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="LAT" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="borders" substitutionGroup="gml:_Feature" type="world:bordersType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="world:cities">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://world.opengeo.org">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="citiesType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="City" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="latitude" nillable="true" type="xsd:double" />
+              <element maxOccurs="1" minOccurs="0" name="Country" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="rank" nillable="true" type="xsd:long" />
+              <element maxOccurs="1" minOccurs="0" name="population" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="longitude" nillable="true" type="xsd:double" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="cities" substitutionGroup="gml:_Feature" type="world:citiesType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="cookbook:sld_cookbook_line">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://opengeo.org/#cookbook">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="sld_cookbook_lineType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiLineStringPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="sld_cookbook_line" substitutionGroup="gml:_Feature" type="cookbook:sld_cookbook_lineType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="cookbook:sld_cookbook_point">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://opengeo.org/#cookbook">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="sld_cookbook_pointType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="pop" nillable="true" type="xsd:long" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="sld_cookbook_point" substitutionGroup="gml:_Feature" type="cookbook:sld_cookbook_pointType" />
+    </schema>
+  </OGRWFSLayer>
+  <OGRWFSLayer name="cookbook:sld_cookbook_polygon">
+    <schema xsd="http://www.w3.org/2001/XMLSchema" cookbook="http://opengeo.org/#cookbook" gml="http://www.opengis.net/gml" medford="http://medford.opengeo.org" usa="http://usa.opengeo.org" world="http://world.opengeo.org" elementFormDefault="qualified" targetNamespace="http://opengeo.org/#cookbook">
+      <import namespace="http://www.opengis.net/gml" schemaLocation="http://v2.suite.opengeo.org/geoserver/schemas/gml/3.1.1/base/gml.xsd" />
+      <complexType name="sld_cookbook_polygonType">
+        <complexContent>
+          <extension base="gml:AbstractFeatureType">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType" />
+              <element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string" />
+              <element maxOccurs="1" minOccurs="0" name="pop" nillable="true" type="xsd:string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="sld_cookbook_polygon" substitutionGroup="gml:_Feature" type="cookbook:sld_cookbook_polygonType" />
+    </schema>
+  </OGRWFSLayer>
+</OGRWFSDataSource>

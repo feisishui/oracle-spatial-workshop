@@ -1,0 +1,199 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle CSW Tests</title>
+</head>
+<body>
+<h1>Oracle CSW Tests</h1>
+<hr>
+
+<H2>Queries</H2>
+
+<H3>GetCapabilities</H3>
+
+<a href="http://localhost:7001/SpatialWS-SpatialWS-context-root/xmlcswservlet?request=GetCapabilities&service=CSW&acceptversion=2.0.0&outputFormat=text/xml">
+http://localhost:7001/SpatialWS-SpatialWS-context-root/xmlcswservlet?request=GetCapabilities&service=CSW&acceptversion=2.0.0&outputFormat=text/xml
+</a>
+
+<h3>GetCapabilities</h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=10 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:GetCapabilities service="CSW" xmlns:csw="http://www.opengis.net/cat/csw"
+  xmlns:ows="http://www.opengis.net/ows"&gt;
+  &lt;ows:AcceptVersions&gt;
+    &lt;ows:Version&gt;2.0.0&lt;/ows:Version&gt;
+  &lt;/ows:AcceptVersions&gt;
+  &lt;ows:AcceptFormats&gt;
+    &lt;ows:OutputFormat&gt;text/xml&lt;/ows:OutputFormat&gt;
+  &lt;/ows:AcceptFormats&gt;
+&lt;/csw:GetCapabilities&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>DescribeRecord</h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:DescribeRecord service="CSW"
+  version="2.0.0"
+  xmlns:csw="http://www.opengis.net/cat/csw" &gt;
+  &lt;csw:TypeName targetNamespace="http://www.opengis.net/cat/csw"&gt;
+    Record
+  &lt;/csw:TypeName&gt;
+&lt;/csw:DescribeRecord&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>GetRecords </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:GetRecords
+   service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw"
+   xmlns:ogc="http://www.opengis.net/ogc"
+   xmlns:dc="http://www.purl.org/dc/elements/1.1/"
+   xmlns:dct="http://www.purl.org/dc/terms/"
+   outputFormat="text/xml"
+   resultType="results"
+   outputSchema="csw:Record"&gt;
+  &lt;csw:Query typeNames="csw:Record"&gt;
+    &lt;csw:ElementName&gt;/csw:Record/dc:identifier&lt;/csw:ElementName&gt;
+    &lt;csw:ElementName&gt;/csw:Record/dc:contributor&lt;/csw:ElementName&gt;
+    &lt;csw:Constraint version="2.0.0" &gt;
+      &lt;ogc:Filter&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:PropertyName&gt;/csw:Record/dc:contributor&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;Raja&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Query&gt;
+&lt;/csw:GetRecords&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>GetRecordById </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=6 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:GetRecordById
+   service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw"
+   xmlns:ogc="http://www.opengis.net/ogc" &gt;
+&lt;csw:Id&gt; REC-1 &lt;/csw:Id&gt;
+&lt;csw:ElementSetName&gt;brief&lt;/csw:ElementSetName&gt;
+&lt;/csw:GetRecordById&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>GetDomain </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=6 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:GetDomain service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw" &gt;
+   &lt;csw:ParameterName&gt;GetRecords.resultType&lt;/csw:ParameterName&gt;
+&lt;/csw:GetDomain&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H2>Updates</H2>
+
+<h3>Transaction Insert </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=18 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:Transaction service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw" &gt;
+  &lt;csw:Insert&gt;
+    &lt;Record xmlns="http://www.opengis.net/cat/csw"
+      xmlns:dc="http://www.purl.org/dc/elements/1.1/"
+      xmlns:dct="http://www.purl.org/dc/terms/"
+      xmlns:ows="http://www.opengis.net/ows" &gt;
+     &lt;dc:contributor scheme="http://www.altova.com"&gt;John&lt;/dc:contributor&gt;
+     &lt;dc:identifier &gt;REC-2&lt;/dc:identifier&gt;
+     &lt;ows:WGS84BoundingBox crs="urn:opengis:crs:OGC:2:84" dimensions="2"&gt;
+       &lt;ows:LowerCorner&gt;12 12&lt;/ows:LowerCorner&gt;
+       &lt;ows:UpperCorner&gt;102 102&lt;/ows:UpperCorner&gt;
+     &lt;/ows:WGS84BoundingBox&gt;
+    &lt;/Record&gt;
+  &lt;/csw:Insert&gt;
+&lt;/csw:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Update </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=21 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:Transaction service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw"
+   xmlns:ogc="http://www.opengis.net/ogc"
+   xmlns:dc="http://www.purl.org/dc/elements/1.1/"&gt;
+  &lt;csw:Update&gt;
+    &lt;csw:RecordProperty&gt;
+      &lt;csw:Name&gt;/csw:Record/dc:contributor&lt;/csw:Name&gt;
+      &lt;csw:Value&gt;Jane&lt;/csw:Value&gt;
+    &lt;/csw:RecordProperty&gt;
+    &lt;csw:Constraint version="2.0.0"&gt;
+      &lt;ogc:Filter&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:PropertyName&gt;/csw:Record/dc:contributor&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;John&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Update&gt;
+&lt;/csw:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h3>Transaction Delete </h3>
+<form name=cswform
+  action="http://localhost:7001/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=17 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;csw:Transaction service="CSW"
+   version="2.0.0"
+   xmlns:csw="http://www.opengis.net/cat/csw"
+   xmlns:dc="http://www.purl.org/dc/elements/1.1/"
+   xmlns:ogc="http://www.opengis.net/ogc"&gt;
+  &lt;csw:Delete typeName="csw:Record"&gt;
+    &lt;csw:Constraint version="2.0.0"&gt;
+      &lt;ogc:Filter&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+            &lt;ogc:PropertyName&gt;/csw:Record/dc:contributor&lt;/ogc:PropertyName&gt;
+            &lt;ogc:Literal&gt;Jane&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Delete&gt;
+&lt;/csw:Transaction&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+</body>
+</html>

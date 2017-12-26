@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>A sample Oracle Maps V2 application</TITLE>
+<script language="Javascript" src="/mapviewer/jslib/v2/oraclemapsv2.js"></script>
+<script language=javascript>
+var customersLayer=null;
+function on_load_mapview() 
+{	
+  var baseURL  = "http://"+document.location.host+"/mapviewer";
+  // Create an OM.Map instance to display the map
+  var mapview = new OM.Map(document.getElementById("map"), 
+                           {
+                             mapviewerURL:baseURL
+                           });
+  // Add a map tile layer as background.
+  var tileLayer = new OM.layer.TileLayer(
+        "baseMap", 
+        {
+            dataSource:"mvdemo", 
+            tileLayer:"demo_map", 
+            tileServerURL:baseURL+"/mcserver"
+        });
+  mapview.addLayer(tileLayer);
+  // Set the initial map center and zoom level
+  var mapCenterLon = -122.45;
+  var mapCenterLat = 37.7706;
+  var mapZoom = 4;
+  var mpoint = new OM.geometry.Point(mapCenterLon,mapCenterLat,8307);
+  mapview.setMapCenter(mpoint);   
+  mapview.setMapZoomLevel(mapZoom);    
+  // Add a theme-based FOI layer to display customers on the map
+  customersLayer = new OM.layer.VectorLayer("customers", 
+        {
+            def:
+                {
+                type:OM.layer.VectorLayer.TYPE_PREDEFINED, 
+                dataSource:"mvdemo", theme:"customers", 
+                url: baseURL,
+                loadOnDemand: false
+                }
+        });
+  mapview.addLayer(customersLayer);
+
+  // Add a navigation panel on the right side of the map
+  var navigationPanelBar = new OM.control.NavigationPanelBar();
+  navigationPanelBar.setStyle({backgroundColor:"#FFFFFF",buttonColor:"#008000",size:12});
+  mapview.addMapDecoration(navigationPanelBar);
+  // Add a scale bar
+  var mapScaleBar = new OM.control.ScaleBar();
+  mapview.addMapDecoration(mapScaleBar);
+  // Display the map.
+  // Note: Change from V1. In V2 initialization and initial display is done just once
+  mapview.init();
+}
+function setLayerVisible(checkBox)
+{
+  // Show the customers vector layer if the check box is checked and
+  // hide it otherwise.
+  if(checkBox.checked)
+    customersLayer.setVisible(true) ;
+  else
+    customersLayer.setVisible(false);
+}
+</script>
+</head>
+<body onload= javascript:on_load_mapview() >
+<h2>A Sample Oracle Maps V2 Application</h2>
+<INPUT TYPE="checkbox" onclick="setLayerVisible(this)" checked/>Show customers
+<div id="map" style="width: 600px; height: 500px"></div> 
+</body>
+</html>

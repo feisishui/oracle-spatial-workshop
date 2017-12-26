@@ -1,0 +1,522 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://xmlns.oracle.com/spatial/network"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:gml="http://www.opengis.net/gml"
+            xmlns="http://xmlns.oracle.com/spatial/network"
+            xmlns:ndm="http://xmlns.oracle.com/spatial/network"
+            elementFormDefault="qualified" version="12.1">
+  <xsd:annotation>
+    <xsd:documentation>
+      <![CDATA[
+/* Copyright (c) 2004, 2011, Oracle and/or its affiliates. 
+All rights reserved. */
+/*                 NAME                                                          
+                   networkAnalysis.xsd                                        
+                                                                             
+               DESCRIPTION                                                   
+                   XML Schema for Oracle Spatial NDM Network Analysis        
+               Functionality.                                                
+                                                                             
+               NOTES                                                         
+                   None.                                                     
+                                                                             
+               MODIFIED        (MM/DD/YY)
+               hgong           08/24/10 - add custom implementations
+               hgong           06/16/10 - add tsp and k-shortest path analysis
+               hgong           06/04/07 - clean up
+               hgong           03/21/07 - add subpath
+               hgong           01/04/07 - change node and link ids from int to
+                                          long
+               hgong           09/22/06 - Reuse network.xsd
+               ningan          12/20/05 - Add "Any Attribute" & "Any" element to
+                                          all interfaces: improve extensibility
+               ningan          11/21/05 - Add field addToNetwork to 
+                                          PathRequestParameterType
+               ningan          10/28/05 - Removed pathRequestParameter from 
+                                        findReachableNodes and findReachingNodes
+               ningan          10/20/05 - Modified isReachable parameters
+               ningan          10/17/05 - Add NetworkAnalysisResponse related
+                                          types
+               ningan          10/13/05 - Change naming convention 
+               ningan          07/25/05 - Comment out complexType ConnectionType
+               ningan          07/19/05 - Include geometry.xsd
+               ningan          07/11/05 - Add complexType allPathsType
+               ningan          06/28/05 - Add complexType NearestNeighborsType         
+               ningan          06/28/05 - Add complexType ShortestPathType 
+               ningan          06/28/05 - Add complexType NetworkManageType 
+               ningan          06/28/05 - Creation                         
+            */
+            ]]>
+    </xsd:documentation>
+  </xsd:annotation>
+  <!--************************GLOBAL DECLARATIONS**************************-->
+  <xsd:include schemaLocation="network-v2.xsd"/>
+  <xsd:include schemaLocation="networkInformation-v2.xsd"/>
+  <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="geometry.xsd" />
+  <!--*************************Glboal Declaration****************************-->  
+  <xsd:element name="networkAnalysisRequest"
+               type="ndm:NetworkAnalysisRequestType"/>
+  <!--*********************NetworkAnalysisRequestType************************-->
+  <xsd:complexType name="NetworkAnalysisRequestType">
+    <xsd:sequence>
+      <xsd:element name="networkName" type="xsd:string"/>
+      <xsd:choice>
+        <xsd:element name="findConnectedComponents"
+                     type="ndm:FindConnectedComponentsRequestType"/>
+        <xsd:element name="findMinSpanningTree"
+                     type="ndm:FindMinSpanningTreeResponseType"
+                     nillable="true"/>
+        <xsd:element name="findReachableNodes"
+                     type="ndm:FindReachableNodesRequestType"/>
+        <xsd:element name="findReachingNodes"
+                     type="ndm:FindReachingNodesRequestType"/>
+        <xsd:element name="isReachable" type="ndm:IsReachableRequestType"/>
+        <xsd:element name="nearestNeighbors"
+                     type="ndm:NearestNeighborsRequestType"/>
+        <xsd:element name="nearestReachingNeighbors"
+                     type="ndm:NearestReachingNeighborsRequestType"/>
+        <xsd:element name="shortestPath" type="ndm:ShortestPathRequestType"/>
+        <xsd:element name="withinCost" type="ndm:WithinCostRequestType"/>
+        <xsd:element name="withinReachingCost" 
+                     type="ndm:WithinReachingCostRequestType"/>
+        <xsd:element name="withinCostPolygon" 
+                     type="ndm:WithinCostPolygonRequestType"/>
+        <xsd:element name="withinReachingCostPolygon" 
+                     type="ndm:WithinReachingCostPolygonRequestType"/>
+        <xsd:element name="kShortestPaths" type="ndm:kShortestPathsRequestType"/>
+        <xsd:element name="tsp" type="ndm:tspRequestType"/>
+        <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+      </xsd:choice> 
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--*************************************************************************-->  
+  <xsd:complexType name="FindConnectedComponentsRequestType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+               namespace="##any" processContents="skip"/>                         
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--***********************************************************************-->  
+  <xsd:complexType name="FindMinSpanningTreeRequestType">
+    <xsd:sequence>
+      <xsd:element name="linksRequestParameter"
+                   type="ndm:LinksRequestParameterType" nillable="true"
+                   minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--***********************************************************************-->
+  <xsd:complexType name="FindReachableNodesRequestType">
+    <xsd:sequence>
+      <xsd:element name="sourceNodeID" type="xsd:long"/>
+      <xsd:element name="nodesRequestParameter" type="ndm:NodesRequestParameterType"
+                   minOccurs="0" nillable="true"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************************************************************-->
+  <xsd:complexType name="FindReachingNodesRequestType">
+    <xsd:sequence>
+      <xsd:element name="targetNodeID" type="xsd:long"/>
+      <xsd:element name="nodesRequestParameter" type="ndm:NodesRequestParameterType"
+                   minOccurs="0" nillable="true"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************************************************************-->
+  <xsd:complexType name="IsReachableRequestType">
+    <xsd:sequence>
+      <xsd:element name="sourceNodeID" type="xsd:long"/>
+      <xsd:element name="targetNodeID" type="xsd:long"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************************************************************-->
+  <xsd:complexType name="NearestNeighborsRequestType">
+    <xsd:sequence>
+      <xsd:element name="startPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="noOfNeighbors" type="xsd:int"/>
+      <xsd:element name="targetLinkLevel" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType"
+                   nillable="true" minOccurs="0"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--**************************************************************************-->
+  <xsd:complexType name="NearestReachingNeighborsRequestType">
+    <xsd:sequence>
+      <xsd:element name="endPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="noOfNeighbors" type="xsd:int"/>
+      <xsd:element name="targetLinkLevel" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType"
+                   nillable="true" minOccurs="0"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--***************************************************************************-->
+  <xsd:complexType name="ShortestPathRequestType">
+    <xsd:sequence>
+      <xsd:element name="startPoint" type="ndm:PointOnNetType" maxOccurs="unbounded"/>
+      <xsd:element name="endPoint" type="ndm:PointOnNetType" maxOccurs="unbounded"/>
+      <xsd:element name="shortestPathAlgorithm" type="ndm:JavaObjectType" minOccurs="0"/>
+      <xsd:element name="searchLinkLevel" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="constraint" type="ndm:JavaObjectType" 
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="linkCostCalculator" type="ndm:JavaObjectType" 
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="nodeCostCalculator" type="ndm:JavaObjectType" 
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType" nillable="true"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--****************************************************************************-->
+  <xsd:complexType name="WithinCostRequestType">
+    <xsd:sequence>
+      <xsd:element name="startPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="cost" type="xsd:double"/>
+      <xsd:element name="targetLinkLevel" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType"
+                   nillable="true" minOccurs="0"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************************************************************-->
+  <xsd:complexType name="WithinReachingCostRequestType">
+    <xsd:sequence>
+      <xsd:element name="endPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="cost" type="xsd:double"/>
+      <xsd:element name="targetLinkLevel" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType"
+                   nillable="true" minOccurs="0"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--****************************************************************************-->
+  <xsd:complexType name="WithinCostPolygonRequestType">
+    <xsd:sequence>
+      <xsd:element name="startPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="cost" type="xsd:double"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--*************************************************************************-->
+  <xsd:complexType name="WithinReachingCostPolygonRequestType">
+    <xsd:sequence>
+      <xsd:element name="endPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="cost" type="xsd:double"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--**********************************************************************-->
+  <xsd:complexType name="kShortestPathsRequestType">
+    <xsd:sequence>
+      <xsd:element name="startPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="endPoint" type="ndm:PointOnNetType"/>
+      <xsd:element name="k" type="xsd:int"/>
+      <xsd:element name="kShortestPathsAlgorithm" type="ndm:JavaObjectType" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="subPathRequestParameter" 
+                   type="ndm:SubPathRequestParameterType" nillable="true"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--************************************************************************-->
+  <xsd:complexType name="tspRequestType">
+    <xsd:sequence>
+      <xsd:element name="tspPoint" type="ndm:PointOnNetType" maxOccurs="unbounded"/>
+      <xsd:element name="tourFlag" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="tspAlgorithm" type="ndm:JavaObjectType" minOccurs="0"/>
+      <xsd:element name="constraintName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="tspPathRequestParameter" 
+                   type="ndm:TspPathRequestParameterType" nillable="true"/>
+      <xsd:element name="saveSubPath" type="SaveSubPathParameterType" minOccurs="0"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+
+  <!--*************************Global Declaration****************************-->  
+  <xsd:element name="networkAnalysisResponse"
+               type="NetworkAnalysisResponseType"/>
+ <!--*********************NetworkAnalysisResponseType***********************-->
+  <xsd:complexType name="NetworkAnalysisResponseType">
+    <xsd:sequence>
+      <xsd:element name="networkName" type="xsd:string"/>
+      <xsd:choice>
+        <xsd:element name="findConnectedComponents" 
+                     type="ndm:FindConnectedComponentsResponseType"
+                     nillable="true"/>                      
+        <xsd:element name="findReachableNodes"
+                     type="ndm:FindReachableNodesResponseType"
+                     nillable="true"/>                     
+        <xsd:element name="findReachingNodes"
+                     type="ndm:FindReachingNodesResponseType"
+                     nillable="true"/>
+        <xsd:element name="isReachable"
+                     type="ndm:IsReachableResponseType"
+                     nillable="true"/>
+        <xsd:element name="nearestNeighbors"
+                     type="ndm:NearestNeighborsResponseType"
+                     nillable="true"/>
+        <xsd:element name="nearestReachingNeighbors"
+                     type="ndm:NearestReachingNeighborsResponseType"
+                     nillable="true"/>
+        <xsd:element name="shortestPath"
+                     type="ndm:ShortestPathResponseType" nillable="true"/>
+        <xsd:element name="withinCost" type="ndm:WithinCostResponseType"
+                     nillable="true"/> 
+        <xsd:element name="withinReachingCost" type="ndm:WithinReachingCostPolygonResponseType"
+                     nillable="true"/>
+        <xsd:element name="withinCostPolygon" type="ndm:WithinCostResponseType"
+                     nillable="true"/> 
+        <xsd:element name="withinReachingCostPolygon" type="ndm:WithinReachingCostPolygonResponseType"
+                     nillable="true"/>
+        <xsd:element name="kShortestPaths"
+                     type="ndm:KShortestPathsResponseType" nillable="true"/>
+        <xsd:element name="tsp"
+                     type="ndm:TspResponseType" nillable="true"/>
+        <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--**********************************************************************-->
+  <xsd:complexType name="FindConnectedComponentsResponseType">
+    <xsd:sequence>
+      <xsd:element name="numConnectedComponent" type="ndm:NonNegativeIntType" 
+                   nillable="true"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>                   
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>        
+  </xsd:complexType>
+  <!--***********************************************************************-->  
+  <xsd:complexType name="FindMinSpanningTreeResponseType">
+    <xsd:choice>
+      <xsd:element name="linksResponse" type="ndm:LinksResponseType"
+                   minOccurs="0" maxOccurs="1"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--**********************************************************************-->      
+  <xsd:complexType name="FindReachableNodesResponseType">
+    <xsd:choice>
+      <xsd:element name="nodesResponse" type="ndm:NodesResponseType"
+                   minOccurs="0" maxOccurs="1"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--**********************************************************************-->        
+  <xsd:complexType name="FindReachingNodesResponseType">
+    <xsd:choice>
+      <xsd:element name="nodesResponse" type="ndm:NodesResponseType"
+                   minOccurs="0" maxOccurs="1"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--***********************************************************************-->          
+  <xsd:complexType name="IsReachableResponseType">
+    <xsd:choice>
+      <xsd:element name="reachable" type="xsd:boolean"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--************************************************************************-->            
+  <xsd:complexType name="NearestNeighborsResponseType">
+    <xsd:choice>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"
+                   minOccurs = "0" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************************************************************-->            
+  <xsd:complexType name="NearestReachingNeighborsResponseType">
+    <xsd:choice>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"
+                   minOccurs = "0" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************************************************************-->            
+  <xsd:complexType name="ShortestPathResponseType">
+    <xsd:sequence>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+  <!--************************************************************************-->                
+  <xsd:complexType name="WithinCostResponseType">
+    <xsd:choice>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>                   
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--*************************************************************************-->                
+  <xsd:complexType name="WithinReachingCostResponseType">
+    <xsd:choice>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>                   
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--************************************************************************-->                
+  <xsd:complexType name="WithinCostPolygonResponseType">
+    <xsd:choice>
+      <xsd:element name="geometry" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="gml:Polygon"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>                   
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--*************************************************************************-->                
+  <xsd:complexType name="WithinReachingCostPolygonResponseType">
+    <xsd:choice>
+      <xsd:element name="geometry" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="gml:Polygon"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>                   
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--*************************************************************************-->                
+  <xsd:complexType name="KShortestPathsResponseType">
+    <xsd:choice>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType"
+                   minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+  <!--*************************************************************************--> 
+  <xsd:complexType name="TspResponseType">
+  	<xsd:sequence>
+      <xsd:element name="tspOrder" type="ndm:IntListType"></xsd:element>
+      <xsd:element name="costs" type="xsd:double"></xsd:element>
+      <xsd:element name="subPathResponse" type="ndm:SubPathResponseType" 
+      			   minOccurs="0" maxOccurs="unbounded"></xsd:element>
+      			       <xsd:choice>
+      <xsd:element name="tspPathResponse" type="ndm:TspPathResponseType"
+                   minOccurs="0" maxOccurs="1"/>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:choice>
+	</xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>
+  </xsd:complexType>
+
+  <!--*************************************************************************-->
+  <xsd:complexType name="PointOnNetType">
+    <xsd:choice>
+      <xsd:sequence>
+        <xsd:element name="nodeID" type="xsd:long"/>
+      </xsd:sequence>
+      <xsd:sequence>
+        <xsd:element name="linkID" type="xsd:long"/>
+        <xsd:element name="percentage" type="xsd:double"/>
+      </xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>             
+    </xsd:choice>
+    <xsd:anyAttribute namespace="##any" processContents="skip"/>    
+  </xsd:complexType>
+
+  <!--*************************************************************************-->
+  <xsd:complexType name="JavaObjectType">
+    <xsd:sequence>
+      <xsd:element name="className" type="xsd:string"
+                   nillable="false" />
+      <xsd:element name="parameters" type="ndm:ParametersType"
+                   nillable="true" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!--*************************************************************************-->
+  <xsd:complexType name="ParametersType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" 
+                 namespace="##any" processContents="skip"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>       

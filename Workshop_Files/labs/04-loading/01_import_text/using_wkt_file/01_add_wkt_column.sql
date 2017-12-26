@@ -1,0 +1,1 @@
+ALTER TABLE us_cities ADD wkt VARCHAR2(200);

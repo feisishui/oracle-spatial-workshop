@@ -1,0 +1,14 @@
+<!--
+Update file WEB-INF/conf/WSConfig.xml with the following code
+-->
+    <!-- Set maximum logging. NOTE: use only for testing and debugging!
+      Avoid this setting in production! -->
+    <logging log_level="finest" log_thread_name="false"
+             log_time="true">
+       <log_output name="System.err" />
+       <log_output name="log/ws.log" />
+    </logging>
+
+    <!-- Set the sync interval to 1 minute (60 000 ms) -->
+    <wfs_cache_sync_interval>60000</wfs_cache_sync_interval>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<!-- This is the configuration file for Oracle Spatial Geocoder. -->
+<GeocoderConfig >
+  <!-- ****************************************************************** -->
+  <!-- ************************ Logging Settings ************************ -->
+  <!-- ****************************************************************** -->
+
+  <!-- The <logging> element specifies the geocoder logging parameters. The
+       geocoder log file can be found under directory
+       $GEOCODER_DEPLOYMENT_HOME/web/WEB-INF/log.
+
+       Possible values are:
+       log_level = "fatal"|"error"|"warn"|"info"|"debug"|"finest"
+                 default: info) ;
+       log_thread_name = "true" | "false" ;
+       log_time = "true" | "false" ;
+  -->
+  <logging log_level="finest" log_thread_name="true" log_time="true">
+  </logging>
+
+  <!-- ****************************************************************** -->
+  <!-- ******************** Predefined Data Sources  ******************** -->
+  <!-- ****************************************************************** -->
+  <!-- Uncomment and modify the following <geocoder> element to predefine one or
+       more geocoders. Each <geocoder> element defines a geocoder for a database
+       connection where the geocoding tables reside. The <database> element
+       defines a database connection for the geocoder. There are two ways to
+       defined a database connection for the geocoder: 1) providing JDBC
+       database connection parameters and 2) providing the JNDI name
+       (container_ds) of a predefined container data source, which are
+       illustrated by the following two sample <geocoder> elements respectively.
+
+       Note: The parameter "load_db_parser_profiles" specifies whether to load
+       address parser profiles from the same database connection. If its value
+       is true, address parser profiles will be loaded from the database,
+       otherwise the parser profiles will be loaded from the local parser
+       profiles located at $GEOCODER_DEPLOYMENT_HOME/web/WEB-INF/parser_profiles.
+
+       <geocoder>
+         <database host="localhost"
+                   port="1521"
+                   sid="orcl"
+                   mode="thin"
+                   user="geocoder_us"
+                   password="geocoder_us"
+                   load_db_parser_profiles="true" />
+       </geocoder>
+
+       <geocoder>
+         <database container_ds="jdbc/gc_europe"
+                   load_db_parser_profiles="true" />
+       </geocoder>
+  -->
+       <geocoder>
+         <database host="localhost"
+                   port="1521"
+                   sid="orcl122"
+                   mode="thin"
+                   user="scott"
+                   password="tiger"
+                   load_db_parser_profiles="true" />
+       </geocoder>
+
+</GeocoderConfig>

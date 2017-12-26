@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LODConfigs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://xmlns.oracle.com/spatial/network"
+            version="12.1">
+  <LODConfig globalNetworkName="$DEFAULT$" networkName="$DEFAULT$">
+    <networkIO>
+      <batchSize>10000</batchSize>
+      <geometryTolerance>0.000001</geometryTolerance>
+      <readPartitionFromBlob>false</readPartitionFromBlob>
+      <partitionBlobTranslator>
+        <className>oracle.spatial.network.lod.PartitionBlobTranslator11gR2</className>
+        <parameters></parameters>
+      </partitionBlobTranslator>
+      <userDataIO categoryId="0">
+        <className>oracle.spatial.network.lod.LODUserDataIOSDO</className>
+        <parameters>
+        </parameters>
+      </userDataIO>
+      <cachingPolicy linkLevel="1">
+        <maxNodes>500000</maxNodes>
+        <residentPartitions></residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+    </networkIO>
+    <networkAnalysis>
+      <linkLevelSelector>
+        <className>oracle.spatial.network.lod.DummyLinkLevelSelector</className>
+        <parameters></parameters>
+      </linkLevelSelector>
+      <withinCostPolygonTolerance>0.05</withinCostPolygonTolerance>
+    </networkAnalysis>
+  </LODConfig>
+  <LODConfig globalNetworkName="HILLSBOROUGH_NETWORK" networkName="HILLSBOROUGH_NETWORK">
+    <networkIO>
+      <batchSize>10000</batchSize>
+      <geometryTolerance>0.000001</geometryTolerance>
+      <readPartitionFromBlob>true</readPartitionFromBlob>
+      <partitionBlobTranslator>
+        <className>oracle.spatial.network.lod.PartitionBlobTranslator11gR2</className>
+        <parameters></parameters>
+      </partitionBlobTranslator>
+      <userDataIO categoryId="0">
+        <className>oracle.spatial.network.lod.LODUserDataIOSDO</className>
+        <parameters>
+        </parameters>
+      </userDataIO>
+      <cachingPolicy linkLevel="1">
+        <maxNodes>200000</maxNodes>
+        <residentPartitions></residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+      <cachingPolicy linkLevel="2">
+        <maxNodes>800000</maxNodes>
+        <residentPartitions>0</residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+    </networkIO>
+    <networkAnalysis>
+      <linkLevelSelector>
+        <className>oracle.spatial.network.lod.DummyLinkLevelSelector</className>
+        <parameters></parameters>
+      </linkLevelSelector>
+    </networkAnalysis>
+  </LODConfig>
+  <LODConfig globalNetworkName="HILLSBOROUGH_NETWORK2" networkName="HILLSBOROUGH_NETWORK2">
+    <networkIO>
+      <batchSize>10000</batchSize>
+      <geometryTolerance>0.000001</geometryTolerance>
+      <readPartitionFromBlob>true</readPartitionFromBlob>
+      <partitionBlobTranslator>
+        <className>oracle.spatial.network.lod.PartitionBlobTranslator11gR2</className>
+        <parameters></parameters>
+      </partitionBlobTranslator>
+      <userDataIO categoryId="0">
+        <className>oracle.spatial.network.lod.LODUserDataIOSDO</className>
+        <parameters>
+        </parameters>
+      </userDataIO>
+      <cachingPolicy linkLevel="1">
+        <maxNodes>200000</maxNodes>
+        <residentPartitions></residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+      <cachingPolicy linkLevel="2">
+        <maxNodes>800000</maxNodes>
+        <residentPartitions>0</residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+    </networkIO>
+    <networkAnalysis>
+      <linkLevelSelector>
+        <className>oracle.spatial.network.lod.DummyLinkLevelSelector</className>
+        <parameters></parameters>
+      </linkLevelSelector>
+    </networkAnalysis>
+  </LODConfig>
+  <LODConfig globalNetworkName="NYC_NET" networkName="NYC_NET">
+    <networkIO>
+      <batchSize>10000</batchSize>
+      <geometryTolerance>0.000001</geometryTolerance>
+      <readPartitionFromBlob>true</readPartitionFromBlob>
+      <partitionBlobTranslator>
+        <className>oracle.spatial.network.lod.PartitionBlobTranslator11gR2</className>
+        <parameters></parameters>
+      </partitionBlobTranslator>
+      <userDataIO categoryId="0">
+        <className>oracle.spatial.network.lod.LODUserDataIOSDO</className>
+        <parameters>
+        </parameters>
+      </userDataIO>
+      <cachingPolicy linkLevel="1">
+        <maxNodes>200000</maxNodes>
+        <residentPartitions></residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+    </networkIO>
+    <networkAnalysis>
+      <linkLevelSelector>
+        <className>oracle.spatial.network.lod.DummyLinkLevelSelector</className>
+        <parameters></parameters>
+      </linkLevelSelector>
+    </networkAnalysis>
+  </LODConfig>
+  <LODConfig globalNetworkName="NAVTEQ_SF" networkName="NAVTEQ_SF">
+    <networkIO>
+      <batchSize>10000</batchSize>
+      <geometryTolerance>0.000001</geometryTolerance>
+      <readPartitionFromBlob>true</readPartitionFromBlob>
+      <partitionBlobTranslator>
+        <className>oracle.spatial.router.ndm.RouterPartitionBlobTranslator10g</className>
+        <parameters></parameters>
+      </partitionBlobTranslator>
+      <userDataIO categoryId="0">
+        <className>oracle.spatial.network.lod.LODUserDataIOSDO</className>
+        <parameters></parameters>
+      </userDataIO>
+      <userDataIO categoryId="1">
+        <className>oracle.spatial.router.ndm.TruckingUserDataIO</className>
+        <parameters></parameters>
+      </userDataIO>
+      <cachingPolicy linkLevel="1">
+        <maxNodes>200000</maxNodes>
+        <residentPartitions></residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+      <cachingPolicy linkLevel="2">
+        <maxNodes>800000</maxNodes>
+        <residentPartitions>0</residentPartitions>
+        <flushRule>
+          <className>oracle.spatial.network.lod.LRUCachingHandler</className>
+          <parameters></parameters>
+        </flushRule>
+      </cachingPolicy>
+    </networkIO>
+    <networkAnalysis>
+    </networkAnalysis>
+  </LODConfig>
+</LODConfigs>

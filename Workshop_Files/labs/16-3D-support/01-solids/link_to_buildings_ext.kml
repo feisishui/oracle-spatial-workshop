@@ -1,0 +1,16 @@
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:gx="http://www.google.com/kml/ext/2.2" 
+  xmlns:kml="http://www.opengis.net/kml/2.2" 
+  xmlns:atom="http://www.w3.org/2005/Atom">
+<NetworkLink>
+  <name>Extruded Buildings stored in Oracle</name>
+  <visibility>1</visibility>
+  <Snippet maxLines="0"></Snippet>
+  <description>The KML comes from an Oracle Database</description>
+  <flyToView>1</flyToView>
+  <Url>
+    <href>http://127.0.0.1:8080/public/Buildings/buildings_ext.kml</href>
+  <viewRefreshMode>onRequest</viewRefreshMode>
+  </Url>
+</NetworkLink>
+</kml>

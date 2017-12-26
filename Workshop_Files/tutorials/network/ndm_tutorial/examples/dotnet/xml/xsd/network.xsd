@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<xsd:schema
+        targetNamespace="http://xmlns.oracle.com/spatial/network"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:gml="http://www.opengis.net/gml"
+        xmlns="http://xmlns.oracle.com/spatial/network"
+        xmlns:ndm="http://xmlns.oracle.com/spatial/network"
+        elementFormDefault="qualified"
+        version="10g Release 2">
+    <xsd:annotation>
+        <xsd:documentation>
+            <![CDATA[
+/* Copyright (c) 2004, 2011, Oracle and/or its affiliates. 
+All rights reserved. */
+/*                NAME                                                          
+                   network.xsd                                        
+                                                                             
+               DESCRIPTION                                                   
+                   XML Schema for Oracle Network Data Model       
+               Functionality.                                                
+                                                                             
+               NOTES                                                         
+                   None.                                                     
+                                                                             
+               MODIFIED        (MM/DD/YY)
+               hgong           06/16/10 - add tsp path type
+               hgong           06/11/07 - clean up
+               hgong           03/21/07 - add subpath
+               hgong           01/04/07 - change node, link and path ids from 
+                                          int to long
+               hgong           09/22/06 - Add PathBase
+               virao           03/05/04 - Fix Path_Link_Key_Reference
+               virao           02/23/04 - Move <xsd:anyAttribute>
+                                          outside of <xsd:sequence>
+               virao           02/16/04 - Remove hierarchyLevel from Link
+               virao           02/11/04 - Make changes to more closely    
+                                          reflect database schema
+               virao           02/05/04 - Finish specfications for        
+                                          DatabaseTableNameType and
+                                          DatabaseColumnNameType
+               virao           02/04/04 - Make <user> element in
+                                          databaseMetadataType optional
+               virao           02/02/04 - Make network id optional
+               virao           01/20/04 - Use local geometry.xsd instead
+                                          of one on remote server
+               virao           01/14/04 - Creation
+            */
+            ]]>
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <!--  bring in the GML geometry schema -->
+    <xsd:import namespace="http://www.opengis.net/gml" />
+
+            <!--
+            schemaLocation="http://schemas.opengis.net/gml/2.1.2/geometry.xsd"/>
+              -->
+
+    <!-- GLOBAL DECLARATIONS -->
+    <xsd:element name="Network" type="NetworkType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                    This is most likely to be the root element of instance
+                    documents conforming to this schema.  
+                ]]> 
+            </xsd:documentation>
+        </xsd:annotation>
+
+        <xsd:key name="Node_Primary_Key">
+            <xsd:annotation>
+                <xsd:documentation>
+                <![CDATA[
+                    Across all Node elements in the Network element, 
+                    the id field has to be unique and present.
+                ]]> 
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:selector xpath="ndm:Node"/>
+            <xsd:field xpath="ndm:id"/>
+        </xsd:key>
+
+        <xsd:key name="Link_Primary_Key">
+            <xsd:annotation>
+                <xsd:documentation>
+                <![CDATA[
+                    Across all Link elements in the Network element, 
+                    the id field has to be unique and present.
+                ]]> 
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:selector xpath="ndm:Link"/>
+            <xsd:field xpath="ndm:id"/>
+        </xsd:key>
+
+        <xsd:key name="Path_Primary_Key">
+            <xsd:annotation>
+                <xsd:documentation>
+                <![CDATA[
+                    Across all Path elements in the Network element, 
+                    the id field has to be unique and present.
+                ]]> 
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:selector xpath="ndm:Path"/>
+            <xsd:field xpath="ndm:id"/>
+        </xsd:key>
+
+        <xsd:keyref name="Link_Start_Node_Key_Reference" 
+                    refer="Node_Primary_Key">
+            <xsd:selector xpath="ndm:Link"/>
+            <xsd:field xpath="ndm:startNodeID"/>
+        </xsd:keyref>
+
+        <xsd:keyref name="Link_End_Node_Key_Reference" 
+                    refer="Node_Primary_Key">
+            <xsd:selector xpath="ndm:Link"/>
+            <xsd:field xpath="ndm:endNodeID"/>
+        </xsd:keyref>
+
+        <xsd:keyref name="Parent_Node_Key_Reference" refer="Node_Primary_Key">
+            <xsd:selector xpath="ndm:Node"/>
+            <xsd:field xpath="ndm:parentNodeID"/>
+        </xsd:keyref>
+
+        <xsd:keyref name="Parent_Link_Key_Reference" refer="Link_Primary_Key">
+            <xsd:selector xpath="ndm:Link"/>
+            <xsd:field xpath="ndm:parentLinkID"/>
+        </xsd:keyref>
+
+        <xsd:keyref name="Path_Start_Node_Key_Reference" 
+                    refer="Node_Primary_Key">
+            <xsd:selector xpath="ndm:Path"/>
+            <xsd:field xpath="ndm:startNodeID"/>
+        </xsd:keyref>
+
+        <xsd:keyref name="Path_End_Node_Key_Reference" 
+                    refer="Node_Primary_Key">
+            <xsd:selector xpath="ndm:Path"/>
+            <xsd:field xpath="ndm:endNodeID"/>
+        </xsd:keyref>
+        
+        <!-- The following doesn't work becuase xsd:field must evaluate to 
+             one XML element or attribute.  In the case of a Path element,
+             it can contain *many* linkID's.
+             For more details see:
+                 http://www.w3.org/TR/xmlschema-1/\
+                     #section-Constraints-on-XML-\
+                     Representations-of-Identity-constraint-Definitions
+        <xsd:keyref name="Path_Link_Key_Reference" refer="Link_Primary_Key">
+            <xsd:selector xpath="ndm:Path"/>
+            <xsd:field xpath="ndm:linkID"/>
+        </xsd:keyref> -->
+        
+        <xsd:keyref name="Path_Link_Key_Reference" refer="Link_Primary_Key">
+            <xsd:selector xpath="ndm:Path/ndm:linkID"/>
+            <xsd:field xpath="."/>
+        </xsd:keyref>
+
+    </xsd:element>
+    <xsd:element name="Node" type="NodeType"/>
+    <xsd:element name="Link" type="LinkType"/>
+    <xsd:element name="Path" type="PathType"/>
+    <xsd:element name="SubPath" type="SubPathType"/>
+
+    <!--********************************************************************-->
+    <xsd:complexType name="NetworkType">
+        <xsd:sequence>
+            <xsd:element name="id"       type="xsd:int" 
+                         minOccurs="0"/>
+            <xsd:element name="name"     type="xsd:string"/>
+
+            <xsd:element name="category">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="SPATIAL_NETWORK"/>
+                        <xsd:enumeration value="LOGICAL_NETWORK"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+
+            <xsd:element name="linkType">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="DIRECTED"/>
+                        <xsd:enumeration value="UNDIRECTED"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+
+            <xsd:element name="geometryType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                            geometryType element should only be present
+                            if category="SPATIAL_NETWORK"
+                        ]]> 
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="SDO_GEOMETRY_TYPE"/>
+                        <xsd:enumeration value="LRS_GEOMETRY_TYPE"/>
+                        <xsd:enumeration value="TOPO_GEOMETRY_TYPE"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element> 
+            <!-- Actual network features -->
+            <xsd:element ref="Node" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Link" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Path" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="SubPath" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <!-- allow open content -->
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+    <!--********************************************************************-->
+    <xsd:complexType name="NodeType">
+        <xsd:sequence>
+            <xsd:element name="id"       type="xsd:long"/>
+            <xsd:element name="cost"     type="xsd:double" minOccurs="0"/>
+            <xsd:element name="isActive" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="maxLinkLevel" type="xsd:int" minOccurs="0"/>
+
+            <xsd:element name="geometry" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="gml:Point"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <!-- allow open content -->
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+    <!--********************************************************************-->
+    <xsd:complexType name="LinkType">
+        <xsd:sequence>
+            <xsd:element name="id"           type="xsd:long"/>
+            <xsd:element name="cost"         type="xsd:double" minOccurs="0"/>
+            <xsd:element name="isActive"     type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="isBidirected" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="startNodeID"  type="xsd:long"/>
+            <xsd:element name="endNodeID"    type="xsd:long"/>
+            <xsd:element name="linkLevel"    type="xsd:int" minOccurs="0"/>
+
+            <xsd:element name="geometry" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="gml:LineString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <!-- allow open content -->
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+    <!--********************************************************************-->    
+    <xsd:complexType name="PathType">
+        <xsd:sequence>
+            <xsd:element name="id"          type="xsd:long" minOccurs="0"/>
+            <xsd:element name="name"        type="xsd:string" minOccurs="0"/>
+            <xsd:element name="type"        type="xsd:string" minOccurs="0"/>
+            <xsd:element name="costs"       type="ndm:DoubleListType"/>
+            <xsd:element name="isSimple"    type="xsd:boolean"/>
+            <xsd:element name="startNodeID" type="xsd:long"/>
+            <xsd:element name="endNodeID"   type="xsd:long"/>
+            <xsd:element name="noOfLinks"   type="CountType"/>
+            <xsd:element name="linkID"      type="xsd:long"
+                         minOccurs="0" maxOccurs="unbounded"/>
+
+            <xsd:element name="geometry" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="gml:LineString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <!-- allow open content -->
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+    <!--********************************************************************-->
+    <xsd:complexType name="ExPathType">
+        <xsd:sequence>
+            <xsd:element name="id"          type="xsd:long" minOccurs="0"/>
+            <xsd:element name="name"        type="xsd:string" minOccurs="0"/>
+            <xsd:element name="type"        type="xsd:string" minOccurs="0"/>
+            <xsd:element name="costs"       type="ndm:DoubleListType"/>
+            <xsd:element name="isSimple"    type="xsd:boolean"/>
+            <xsd:element name="startNodeID" type="xsd:long"/>
+            <xsd:element name="endNodeID"   type="xsd:long"/>
+            <xsd:element name="noOfLinks"   type="CountType"/>
+            
+            <xsd:element name="linkResponse" type="ndm:LinkType" minOccurs="1" maxOccurs="unbounded"/>
+            
+            <xsd:element name="nodeResponse" type="ndm:NodeType" minOccurs="1" maxOccurs="unbounded"/>
+
+            <xsd:element name="geometry" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="gml:LineString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!-- allow open content -->
+            <xsd:any minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <!-- allow open content -->
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+    <!--********************************************************************-->    
+    <xsd:complexType name="SubPathType">
+        <xsd:sequence>
+            <xsd:element name="id"               type="xsd:long" minOccurs="0"/>
+            <xsd:element name="name"             type="xsd:string" minOccurs="0"/>
+            <xsd:element name="type"             type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referencePath"    type="ndm:PathType"/>
+            <xsd:element name="pathResponse"    type="ndm:ExPathType"/>
+            <xsd:element name="startLinkID"      type="xsd:long"/>
+            <xsd:element name="startPercentage"  type="xsd:double"/>
+            <xsd:element name="endLinkID"        type="xsd:long"/>
+            <xsd:element name="endPercentage"    type="xsd:double"/>
+            <xsd:element name="costs"            type="ndm:DoubleListType" minOccurs="0"/>
+            <xsd:element name="geometry" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="gml:LineString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--********************************************************************-->
+    <xsd:complexType name="TspPathType">
+        <xsd:sequence>
+            <xsd:element name="tspOrder" type="ndm:IntListType" minOccurs="0"/>
+            <xsd:element name="costs"    type="ndm:DoubleListType" minOccurs="0"/>
+            <xsd:element name="subPath"  type="ndm:SubPathType" minOccurs="0"
+                         maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--********************************************************************-->
+    <xsd:simpleType name="DatabaseTableNameType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                    A string that is a valid database table name.  
+                    Must satisfy the following requirements:
+                        1. 1 and 30 characters, inclusive
+                        2. Must be made up of the characters
+                           A-Z, a-z, 0-9, #, $, _
+                        3. First character must be a letter.
+                ]]> 
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="30"/>
+            <xsd:pattern value="[A-Za-z][A-Za-z0-9#$_]{0,29}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!--********************************************************************-->
+    <xsd:simpleType name="DatabaseColumnNameType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                    A string that is a valid database column name.  
+                    Must satisfy the following requirements:
+                        1. 1 and 30 characters, inclusive
+                        2. Must be made up of the characters
+                           A-Z, a-z, 0-9, #, $, _
+                        3. First character must be a letter.
+                ]]> 
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="30"/>
+            <xsd:pattern value="[A-Za-z][A-Za-z0-9#$_]{0,29}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!--********************************************************************-->
+    <xsd:simpleType name="CountType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                    Type to store count statistics - noOfNodes, noOfLinks, etc..
+                    Has to be a restriction on xsd:int because we want it 
+                    to work as an int in Java.
+                ]]> 
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:int">
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>   
+    <!--********************************************************************-->
+  <!--******************************DegreeType*******************************-->                  
+  <xsd:simpleType name="DegreeType">
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="-1"/>
+      <xsd:maxInclusive value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--*************************NonNegativeIntType****************************-->    
+  <xsd:simpleType name="NonNegativeIntType">
+      <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--******************************IDListType*******************************-->  
+  <xsd:simpleType name="IDListType">
+    <xsd:list itemType="xsd:long"/>
+  </xsd:simpleType>
+  <!--******************************IntListType*******************************-->  
+  <xsd:simpleType name="IntListType">
+    <xsd:list itemType="xsd:int"/>
+  </xsd:simpleType>
+  <!--******************************DoubleListType*******************************-->  
+  <xsd:simpleType name="DoubleListType">
+    <xsd:list itemType="xsd:double"/>
+  </xsd:simpleType>
+</xsd:schema>

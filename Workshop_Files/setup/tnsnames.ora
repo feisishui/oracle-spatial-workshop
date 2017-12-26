@@ -1,0 +1,21 @@
+# This is a simple configuration for your TNSNAMES.ORA file. Use it if you experience problems connecting to your database.
+# It defines the connection to your local database on your local machine
+# It assumes your database is called ORCL. If it has another name, modify the SID line
+
+# There is no need for any restart
+
+# Test your connection by:
+#   C:\> tnsping ORCL
+# and
+#   sqlplus scott/tiger@ORCL
+
+# (save your original TNSNAMES.ORA file first)
+
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = ORCL)
+    )
+  )

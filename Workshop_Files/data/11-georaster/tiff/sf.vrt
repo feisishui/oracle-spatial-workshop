@@ -1,0 +1,97 @@
+<VRTDataset rasterXSize="8597" rasterYSize="8597">
+  <SRS>PROJCS["NAD83 / California zone 3",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Lambert_Conformal_Conic_2SP"],PARAMETER["standard_parallel_1",38.43333333333333],PARAMETER["standard_parallel_2",37.06666666666667],PARAMETER["latitude_of_origin",36.5],PARAMETER["central_meridian",-120.5],PARAMETER["false_easting",2000000],PARAMETER["false_northing",500000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["X",EAST],AXIS["Y",NORTH],AUTHORITY["EPSG","26943"]]</SRS>
+  <GeoTransform>  1.8284679197374999e+06,  3.0480099999999866e-01,  0.0000000000000000e+00,  6.4644627889149997e+05,  0.0000000000000000e+00, -3.0480099999999866e-01</GeoTransform>
+  <VRTRasterBand dataType="Byte" band="1">
+    <ColorInterp>Red</ColorInterp>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf1.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf2.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf3.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf4.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+  </VRTRasterBand>
+  <VRTRasterBand dataType="Byte" band="2">
+    <ColorInterp>Green</ColorInterp>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf1.tif</SourceFilename>
+      <SourceBand>2</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf2.tif</SourceFilename>
+      <SourceBand>2</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf3.tif</SourceFilename>
+      <SourceBand>2</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf4.tif</SourceFilename>
+      <SourceBand>2</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+  </VRTRasterBand>
+  <VRTRasterBand dataType="Byte" band="3">
+    <ColorInterp>Blue</ColorInterp>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf1.tif</SourceFilename>
+      <SourceBand>3</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf2.tif</SourceFilename>
+      <SourceBand>3</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="0" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf3.tif</SourceFilename>
+      <SourceBand>3</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="0" xSize="4299" ySize="4299" />
+    </SimpleSource>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">sf4.tif</SourceFilename>
+      <SourceBand>3</SourceBand>
+      <SourceProperties RasterXSize="4299" RasterYSize="4299" DataType="Byte" BlockXSize="4299" BlockYSize="1" />
+      <SrcRect xOff="0" yOff="0" xSize="4299" ySize="4299" />
+      <DstRect xOff="4298" yOff="4298" xSize="4299" ySize="4299" />
+    </SimpleSource>
+  </VRTRasterBand>
+</VRTDataset>

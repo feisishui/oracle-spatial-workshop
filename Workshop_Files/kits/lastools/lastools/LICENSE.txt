@@ -1,0 +1,62 @@
+LICENSE AGREEMENT:
+
+  These LAStools and LASlib (with LASzip) are open-source and are
+  LGPL-licensed (see COPYING). Contact me if you need a different
+  licensing model for proprietary or commercial use.
+
+    * laszip
+    * las2las
+    * lasinfo
+    * lasindex
+    * lasdiff
+    * lasmerge
+    * las2txt & txt2las
+    * lasprecision
+    * LASzip - the lossless LAS compressor at http://laszip.org
+    * LASlib (with LASzip) - the API used by LAStools.
+
+  These LAStools require a license for commercial use. But they can
+  be used freely for non-commercial and non-military purposes that
+  are personal, educational, humanitarian, not-for-profit, and where
+  you can convince me that they will better the world.
+
+    * lasclassify
+    * lastool
+    * lasgrid
+    * lasgrid_old
+    * lasheight
+    * lasboundary
+    * lasduplicate
+    * las2tin
+    * las2iso
+    * las2dem
+    * lasthin
+    * lassort
+    * lastile
+    * lasclip
+    * lasview
+    * las2shp & shp2las.
+
+  This software is distributed WITHOUT ANY WARRANTY and without even the
+  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+  If you want to use LAStools commercially please contact me for licensing
+  terms. A simple rule of thumb: if you have paid, for example, for ArcGIS
+  from ESRI, the QT Modeler from Applied Imagery, LP360 from QCoherent, or
+  similar products then you should also get a LAStools license. You can
+
+  (a) license the existing executables for production
+  (b) license the source code and adapt it for your own production needs
+  (c) license the source code to include in your own software package
+ 
+  Optionally you can also hire me as a consultant to either create tools
+  tailored to your particular needs or to integrate the source code into
+  your own software tools.
+
+PROGRAMMERS:
+  
+  martin.isenburg@gmail.com
+  
+COPYRIGHT:
+  
+  (c) 2007-2011, Martin Isenburg, LASSO - tools to catch reality

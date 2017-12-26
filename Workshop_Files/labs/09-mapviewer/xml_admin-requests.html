@@ -1,0 +1,173 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Examples of administrative requests</title>
+</head>
+<body>
+<h1>Examples of administrative requests</h1>
+
+<HR>
+<TABLE cellpadding="5" cellspacing="3" border="0" summary="">
+<TR>
+  <TD> <A HREF="#mgr_stats">status</A></TD>
+  <TD> <A HREF="#mgr_datasource">datasources</A></TD>
+  <TD> <A HREF="#mgr_cache">caches</A></TD>
+  <TD> <A HREF="#mgr_restart">restart</A></TD>
+  <TD> <A HREF="#mgr_econfig">config</A></TD>
+</TR>
+</TABLE>
+
+<A NAME="mgr_stats">
+<FONT COLOR="#ff0000"><H2> Monitoring MapViewer run-time status</H2> </FONT>
+
+<H3>Mappers and JDBC connections</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;get_stats/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Top theme queries</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;top_theme_queries/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+
+<H3><font color="#ff0000">Reset</font> top theme queries </H3>
+ Use this form to clear/reset the current top theme queries information.<BR>
+
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;reset_top_theme_queries/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+
+
+<A NAME="mgr_datasource">
+<FONT COLOR="#ff0000"><H2> Managing Map Data Sources </H2> </FONT>
+
+<H3>Add a dynamic/temporary data source:</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=15>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;add_data_source
+        name="mvdemo"
+        jdbc_host="foo.us.oracle.com"
+        jdbc_port="1521"
+        jdbc_sid="orcl"
+        jdbc_user="scott"
+        jdbc_password="tiger"
+        jdbc_mode="thin"
+        number_of_mappers="3" /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>List data sources:</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;list_data_sources /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Data source exists:</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;data_source_exists data_source="mvdemo"/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Redefine a data source:</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=15>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;redefine_data_source
+        name="mvdemo"
+        jdbc_host="foo.us.oracle.com"
+        jdbc_port="1521"
+        jdbc_sid="orcl"
+        jdbc_user="scott"
+        jdbc_password="tiger"
+        jdbc_mode="thin"
+        number_of_mappers="5" /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Remove a data source:</H3>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;remove_data_source data_source="mvdemo" jdbc_password="tiger" /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+
+
+<HR>
+<A NAME="mgr_cache">
+<FONT COLOR="#ff0000"><H2> Managing caches </H2></FONT>
+
+<H3>Clear cached style/theme/basemap definitions in a data source:</H3></FONT>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;clear_cache data_source="mvdemo"/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<H3>Clear cached data of a predefined theme:</H3></FONT>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;clear_theme_cache data_source="mvdemo" theme="MY_THEME" /&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA> <BR><INPUT type=submit value=Submit> </FORM>
+
+<HR>
+<A NAME="mgr_econfig">
+<FONT COLOR="#ff0000"><H2> Editing MapViewer config file </H2></FONT>
+
+<H3>Edit this MapViewer server's config file (mapViewerConfig.xml):</H3></FONT>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;edit_config_file/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA>
+<BR><INPUT type=submit value=Submit> </FORM>
+
+<HR>
+<A NAME="mgr_restart">
+<FONT COLOR="#ff0000"><H2> Restarting MapViewer </H2></FONT>
+
+<H3>Use the following form to restart this MapViewer server* :</H3></FONT>
+<FORM action=http://localhost:8080/mapviewer/mapadmin method=post>
+<TEXTAREA cols=70 name=xml_request rows=5>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;non_map_request&gt;
+  &lt;restart/&gt;
+&lt;/non_map_request&gt;
+</TEXTAREA>
+<FONT size="-1"> * The mapViewerConfig.xml file will be reloaded. </FONT>
+<BR><INPUT type=submit value=Submit> </FORM>
+
+
+<p>
+<HR>
+<TABLE cellpadding="5" cellspacing="3" border="0" summary="">
+<TR>
+  <TD> <A HREF="#mgr_stats">status</A></TD>
+  <TD> <A HREF="#mgr_datasource">datasources</A></TD>
+  <TD> <A HREF="#mgr_cache">caches</A></TD>
+  <TD> <A HREF="#mgr_restart">restart</A></TD>
+  <TD> <A HREF="#mgr_econfig">config</A></TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

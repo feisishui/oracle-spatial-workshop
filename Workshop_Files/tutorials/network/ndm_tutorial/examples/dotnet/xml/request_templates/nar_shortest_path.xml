@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<networkAnalysisRequest
+   xmlns="http://xmlns.oracle.com/spatial/network"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:gml="http://www.opengis.net/gml">
+  <networkName>NAVTEQ_SF</networkName>
+  <shortestPath>
+    <startPoint>
+      <nodeID>199520844</nodeID>
+    </startPoint>
+    <endPoint>
+      <nodeID>199652792</nodeID>
+    </endPoint>
+    <subPathRequestParameter>
+      <cost> true </cost>
+      <isFullPath> true </isFullPath>
+      <startLinkIndex> true </startLinkIndex>
+      <startPercentage> true </startPercentage>
+      <endLinkIndex> true </endLinkIndex>
+      <endPercentage> true </endPercentage>
+      <geometry>true</geometry>
+      <pathRequestParameter>
+        <cost> true </cost>
+        <isSimple> true </isSimple>
+        <startNodeID>true</startNodeID>
+        <endNodeID>true</endNodeID>
+        <noOfLinks>true</noOfLinks>
+        <geometry>true</geometry>
+        <linksRequestParameter>
+          <linkRequestParameter>
+            <id>true</id>
+            <cost>true</cost>
+            <isActive>true</isActive>
+            <isBidirected>true</isBidirected>
+            <startNodeID>true</startNodeID>
+            <endNodeID>true</endNodeID>
+            <linkLevel>true</linkLevel>
+            <geometry>true</geometry>
+          </linkRequestParameter>
+        </linksRequestParameter>
+        <nodesRequestParameter>
+          <nodeRequestParameter>
+            <id>true</id>
+            <cost>true</cost>
+            <isActive>true</isActive>
+            <geometry>true</geometry>
+          </nodeRequestParameter>
+        </nodesRequestParameter>
+      </pathRequestParameter>
+    </subPathRequestParameter>
+  </shortestPath>
+</networkAnalysisRequest>

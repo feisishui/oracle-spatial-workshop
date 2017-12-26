@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle WMS Tests</title>
+  <link rel="stylesheet" href="oic.css" type="text/css">
+</head>
+<body>
+<h1>Oracle WMS Tests</h1>
+<hr>
+
+<h3>Service URL: http://localhost:8080/mapviewer/wms </h3>
+
+<h3>GetCapabilities</h3>
+<a href="http://localhost:8080/mapviewer/wms?VERSION=1.1.0&amp;REQUEST=GetCapabilities&amp;SERVICE=WMS">http://localhost:8080/mapviewer/wms?VERSION=1.1.0&amp;REQUEST=GetCapabilities&amp;SERVICE=WMS</a>
+<p>
+List server capabilities
+<H4>Parameters:</h4>
+&nbsp;&nbsp;?VERSION=1.1.0
+<br>&nbsp;&nbsp;&amp;REQUEST=GetCapabilities
+<br>&nbsp;&nbsp;&amp;SERVICE=WMS
+
+<h3>GetMap</h3>
+<a href="http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:4326&BBOX=-80,38,-78,40&WIDTH=480&HEIGHT=400&LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES">http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:4326&BBOX=-80,38,-78,40&WIDTH=480&HEIGHT=400&LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES</a>
+<p>
+Map constructed from a set of layers
+Bounding box in WGS 84 (GPS) coordinates
+<H4>Parameters:</h4>
+&nbsp;&nbsp;?VERSION=1.1.0
+<br>&nbsp;&nbsp;&amp;REQUEST=GetMap
+<br>&nbsp;&nbsp;&amp;FORMAT=image/png
+<br>&nbsp;&nbsp;&amp;SRS=EPSG:4326
+<br>&nbsp;&nbsp;&amp;BBOX=-80,38,-78,40
+<br>&nbsp;&nbsp;&amp;WIDTH=480
+<br>&nbsp;&nbsp;&amp;HEIGHT=400
+<br>&nbsp;&nbsp;&amp;LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES
+
+
+<<h3>GetMap</h3>
+<a href="http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:3785&BBOX=-8905559.3,4579425.81,-8682920.3,4865942.28&WIDTH=480&HEIGHT=400&LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES
+">http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:3785&BBOX=-8905559.3,4579425.81,-8682920.3,4865942.28&WIDTH=480&HEIGHT=400&LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES</a>
+<p>
+Map constructed from a set of layers
+Bounding box in spherical mercator coordinates ("google projection)
+<H4>Parameters:</h4>
+&nbsp;&nbsp;?VERSION=1.1.0
+<br>&nbsp;&nbsp;&amp;REQUEST=GetMap
+<br>&nbsp;&nbsp;&amp;FORMAT=image/png
+<br>&nbsp;&nbsp;&amp;SRS=EPSG:3785
+<br>&nbsp;&nbsp;&amp;BBOX=-8905559.3,4579425.81,-8682920.3,4865942.28
+<br>&nbsp;&nbsp;&amp;WIDTH=480
+<br>&nbsp;&nbsp;&amp;HEIGHT=400
+<br>&nbsp;&nbsp;&amp;LAYERS=US_STATES,US_COUNTIES,US_PARKS,US_CITIES
+
+
+<h3>GetMap</h3>
+<a href="http://localhost:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/jpeg&SRS=EPSG:4326&BBOX=-126,33,-114,45&WIDTH=480&HEIGHT=400&DATASOURCE=scott&BASEMAP=US_BASE_MAP&LAYERS=null">http://localhost:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetMap&FORMAT=image/jpeg&SRS=EPSG:4326&BBOX=-126,33,-114,45&WIDTH=480&HEIGHT=400&DATASOURCE=scott&BASEMAP=US_BASE_MAP&LAYERS=null</a>
+<p>
+Map constructed from a pre-defined base map (no explicit layers specified)
+Using an explicit datasource
+Bounding box in WGS 84 (GPS) coordinates
+<H4>Parameters:</h4>
+&nbsp;&nbsp;?VERSION=1.1.0
+<br>&nbsp;&nbsp;&amp;REQUEST=GetMap
+<br>&nbsp;&nbsp;&amp;FORMAT=image/jpeg
+<br>&nbsp;&nbsp;&amp;SRS=EPSG:4326
+<br>&nbsp;&nbsp;&amp;BBOX=-126,33,-114,45
+<br>&nbsp;&nbsp;&amp;WIDTH=480
+<br>&nbsp;&nbsp;&amp;HEIGHT=400
+<br>&nbsp;&nbsp;&amp;DATASOURCE=scott
+<br>&nbsp;&nbsp;&amp;BASEMAP=US_BASE_MAP
+<br>&nbsp;&nbsp;&amp;LAYERS=null
+
+<h3>GetFeatureInfo</h3>
+<a href="http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetFeatureInfo&query_Layers=US_STATES&SRS=SDO:8307&BBOX=-126,33,-114,45&WIDTH=480&HEIGHT=400&X=200&y=200
+">http://127.0.0.1:8080/mapviewer/wms?VERSION=1.1.0&REQUEST=GetFeatureInfo&query_Layers=US_STATES&SRS=SDO:8307&BBOX=-126,33,-114,45&WIDTH=480&HEIGHT=400&X=200&y=200</a>
+<p>
+Get information about one specific state
+<H4>Parameters:</h4>
+&nbsp;&nbsp;?VERSION=1.1.0
+<br>&nbsp;&nbsp;&amp;REQUEST=GetFeatureInfo
+<br>&nbsp;&nbsp;&amp;query_Layers=US_STATES
+<br>&nbsp;&nbsp;&amp;SRS=SDO:8307
+<br>&nbsp;&nbsp;&amp;BBOX=-126,33,-114,45
+<br>&nbsp;&nbsp;&amp;WIDTH=480
+<br>&nbsp;&nbsp;&amp;HEIGHT=400
+<br>&nbsp;&nbsp;&amp;X=200
+<br>&nbsp;&nbsp;&amp;y=200
+
+<hr>
+</body>
+</html>

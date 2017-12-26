@@ -1,0 +1,79 @@
+15 August 2011 -- lasclassify: added after demands for bare-earth extraction
+15 August 2011 -- lastool now also displays existing projection information
+5 August 2011 -- lastool and many LAStools allow to add/set projection info
+30 July 2011 -- lasclip: support in GUI and *.txt files for polygon input
+30 July 2011 -- lasheight: allows dropping points based on height above ground
+30 July 2011 -- lassort: sort by GPS time as a new option
+21 July 2011 -- lastool: one tool to rule them all - a simple GUI for LAStools
+7 July 2011 -- lasheight: created in the express to kahl with lightning delay
+30 June 2011 -- out-of-core lasgrid for large rasters & support for ERDAS *.img
+23 June 2011 -- turned on LASzip version 2.0 compressor with chunking 
+11 June 2011 -- support for over 4,294,967,295 points in merged LAS/LAZ or for ASCII
+31 May 2011 -- new spatial data base functionality for folders of LAS/LAZ files
+21 May 2011 -- most tools can now batch process with wildcards or multiple file names
+17 May 2011 -- laszip: enabling batch processing 
+15 May 2011 -- laszip: improved GPS11v2 compression for interleaved flight-lines
+13 May 2011 -- all tools can now read spatially indexed data if LAX file
+13 May 2011 -- moved indexing, filtering, transforming into LASreader
+9 May 2011 -- laszip: the chunked compressor now allows variable chunk sizes
+2 May 2011 -- lasduplicate: created after Mark's packet arrived
+29 April 2011 - lasindex: created after cable outage during the royal wedding (-:
+27 April 2011 -- the LASreader of the LASlib interface now allows to seek()
+25 April 2011 -- laszip: chunked compression for random access decompression
+22 April 2011 -- txt2las & shp2las command-line flags specify projection VLR
+18 April 2011 -- las2las: sets projection tags or reprojects horizontally
+12 April 2011 -- lasboundary: output PolygonZ instead of PolylineZ for SHP files 
+11 April 2011 -- all tools can now read/write ASCII via on-the-fly conversion
+7 April 2011 -- las2dem: improved false colors and RGB color handling
+6 April 2011 -- las2dem: added -intensity as an alternative to -elevation
+22 March 2011 -- lasthin: ooups ... fixed a fat fat bug living in the sparsity
+20 March 2011 -- txt2las: added capability to read *.zip, *.rar, and *.7z directly
+20 March 2011 -- all tools can now read and write LASzip version 2.0
+18 March 2011 -- new cool LASfilters and LAStransforms
+15 March 2011 -- las2txt: added the 'E' option to place an '-extra STRING' 
+4 March 2011 -- lasdem: added floating point -precision to ASC/BIL/TIF output
+3 March 2011 -- lasdem: ASC ESRI ASCII *.asc grids as an output option 
+27 February 2011 -- lasthin: keep '-sparse' grids in a hash_map or a map
+24 February 2011 -- lasclip: added possibility to merely classify (not clip) points 
+22 February 2011 -- txt2las: added option to scale the intensity scan_angle
+12 February 2011 -- lasthin: option to keep highest instead of lowest point
+7 February 2011 -- created lasclip after baking a cheese in dad's microwave oven 
+26 January 2011 -- las2las, lasinfo, las2txt, and lasmerge: use LAStransform
+5 February 2011 -- created lassort a few hours before having Lufthansa Thai food
+23 January 2011 -- all tools use LASwriteOpener 
+21 January 2011 -- all tools use LASreadOpener and can read multiple LAS files
+21 January 2011 -- lasboundary: added the concept of a '-disjoint_hull' as output  
+17 January 2011 -- lasboundary: added capability to output '-holes' in the data set  
+15 January 2011 -- las2iso: new LineWriter adds possibility to output in KML & WKT
+4 January 2011 -- all tools have a LASfilter to clip or eliminate points
+3 January 2011 -- laszip: completely refactored for integration into liblas
+3 December 2010 -- laslib API: updated to (somewhat) support LAS format 1.3
+30 November 2010 -- created lasprecision spotting few paper cups at Starbuck's Offenbach
+7 February 2010 -- lasgrid: created from lasraster pondering about Karleen's Valentine
+17 January 2010 -- laszip: switched the range coder with faster arithmetic coder
+30 October 2009 -- created lasboundary after working late and biking through the night
+25 August 2009 -- created las2shp & las2shp after painting walls and hanging the yellow curtains
+17 August 2009 -- las2iso: possibility to simplify and clean the contours
+10 July 2009 -- lasinfo: '-auto_date' sets the day/year to the file creation date
+11 April 2009 -- created las2dem after making an offer on 1881 Chestnut
+6 April 2009 -- created las2iso after getting more serious about 1881 Chestnut
+17 September 2008 -- all tools to deal with LAS format version 1.2
+19 April 2008 -- created lasthin after not going on Sheker's full moon hike
+31 March 2009 -- created las2tin on a lonely flight UA 927 from FRA to SFO
+12 March 2009 -- all tools ask for input when started without arguments
+17 November 2007 -- Howard contacts me. the LAStools code base branches off into LIBlas.
+07 November 2007 -- created lasmerge after an email from luis.viveros@digimapas.cl
+13 July 2007 -- lasinfo: new option to "repair" the header and change items
+13 July 2007 -- txt2las: single pass if output is to file
+10 July 2007 -- created las2las after talking with LLNL Linda about the H1B process
+25 June 2007 -- txt2las: added warning in case that quantization causes a sign flip
+9 May 2007 -- adapted lasview from my streaming point viewer
+4 May 2007 -- completed las2txt one month later because my mother passed away
+4 April 2007 -- created las2txt in the ICE from Frankfurt Airport to Wuerzburg
+25 March 2007 -- created lasinfo in Hongkong at Pacific Coffee after walking up the hill
+26 February 2007 -- created txt2las sitting in the SFO lounge waiting for LH 455
+23 February 2007 -- created lasdiff before getting ready for henna's birthday cabin trip
+22 February 2007 -- created laspointreaders and laspointwriters about an hour before henna's birthday
+21 February 2007 -- created laswriter API after eating Sarah's veggies with peanutsauce
+18 February 2007 -- created lasreader API after repairing 2 vacuum cleaners in the garden
+14 February 2007 -- created laszip after picking flowers for henna's Valentine dinner

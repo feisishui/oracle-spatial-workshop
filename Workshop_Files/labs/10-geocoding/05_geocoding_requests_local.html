@@ -1,0 +1,381 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle Geocoder Tests</title>
+</head>
+<body>
+<h1>Oracle Geocoder Tests</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#US"> United States </a></td>
+  <td> <a href="#FR"> France        </a></td>
+  <td> <a href="#DE"> Germany       </a></td>
+  <td> <a href="#UK"> UK            </a></td>
+  <td> <a href="#NL"> Netherlands   </a></td>
+  <td> <a href="#BE"> Belgium       </a></td>
+  <td> <a href="#REVERSE"> Reverse Geocoding </a></td>
+</tr>
+</table>
+
+<a name="US">
+<H3>United States</H3>
+<h4>Unformated addresses</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1500 Clay Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Pensylvania Avenue" /&gt;
+          &lt;address_line value="Washington, DC 22001" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<h4>Using US-specific address formatting - multiple matches</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;us_form2 street="Howard Street" city="San Francisco" state="CA"/&gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="FR">
+<H3>France</H3>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="12 rue de l'Arcade" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="150 Bd Hausman" /&gt;
+          &lt;address_line value="75009 Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="DE">
+<H3>Germany</H3>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Alexanderplatz" /&gt;
+          &lt;address_line value="D-10178 Berlin" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="UK">
+<H3>UK</H3>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="High Street" /&gt;
+          &lt;address_line value="Maidenhead" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Star House" /&gt;
+          &lt;address_line value="20 Grenfell Road" /&gt;
+          &lt;address_line value="Maidenhead SL6 1EH" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Cowley Road" /&gt;
+          &lt;address_line value="Cambridge" /&gt;
+          &lt;address_line value="CB4 0WS" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="UK" &gt;
+          &lt;address_line value="Barton Road" /&gt;
+          &lt;address_line value="Cambridge CB3" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="NL">
+<H3>Netherlands</H3>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="NL" &gt;
+          &lt;address_line value="Kennedy Laan" /&gt;
+          &lt;address_line value="3451 Utrecht" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+<p>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="NL" &gt;
+          &lt;address_line value="Multatulistraat 45" /&gt;
+          &lt;address_line value="NL-3451 Utrecht" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="BE">
+<H3>Belgium</H3>
+<h4>Address in French</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="Avenue du Bois Soleil, 62" /&gt;
+          &lt;address_line value="Kraainem" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same address in Dutch</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"&gt;
+      &lt;input_address match_mode="default"&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="Zonneboslaan, 62" /&gt;
+          &lt;address_line value="Kraainem" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="REVERSE">
+<H3>Reverse Geocoding</H3>
+<h4>US: Longitude, latitude, no SRID</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+    country="US"
+    longitude="-122.41837" latitude="37.80598"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>US: Easting, northing, SRID</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+    country="US"
+    x="-2274355.9" y="1959197.12" srid="32775"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>France: Longitude, latitude, no SRID</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="FR"
+      longitude="2.322855" latitude="48.867909999999995"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>France: Easting, northing, SRID</h4>
+<form name=omsmapform action=http://localhost:7001/geocoder/gcserver method=post>
+<textarea name=xml_request rows=8 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;geocode_request&gt;
+  &lt;address_list&gt;
+    &lt;input_location id="1"
+      country="FR"
+      x="598997.994" y="2429954.32" srid="41014"&gt;
+    &lt;/input_location&gt;
+  &lt;/address_list&gt;
+&lt;/geocode_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#US"> United States </a></td>
+  <td> <a href="#FR"> France        </a></td>
+  <td> <a href="#DE"> Germany       </a></td>
+  <td> <a href="#UK"> UK            </a></td>
+  <td> <a href="#NL"> Netherlands   </a></td>
+  <td> <a href="#BE"> Belgium       </a></td>
+  <td> <a href="#REVERSE"> Reverse Geocoding </a></td>
+</tr>
+</table>
+
+</body>
+</html>

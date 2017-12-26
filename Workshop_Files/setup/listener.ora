@@ -1,0 +1,35 @@
+# This is a simple configuration for your LISTENER.ORA file. Use it if you experience problems connecting to your database.
+# The listener will only "listen" on your localhost address, so you do not have to worry about your actual IP address.
+# The listener will always "know" about your local database, so you do not depend on the database registering iself first.
+
+# Don't forget to modify the ORACLE_HOME and SID_NAME settings to match your configuration. 
+
+# After setting up this file, you will need to restart your listener.
+# Either stop and start the listener service, or use the command line:
+#   C:\> lsnrctl stop 
+#   C:\> lsnrctl start
+
+# Test your connection by:
+#   C:\> tnsping ORCL
+# and
+#   sqlplus scott/tiger@ORCL
+
+# (save your original LISTENER.ORA file first)
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS_LIST =
+        (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+      )
+    )
+  )
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = ORCL)
+      (ORACLE_HOME = C:\Oracle\product\11.1.0\db_1)
+      (SID_NAME = ORCL)
+    )
+  )

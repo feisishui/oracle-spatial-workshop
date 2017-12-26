@@ -1,0 +1,1 @@
+EXECUTE sdo_geor_utl.renameRDT('US_RASTERS_RDT_01', 'US_RASTERS_RDT_02'); 

@@ -1,0 +1,225 @@
+The tfw files only contain the transformation information and tif files contain the image data for each band.
+A tfw file is a short six line ASCII file.
+Each ASCII tfw file has six values, one per line:
+
+Line 1:       x-scale. This is the horizontal distance in meters represented by each pixel. So in the above example each pixel is .6 meters wide.
+Line 2:       Rotation about y axis.
+Line 3:       Rotation about x axis.
+Line 4:       y-scale This is the vertical distance in meters represented by each pixel. So in the above example each pixel is .6 meters tall. Normally negative, because whilst an image has its origin in the top left corner, for Northings and Eastings the origin is normally considered to be the bottom left corner - hence why the scale is normally negative.
+Line 5:       x-reference point. This is the horizontal coordinate (or Easting) of the center of the top left pixel.
+Line 6:       y-reference point. This is the vertical coordinate (or Northing) of the center of the top left pixel.
+
+    pixel x size
+    rotation about the y axis
+    rotation about the x axis
+    - pixel y size
+    x of upper left pixel
+    y of upper left pixel
+
+For example:
+
+    25 (pixel x size)
+    0 (rotation about the y axis)
+    0 (rotation about the x axis)
+    -25 (- pixel y size)
+    656414 (x of upper left pixel)
+    8464763 (y of upper left pixel)
+
+tfw files
+There are two ways in which an image can know its geographic coordinates.
+
+The first option is to imbed special tags in a tif file with the GeoTIFF format.
+The second option is to have a world file, a 6-line ASCII file file such as
+
+                   2.4384
+                   0.0000
+                   0.0000
+                  -2.4384
+              441794.4342
+             5094101.4520
+
+These are the 6 coefficients of a three-by-three transformation matrix.
+They indicate that a pixel is 2.4384 meters square, and that the center of the upper left pixel
+has an easting (x coordinate) of 441794.4342 and a northing of 5094101.4520.
+
+For fans of the matrix:
+
+x = 2.4384 * column + 0.0 * row + 441794.4342
+y = (-2.4384) * row + 0.0 * column + 5094101.4520
+
+In Oracle, use the sdo_geor.geoReference() function:
+
+sdo_geor.georeference(
+  georaster,
+  srid,
+  modelCoordinateLocation,
+  sdo_number_array (A, B, C),
+  sdo_number_array (D, E, F)
+)
+
+If the original raster data is rectified and if the model coordinate
+of its origin (upper-left corner) is (x0, y0) and its spatial resolution
+or scale is s, then the following are true:
+  A = s, B = 0, C = x0,
+  D = 0, E = -s, F = y0.
+
+wgere the TFW is:
+A   s         pixel x size
+B   0         rotation about the y axis
+D   0         rotation about the x axis
+E   -s        - pixel y size
+C   x0        x of upper left pixel
+F   y0        y of upper left pixel
+
+Example:
+
+Given this TFW:
+A       2.4384      pixel x size
+B       0.0000      rotation about the y axis
+D       0.0000      rotation about the x axis
+E      -2.4384      - pixel y size
+C  441794.4342      x of upper left pixel
+F 5094101.4520      y of upper left pixel
+
+xCoefficients:
+A       2.4384      pixel x size
+B       0.0000      rotation about the y axis
+C  441794.4342      x of upper left pixel
+
+yCoefficients:
+D       0.0000      rotation about the x axis
+E      -2.4384      - pixel y size
+F 5094101.4520      y of upper left pixel
+
+The second and third values are zero because there is no rotation or skew.
+
+  sdo_geor.geoReference (
+    georaster               => gr,
+    srid                    => 27571,
+    modelCoordinateLocation => 1,
+    xCoefficients           => sdo_number_array(
+      2.4384,         -- A = x pixel resolution
+      0,              -- B = y rotation
+      441794.4342     -- C = x upper left
+    ),
+    yCoefficients           => sdo_number_array(
+      0,              -- D = x rotation
+      -2.4384,        -- E = y pixel resolution
+      5094101.4520    -- F = y upper left
+    )
+  );
+
+
+
+SF1                         SF3
+0.3048010000                0.3048010000
+0.0000000000                0.0000000000
+0.0000000000                0.0000000000
+-0.3048010000               -0.3048010000
+1828468.0721379998          1829778.1068360000
+646446.1264909999           646446.1264909999
+
+SF2                         SF4
+0.3048010000                0.3048010000
+0.0000000000                0.0000000000
+0.0000000000                0.0000000000
+-0.3048010000               -0.3048010000
+1828468.0721379998          1829778.1068360000
+645136.0917930000           645136.0917930000
+
+SF1:
+
+SDO_GEORASTER(
+  21001,
+  SDO_GEOMETRY(
+    2003, 26943, NULL,
+    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
+    SDO_ORDINATE_ARRAY(
+      1828467.92, 646446.279,
+      1828467.92, 645791.262,
+      1828467.92, 645135.939,
+      1829122.94, 645135.939,
+      1829778.26, 645135.939,
+      1829778.26,645791.262,
+      1829778.26, 646446.279,
+      1829122.94, 646446.279,
+      1828467.92, 646446.279
+    )
+  ),
+  'US_RASTERS_RDT_01', 1,
+  XMLTYPE(
+<georasterMetadata xmlns="http://xmlns.oracle.com/spatial/georaster">
+  <objectInfo>
+    <rasterType>21001</rasterType>
+    <isBlank>false</isBlank>
+    <defaultRed>1</defaultRed>
+    <defaultGreen>2</defaultGreen>
+    <defaultBlue>3</defaultBlue>
+  </objectInfo>
+  <rasterInfo>
+    <cellRepresentation>UNDEFINED</cellRepresentation>
+    <cellDepth>8BIT_U</cellDepth>
+    <totalDimensions>3</totalDimensions>
+    <dimensionSize type="ROW">
+      <size>4299</size>
+    </dimensionSize>
+    <dimensionSize type="COLUMN">
+      <size>4299</size>
+    </dimensionSize>
+    <dimensionSize type="BAND">
+      <size>3</size>
+    </dimensionSize>
+    <ULTCoordinate>
+      <row>0</row>
+      <column>0</column>
+      <band>0</band>
+    </ULTCoordinate>
+    <blocking>
+      <type>REGULAR</type>
+      <totalRowBlocks>9</totalRowBlocks>
+      <totalColumnBlocks>9</totalColumnBlocks>
+      <totalBandBlocks>1</totalBandBlocks>
+      <rowBlockSize>512</rowBlockSize>
+      <columnBlockSize>512</columnBlockSize>
+      <bandBlockSize>3</bandBlockSize>
+    </blocking>
+    <interleaving>BIP</interleaving>
+    <pyramid>
+      <type>NONE</type>
+    </pyramid>
+    <compression>
+      <type>NONE</type>
+    </compression>
+  </rasterInfo>
+  <spatialReferenceInfo>
+    <isReferenced>true</isReferenced>
+    <isRectified>true</isRectified>
+    <SRID>26943</SRID>
+    <spatialResolution dimensionType="X">
+      <resolution>0.304800999999999</resolution>
+    </spatialResolution>
+    <spatialResolution dimensionType="Y">
+      <resolution>0.304800999999999</resolution>
+    </spatialResolution>
+    <modelCoordinateLocation>UPPERLEFT</modelCoordinateLocation>
+    <modelType>FunctionalFitting</modelType>
+    <polynomialModel rowOff="0" columnOff="0" xOff="0" yOff="0" zOff="0" rowScale="1" columnScale="1" xScale="1" yScale="1" zScale="1">
+      <pPolynomial pType="1" nVars="2" order="1" nCoefficients="3">
+        <polynomialCoefficients>2120879.783503014 0 -3.280829131138032</polynomialCoefficients>
+      </pPolynomial>
+      <qPolynomial pType="1" nVars="0" order="0" nCoefficients="1">
+        <polynomialCoefficients>1</polynomialCoefficients>
+      </qPolynomial>
+      <rPolynomial pType="1" nVars="2" order="1" nCoefficients="3">
+        <polynomialCoefficients>-5998890.816426147 3.280829131138032 0</polynomialCoefficients>
+      </rPolynomial>
+      <sPolynomial pType="1" nVars="0" order="0" nCoefficients="1">
+        <polynomialCoefficients>1</polynomialCoefficients>
+      </sPolynomial>
+    </polynomialModel>
+  </spatialReferenceInfo>
+  <layerInfo>
+    <layerDimension>BAND</layerDimension>
+  </layerInfo>
+</georasterMetadata>
+))

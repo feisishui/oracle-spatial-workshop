@@ -1,0 +1,329 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle Router Tests</title>
+</head>
+<body>
+<h1>Oracle Router Tests</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#short"> Short Distance </a></td>
+  <td> <a href="#multi"> Multiple destinations </a></td>
+  <td> <a href="#gc"   > Pre_geocoded destinations </a></td>
+  <td> <a href="#geo"  > Geographic destinations </a></td>
+  <td> <a href="#nonr" > Non-routable destinations </a></td>
+</tr>
+</table>
+
+<a name="short">
+<h3>Short distance routes: in town </h3>
+
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route</h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry</h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry and edge ids</h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning only route geometry simplified </h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="false"
+  return_route_geometry="true"
+  return_detailed_geometry="false"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="multi">
+<h3>Multiple destinations ("batch" request)</h3>
+<h4>San Francisco: Howard Street to Columbus Avenue, California Street, Sutter Street</h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;batch_route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/batch_route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="gc">
+<h3>Pre-Geocoded Destinations</h3>
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  pre_geocoded_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;pre_geocoded_location id="1"&gt;
+      &lt;edge_id&gt;917724446&lt;/edge_id&gt;
+      &lt;percent&gt;0.0&lt;/percent&gt;
+      &lt;side&gt;R&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;pre_geocoded_location id="2"&gt;
+      &lt;edge_id&gt;198680212&lt;/edge_id&gt;
+      &lt;percent&gt;0.0&lt;/percent&gt;
+      &lt;side&gt;R&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="geo">
+<h3>Geographic Destinations</h3>
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" country="US"
+      longitude="-122.4016" latitude="37.78415" /&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" country="US"
+      longitude="-122.41837" latitude="37.80598" /&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="nonr">
+<h3>Non-routable destinations </h3>
+<h4>San Francisco: Cascade Walk (non-routable) to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="98 Cascade Walk" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco: Howard Street to Yerba Buena Lane (non-routable) - fastest route </h4>
+<form name=omsmapform action=http://localhost:7001/routeserver/servlet/RouteServerServlet method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="33 Yerba Buena Lane" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#short"> Short Distance </a></td>
+  <td> <a href="#multi"> Multiple destinations </a></td>
+  <td> <a href="#gc"   > Pre_geocoded destinations </a></td>
+  <td> <a href="#geo"  > Geographic destinations </a></td>
+  <td> <a href="#nonr" > Non-routable destinations </a></td>
+</tr>
+</table>
+
+</body>
+</html>

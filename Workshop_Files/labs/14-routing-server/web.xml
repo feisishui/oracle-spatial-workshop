@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+<web-app>
+  <servlet>
+    <servlet-name>RouteServerServlet</servlet-name>
+
+    <servlet-class>oracle.spatial.router.server.RouteServerServlet</servlet-class>
+
+    <load-on-startup>1</load-on-startup>
+
+    <security-role-ref>
+       <role-name>rs_admin</role-name>
+       <role-link>rs_admin_role</role-link>
+    </security-role-ref>   
+
+    <!-- RouteServer initialization parameters -->
+    <!--
+      The Router can connect to a database either using a data source or 
+      using a JDBC connect string. The preferred method is to use a data
+      source. Only one needs to be specified. If both are specified the 
+      data source will override the JDBC connect string. Replace one of the
+      placeholder strings with either a JNDI name or JDBC connect string.
+
+      Once you pick a connection method you may either leave the 
+      unused placeholders in the file or delete them.
+    -->
+    <init-param>
+      <param-name>*UNUSED*container_ds</param-name>
+      <param-value>containerDSPlaceholder</param-value>
+        <!-- 
+          <description>
+            Tells the Router how to connect to the databas using a data
+            source container. The parameter value is the JNDI name of the 
+            data source:
+
+	          jdbc/exampleDS
+          </description>
+        -->
+    </init-param>
+
+    <!--
+      If the routeserver_schema_jdbc_connect_string is used then the 
+      routeserver_schema_username and routeserver_schema_username
+      parameters must also be specified. 
+    -->
+    <init-param>        
+      <param-name>routeserver_schema_jdbc_connect_string</param-name>        
+      <param-value>jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=127.0.0.1)(PORT=1521)))(CONNECT_DATA=(SID=orcl122)))</param-value>
+        <!-- 
+          <description>
+            Tells the Router how to connect to the database use the following
+            as a template replaceing host_name, port_number and oracle_sid:
+
+            jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521)))(CONNECT_DATA=(SID=orcl)))
+       
+            host_name: the name of the machine where the database is located 
+                       for example mysystem.us.mycompany.com
+            port_number: the database port number which can be found with the 
+                         lsnrctl status command
+            oracle_sid: the SID of your database
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>routeserver_schema_username</param-name>
+      <param-value>scott</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>routeserver_schema_password</param-name>
+      <param-value>!tiger</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>routeserver_network_name</param-name>
+      <param-value>ROUTE_SF</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>*UNUSED*wl-dispatch-policy</param-name>
+      <param-value>workManagerPlaceholder</param-value>
+        <!-- 
+          <description>
+            The name of a Weblogic Server "Work Manager" defined in the 
+            Weblogic console at Environment->Work Managers. You define a 
+            Work Manager, then within that manager you define constraints.  
+
+            These constraints constrain resource usage in the Routeserver Weblogic 
+            server. For example, limiting the max number of threads to allocate
+            handle incoming requests. This keeps the server from becomeing
+	          overloaded.
+	  </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>routeserver_schema_connection_cache_min_limit</param-name>
+      <param-value>3</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>routeserver_schema_connection_cache_max_limit</param-name>
+      <param-value>100</param-value>
+    </init-param>
+
+    <!-- Geocoder parameters -->
+    <init-param>
+      <param-name>geocoder_type</param-name>
+      <param-value>httpclient</param-value>
+        <!-- 
+          <description>
+            httpclient - interacts with geocoder Java Servlet
+            thinclient - interacts with geocoder in Oracle Database
+                  none - no geocoder provided
+
+            If geocoder_type is set to thinclietnt and the Geocoder and 
+            Routeserver are in the same OC4j container the Geocoder must 
+            be configured to use a data source to avoid connection pool  
+            conflicts. 
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_match_mode</param-name>
+      <param-value>DEFAULT</param-value>
+    </init-param>
+
+    <!-- These parameters are used if geocoder_type is httpclient -->
+    <init-param>
+      <param-name>geocoder_http_url</param-name>
+      <param-value>http://127.0.0.1:7001/geocoder/gcserver</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_http_proxy_host</param-name>
+      <param-value></param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_http_proxy_port</param-name>
+      <param-value>-1</param-value>
+    </init-param>
+
+    <!-- These parameters are used if geocoder_type is thinclient -->
+    <init-param>
+      <param-name>geocoder_schema_host</param-name>
+      <param-value>localhost</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_schema_port</param-name>
+      <param-value>1521</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_schema_sid</param-name>
+      <param-value>orcl</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>geocoder_schema_username</param-name>
+      <param-value>gc_americas</param-value>
+    </init-param>
+        
+    <init-param>
+      <param-name>geocoder_schema_password</param-name>
+      <param-value>gc_americas</param-value>
+    </init-param>
+        
+    <init-param>
+      <param-name>geocoder_schema_mode</param-name>
+      <param-value>thin</param-value>
+        <!--
+          <description>
+            thin, oci8, etc 
+          </description>
+        -->
+    </init-param>
+
+    <!-- RouteServer Logging parameters -->
+    <init-param>
+      <param-name>log_filename</param-name>
+      <param-value>log/RouteServer.log</param-value>
+        <!--
+          <description>
+            Create a log file for the Router.
+
+            The log file can be specified as a relative path log/RouteServer.log 
+            This creates a log file relative to the Router install. 
+            In OC4j the log file created would be
+            $OC4J_HOME/j2ee/home/applications/routeserver/web/log/RouteServer.log
+
+            The log file can also be specified as an absolute path:
+            /scratch/logfiles/router/Router.log
+
+            If the <param-value></param-value> is left empty the Router 
+            creates a default log file:
+            $OC4J_HOME/j2ee/home/applications/routeserver/web/log/RouteServer.log
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>log_level</param-name>
+      <param-value>INFO</param-value>
+        <!-- 
+          <description> 
+            What information should be written to log file?
+            FATAL  - highest level: only FATAL messages are logged
+            ERROR  - error and fatal messages are logged
+            WARN   - warn, error, and fatal messages are logged
+            INFO   - info, warn, error, and fatal messages are logged
+            DEBUG  - debug, info, warn, error, and fatal messages are logged
+            FINEST - lowest level: everything is logged
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>log_thread_name</param-name>
+      <param-value>true</param-value>
+        <!--
+          <description> 
+            Whether or not to log the thread name which 
+            makes the log entry - (true or false).
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>log_time</param-name>
+      <param-value>true</param-value>
+        <!--
+          <description> 
+            Whether or not to log the time of day along
+            with the log entry - (true or false).
+          </description>
+        -->
+    </init-param>
+
+    <!-- Road description parameters -->
+    <init-param>
+      <param-name>max_speed_limit</param-name>
+      <param-value>34</param-value>
+        <!-- 
+          <description> 
+            Maximum speed limit of any road segment.
+            In meters per second. Should be A 
+            POSITIVE INTEGER SMALLER THAN 32767.  
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>local_road_threshold</param-name>
+      <param-value>25</param-value>
+        <!--
+          <description> 
+            If the estimated distance between source and destination nodes is 
+            less than this value, in miles, then keep local roads a viable 
+            option. This is done as an optimization for short routes.
+
+            Increasing this value beyond the 25 mile default may generate more
+            accurate routes using local roads but can also decrease the Routers 
+            performance by increasing size of the soluion set to be searched.
+            
+            Decreasing this value, the minimum allowed value is 10, can increase
+            Router performance by decreasing the size of the solution set to be
+            searched. However, this may cause the Router to abandon viable local
+            routes and produce nonoptimal short routes.
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>highway_cost_multiplier</param-name>
+      <param-value>1.5</param-value>
+        <!--
+          <description> 
+            This is the amount by which to make 
+            highways less attractive when computing
+            routes with route_preference="local". 
+            1.5 is a good value.  
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>driving_side</param-name>
+      <param-value>R</param-value>
+        <!--
+          <description> 
+            Default driving side. This is only used in           
+            the case of pre-geocoded requests that do 
+            not specify a country code. In all other 
+	          cases driving side is gotten from a property 
+	          file. 
+
+            R for right side and L for left side.
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>language</param-name>
+      <param-value>English</param-value>
+        <!--
+          <description> 
+	          Language to use to give driving directions.
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>long_ids</param-name>
+      <param-value>true</param-value>
+        <!--
+          <description> 
+           If true edge and node ids are Java long datatype (8 bytes)
+           otherwise they are Java integers (4 bytes)
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>distance_function_type</param-name>
+      <param-value>geodetic</param-value>
+        <!--
+          <description>
+            geodetic  - Use the distance function for 
+                        geodetic coordinate systems (e.g. SRID 8307).
+            euclidean - Use the distance function for
+                        projected coordinate systems.
+          </description>
+        -->
+    </init-param>
+
+    <!-- Partitioning parameters -->
+    <init-param>
+      <param-name>partition_cache_size_limit</param-name>
+      <param-value>70</param-value>
+        <!-- 
+          <description>
+            The network partition cache can hold at
+            most this many number of partitions.
+            Set this based on how much memory you have.
+            If partitions are already in the cache, the 
+            RouteServer will not have to load them from the
+            database.
+            WARNING: if you set this too high, you will
+                     run into a OutOfMemoryError.
+
+	          General sizing formula:
+              NodesPerGigabyte: 1.5 million
+              AvgNodesPartition: 26000 
+              UsableMemory: (Allocated Heap in Gigabytes - 1 Gigabyte)
+
+              (NodesPerGigabyte/AvgNodesPartition)*UsableMemory
+
+              NodesPerGigabyte: this should not change 
+
+            AvgNodesPartition: The average number of nodes per
+            local partition. This average should never include
+            the highway partition 0. For the US data set the 
+            average is around 26000. It is best to confirm 
+            this average in the data set used with the following.
+
+            SELECT AVG(COUNT(node_id))
+                  FROM node 
+                  WHERE partition_id>0
+                  GROUP BY partition_id;
+      
+            This generates a very safe number for the partition
+                  cache size. In general it is safe to add another 
+                  15% to 20% to this number.
+
+            The default value above was generated for the US data 
+            set running on a 2G heap, 1G for the highway partition 
+            and 1G for the local partitions and padding it by about
+            15%
+          </description>
+        -->
+    </init-param>
+
+    <init-param>
+      <param-name>partition_table_name</param-name>
+      <param-value>partition</param-value>
+        <!--
+          <description>
+            Name of the partition table that contains the
+            network partitions.  The table is presumed
+            to be contained in the schema described by
+            routeserver_schema_jdbc_connect_string,
+            routeserver_schema_username,
+            and routeserver_schema_password parameters 
+            described above.
+          </description>
+        -->
+    </init-param>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>RouteServerServlet</servlet-name>
+    <url-pattern>/routeserver</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>RouteServerServlet</servlet-name>
+    <url-pattern>/servlet/RouteServerServlet</url-pattern>
+  </servlet-mapping>
+
+  <!-- Security parameters -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Admin</web-resource-name>
+      <url-pattern>/admin.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>rs_admin_role</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>RouteServer Administration</realm-name>
+  </login-config>
+
+  <security-role>
+    <description>To perform RouteServer administration.</description>
+    <role-name>rs_admin_role</role-name>
+  </security-role>
+
+</web-app>

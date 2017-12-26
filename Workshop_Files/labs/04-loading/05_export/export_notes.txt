@@ -1,0 +1,238 @@
+1) The original shape file:
+---------------------------
+
+$ ogrinfo -so -al /media/sf_Workshop_Files/data/04-loading/shape/us_counties.shp
+INFO: Open of `/media/sf_Workshop_Files/data/04-loading/shape/us_counties.shp'
+      using driver `ESRI Shapefile' successful.
+
+Layer name: us_counties
+Metadata:
+  DBF_DATE_LAST_UPDATE=2016-01-10
+Geometry: Polygon
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["GCS_WGS_1984",
+    DATUM["World Geodetic System 1984 (EPSG ID 6326)",
+        SPHEROID["WGS_84_EPSG_ID_7030",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.000000],
+    UNIT["Degree",0.017453292519943295]]
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (24.15)
+TOTPOP: Real (24.15)
+POPPSQMI: Real (24.15)
+
+
+2) Load the shape file in Oracle:
+---------------------------------
+
+ogr2ogr -f OCI OCI:scott/tiger@localhost:1521/orcl122: us_counties.shp \
+    -lco DIM=2 -lco SRID=4326 -lco GEOMETRY_NAME=geom -lco INDEX=NO \
+    -lco DIMINFO_X="-180,180,1" -lco DIMINFO_Y="-90,90,1" \
+    -lco ADD_LAYER_GTYPE=NO \
+    -lco LAUNDER=YES
+
+SQL> desc us_counties
+ Name                                     Null?    Type
+ ---------------------------------------- -------- ----------------------------
+ ID                                       NOT NULL NUMBER(38)
+ GEOM                                              MDSYS.SDO_GEOMETRY
+ COUNTY                                            VARCHAR2(124)
+ FIPSSTCO                                          VARCHAR2(20)
+ STATE                                             VARCHAR2(120)
+ STATE_ABRV                                        VARCHAR2(8)
+ FIPSST                                            VARCHAR2(8)
+ LANDSQMI                                          NUMBER(24,15)
+ TOTPOP                                            NUMBER(24,15)
+ POPPSQMI                                          NUMBER(24,15)
+
+$ ogrinfo -so -al OCI:scott/tiger@localhost:1521/orcl122:us_counties
+INFO: Open of `OCI:scott/tiger@localhost:1521/orcl122:us_counties'
+      using driver `OCI' successful.
+
+Layer name: us_counties
+Geometry: Unknown (any)
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["WGS 84",
+    DATUM["World Geodetic System 1984 (EPSG ID 6326)",
+        SPHEROID["WGS 84 (EPSG ID 7030)",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.000000],
+    UNIT["Decimal Degree",0.0174532925199433],
+    AUTHORITY["EPSG. See 3D CRS for original information source.","4326"]]
+ID: Integer64 (0.0) NOT NULL
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (24.15)
+TOTPOP: Real (24.15)
+POPPSQMI: Real (24.15)
+
+You can see that the types have been properly converted (including the size and decimals of the numbers)
+
+3) Export to a file GDB:
+------------------------
+
+$ ogr2ogr -f FileGDB us_data.gdb -append OCI:scott/tiger@orcl122:us_counties -nlt POLYGON
+Warning 1: The output driver does not seem to natively support Integer64 type for field ID. Converting it to Real instead. -mapFieldType can be used to control field type conversion.
+
+$ ogrinfo -so -al us_data.gdb
+INFO: Open of `us_data.gdb'
+      using driver `FileGDB' successful.
+
+Layer name: us_counties
+Geometry: Multi Polygon
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["WGS 84",
+    DATUM["WGS_1984",
+        SPHEROID["WGS 84",6378137,298.257223563,
+            AUTHORITY["EPSG","7030"]],
+        AUTHORITY["EPSG","6326"]],
+    PRIMEM["Greenwich",0,
+        AUTHORITY["EPSG","8901"]],
+    UNIT["degree",0.0174532925199433,
+        AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4326"]]
+FID Column = OBJECTID
+Geometry Column = SHAPE
+ID: Real (0.0) NOT NULL
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (0.0)
+TOTPOP: Real (0.0)
+POPPSQMI: Real (0.0)
+
+The strings have retained their proper sizes, but the numbers are now simple REALs without any size limits.
+
+
+4) Export back to shape file
+----------------------------
+
+$ ogr2ogr -f "ESRI Shapefile" us_counties.shp OCI:scott/tiger@orcl122:us_counties
+$ ogrinfo us_counties.shp
+INFO: Open of `us_counties.shp'
+      using driver `ESRI Shapefile' successful.
+1: us_counties (Polygon)
+$ ogrinfo -so -al us_counties.shp
+INFO: Open of `us_counties.shp'
+      using driver `ESRI Shapefile' successful.
+
+Layer name: us_counties
+Metadata:
+  DBF_DATE_LAST_UPDATE=2016-05-18
+Geometry: Polygon
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["GCS_WGS_1984",
+    DATUM["World Geodetic System 1984 (EPSG ID 6326)",
+        SPHEROID["WGS_84_EPSG_ID_7030",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.000000],
+    UNIT["Degree",0.017453292519943295]]
+ID: Integer64 (18.0)
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (24.15)
+TOTPOP: Real (24.15)
+POPPSQMI: Real (24.15)
+
+The file is identical to the original, with all types preserved
+
+5) Copy shape file to FileGDB
+-----------------------------
+
+$ rm -r us_data.gdb
+$ ogr2ogr -f FileGDB us_data.gdb us_counties.shp
+Warning 1: The output driver does not seem to natively support Integer64 type for field ID. Converting it to Real instead. -mapFieldType can be used to control field type conversion.
+
+$ ogrinfo -so -al us_data.gdb
+INFO: Open of `us_data.gdb'
+      using driver `FileGDB' successful.
+
+Layer name: us_counties
+Geometry: Multi Polygon
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["GCS_WGS_1984",
+    DATUM["World Geodetic System 1984 (EPSG ID 6326)",
+        SPHEROID["WGS_84_EPSG_ID_7030",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.000000],
+    UNIT["Degree",0.017453292519943295]]
+FID Column = OBJECTID
+Geometry Column = SHAPE
+ID: Real (0.0)
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (0.0)
+TOTPOP: Real (0.0)
+POPPSQMI: Real (0.0)
+
+6) Load from FileGDB
+
+ogr2ogr -f OCI OCI:scott/tiger@localhost:1521/orcl122: us_data.gdb \
+    -lco DIM=2 -lco SRID=4326 -lco GEOMETRY_NAME=geom -lco INDEX=NO \
+    -lco DIMINFO_X="-180,180,1" -lco DIMINFO_Y="-90,90,1" \
+    -lco ADD_LAYER_GTYPE=NO \
+    -lco LAUNDER=YES
+
+
+SQL> desc us_counties
+ Name                                     Null?    Type
+ ---------------------------------------- -------- ----------------------------
+ OGR_FID                                  NOT NULL NUMBER(38)
+ GEOM                                              MDSYS.SDO_GEOMETRY
+ ID                                                FLOAT(126)
+ COUNTY                                            VARCHAR2(124)
+ FIPSSTCO                                          VARCHAR2(20)
+ STATE                                             VARCHAR2(120)
+ STATE_ABRV                                        VARCHAR2(8)
+ FIPSST                                            VARCHAR2(8)
+ LANDSQMI                                          FLOAT(126)
+ TOTPOP                                            FLOAT(126)
+ POPPSQMI                                          FLOAT(126)
+
+$ ogrinfo -so -al OCI:scott/tiger@localhost:1521/orcl122:us_countiesINFO: Open of `OCI:scott/tiger@localhost:1521/orcl122:us_counties'
+      using driver `OCI' successful.
+
+Layer name: us_counties
+Geometry: Unknown (any)
+Feature Count: 3230
+Extent: (-179.144806, -14.605210) - (179.764160, 71.332649)
+Layer SRS WKT:
+GEOGCS["WGS 84",
+    DATUM["World Geodetic System 1984 (EPSG ID 6326)",
+        SPHEROID["WGS 84 (EPSG ID 7030)",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.000000],
+    UNIT["Decimal Degree",0.0174532925199433],
+    AUTHORITY["EPSG. See 3D CRS for original information source.","4326"]]
+FID Column = OGR_FID
+ID: Real (0.0)
+COUNTY: String (124.0)
+FIPSSTCO: String (20.0)
+STATE: String (120.0)
+STATE_ABRV: String (8.0)
+FIPSST: String (8.0)
+LANDSQMI: Real (0.0)
+TOTPOP: Real (0.0)
+POPPSQMI: Real (0.0)
+
+

@@ -1,0 +1,1585 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle Elocation Router Tests</title>
+</head>
+<body>
+<h1>Oracle Elocation Router Tests</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#us-short"> US Short Distance </a></td>
+  <td> <a href="#us-medium"> US Medium Distance </a></td>
+  <td> <a href="#us-long"> US Long Distance </a></td>
+  <td> <a href="#eu-short"> Europe Short Distance </a></td>
+  <td> <a href="#eu-medium"> Europe Medium Distance </a></td>
+  <td> <a href="#eu-long"> Europe Long Distance </a></td>
+  <td> <a href="#multi"> Multiple destinations </a></td>
+  <td> <a href="#batch"> Batch routes </a></td>
+  <td> <a href="#gc"> Pre_geocoded destinations </a></td>
+  <td> <a href="#geo"> Geographic destinations </a></td>
+  <td> <a href="#nonr"> Non-routable destinations </a></td>
+  <td> <a href="#json"> JSON responses </a></td>
+</tr>
+</table>
+
+<a name="us-short">
+<h2>US: Short distance routes</h2>
+
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route - returning time and distance only</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="false"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route - returning driving directions</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+
+<h4>Same - shortest route returning details of origin and destination addresses</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry and edge ids</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry maneuver geometries</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_segment_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning only route geometry simplified </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="false"
+  return_route_geometry="true"
+  return_detailed_geometry="false"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal: Rue Bishop to Place Jacques-Cartier, directions in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_route_edge_ids="true"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1200 rue Bishop" /&gt;
+          &lt;address_line value="Montreal" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="Place Jacques Cartier" /&gt;
+          &lt;address_line value="Montreal" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="us-medium">
+<h2>US: Medium distance routes </h2>
+
+<h4>San Francisco to Los Angeles - Fastest</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with detailed driving directions</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  driving_directions_detail="high"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with detailed and hierarchical driving directions</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  driving_directions_detail="high"
+  return_hierarchical_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with full route geometry</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with simplified route geometry</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  return_route_geometry="true"
+  return_detailed_geometry="false"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with full route and manoeuver geometries</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  return_route_geometry="true"
+  return_detailed_geometry="true"
+  return_segment_geometry="true" &gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Fastest with simplified route and manoeuver geometries</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  return_route_geometry="true"
+  return_detailed_geometry="false"
+  return_segment_geometry="true" &gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco to Los Angeles - Shortest using local roads</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  road_preference="local" return_driving_directions="true"
+  distance_unit="mile" time_unit="hour"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal to Boston - Shortest</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="hour"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="CA" &gt;
+          &lt;address_line value="1200 Rue Bishop" /&gt;
+          &lt;address_line value="Montreal" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="200 State Street" /&gt;
+          &lt;address_line value="Boston, MA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="us-long">
+<h2>US:Long distance routes </h2>
+<h4>Los Angeles to Chicago - Fastest</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="50 W Washington St" /&gt;
+          &lt;address_line value="Chicago, IL" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="long">
+<h2>Long distance routes </h2>
+<h4>Los Angeles to Chicago - Shortest, local roads</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  road_preference="local" return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="3600 Sunset Boulevard" /&gt;
+          &lt;address_line value="Los Angeles, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="50 W Washington St" /&gt;
+          &lt;address_line value="Chicago, IL" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="eu-short">
+<h2>Europe: Short distance routes</h2>
+
+<h4>Paris: directions in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="15 rue royale" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="Place d'Italie" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Madrid: directions in Spanish</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="SPANISH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Calle de Alberto Aguilera, 18" /&gt;
+          &lt;address_line value="Madrid" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="calle palestina 8" /&gt;
+          &lt;address_line value="28100 Alcobendas" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="eu-medium">
+<h2>Europe: Medium distance routes</h2>
+
+<h4>Spain: Valencia to Barcelona</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="SPANISH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Carrer de Sant Pau, 5" /&gt;
+          &lt;address_line value="Valencia" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="ES" &gt;
+          &lt;address_line value="Avinguda Diagonal, 615" /&gt;
+          &lt;address_line value="Barcelona" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>France: Nice to Marseille</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="100 Promenade des Anglais" /&gt;
+          &lt;address_line value="Nice" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="Quai des Belges" /&gt;
+          &lt;address_line value="Marseille" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="eu-long">
+<h2>Europe: Long distance routes</h2>
+
+<h4>Nice to Brussels</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="100 Promenade des Anglais" /&gt;
+          &lt;address_line value="Nice" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="BE" &gt;
+          &lt;address_line value="Place de Brouckère" /&gt;
+          &lt;address_line value="Bruxelles" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Paris to Munich</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true" distance_unit="km"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="FR" &gt;
+          &lt;address_line value="26 Boulevard Haussmann" /&gt;
+          &lt;address_line value="Paris" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="DE" &gt;
+          &lt;address_line value="Arabellastraße 6" /&gt;
+          &lt;address_line value="Munchen" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="multi">
+<h2>Multiple destinations</h2>
+<h4>Open route: Howard Street to Columbus Avenue to California Street to Sutter Street</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"
+  return_driving_directions="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Closed route: Howard Street to Columbus Avenue to California Street to Sutter Street, then back to Howard Street</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"
+  return_driving_directions="true"
+  route_type="closed"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Open optimized route (TSP) with fixed final destination: Howard Street to Sutter Street, via Columbus Avenue, California Street in any order</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"
+  return_driving_directions="true"
+  optimize_route="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Open optimized route (TSP): Howard Street to Columbus Avenue, California Street, Sutter Street in any order</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"
+  return_driving_directions="true"
+  optimize_route="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Closed optimized route (TSP): Howard Street to Columbus Avenue, California Street and Sutter Street in any order, then back to Howard Street</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"
+  return_driving_directions="true"
+  route_type="closed"
+  optimize_route="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="batch">
+<h2>Batch request)</h2>
+<h4>San Francisco: Howard Street to Columbus Avenue, California Street and Sutter Street</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;batch_route_request id="1" route_preference="fastest"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="0" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/batch_route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="gc">
+<h2>Pre-Geocoded Destinations</h2>
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"
+  pre_geocoded_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;pre_geocoded_location id="1"&gt;
+      &lt;edge_id&gt;23607005&lt;/edge_id&gt;
+      &lt;percent&gt;0.53&lt;/percent&gt;
+      &lt;side&gt;R&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;pre_geocoded_location id="2"&gt;
+      &lt;edge_id&gt;23601015&lt;/edge_id&gt;
+      &lt;percent&gt;0.33&lt;/percent&gt;
+      &lt;side&gt;R&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal: Rue Bishop to Place Jacques-Cartier, directions in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_route_edge_ids="true"
+  language="FRENCH"
+  pre_geocoded_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;pre_geocoded_location id="1"&gt;
+      &lt;edge_id&gt;598588378&lt;/edge_id&gt;
+      &lt;percent&gt;0.5050505050505051&lt;/percent&gt;
+      &lt;side&gt;L&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;pre_geocoded_location id="2"&gt;
+      &lt;edge_id&gt;598941816&lt;/edge_id&gt;
+      &lt;percent&gt;0&lt;/percent&gt;
+      &lt;side&gt;L&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal to Boston - Shortest</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="hour"
+  pre_geocoded_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;pre_geocoded_location id="1"&gt;
+      &lt;edge_id&gt;598588378&lt;/edge_id&gt;
+      &lt;percent&gt;0.5050505050505051&lt;/percent&gt;
+      &lt;side&gt;L&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;pre_geocoded_location id="2"&gt;
+      &lt;edge_id&gt;497585054&lt;/edge_id&gt;
+      &lt;percent&gt;0.5&lt;/percent&gt;
+      &lt;side&gt;L&lt;/side&gt;
+    &lt;/pre_geocoded_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="geo">
+<h2>Geographic Destinations</h2>
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1"
+      longitude="-122.4014128" latitude="37.7841193" /&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2"
+      longitude="-122.41833266666666" latitude="37.805999" /&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal: Rue Bishop to Place Jacques-Cartier, directions in French</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_route_edge_ids="true"
+  language="FRENCH"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" country="CA"
+      longitude="-73.57498303030303" latitude="45.495921414141414" /&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" country="CA"
+      longitude="-73.55252" latitude="45.50755" /&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Montreal to Boston - Shortest</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=12 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  road_preference="highway" return_driving_directions="true"
+  distance_unit="mile" time_unit="hour"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" country="CA"
+      longitude="-73.57498303030303" latitude="45.495921414141414" /&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="1" country="US"
+      longitude="-71.05258" latitude="42.359515" /&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="nonr">
+<h3>Non-routable destinations </h3>
+<h4>San Francisco: Cascade Walk (non-routable) to Columbus Avenue - fastest route </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="98 Cascade Walk" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>San Francisco: Howard Street to Yerba Buena Lane (non-routable) - fastest route </h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  return_locations="true"
+  return_route_edge_ids="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="33 Yerba Buena Lane" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<a name="json">
+<h2>JSON responses</h2>
+
+<h4>San Francisco: Howard Street to Columbus Avenue - fastest route</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs?format=JSON method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_driving_directions="true"
+  distance_unit="mile" time_unit="minute"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning details of origin and destination addresses</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs?format=JSON method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_locations="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs?format=JSON method=post>
+<textarea name=xml_request rows=24 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Same - shortest route returning route geometry and edge ids</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs?format=JSON method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="shortest"
+  return_driving_directions="true"
+  return_route_edge_ids ="true"
+  return_route_geometry="true"
+  return_detailed_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;end_location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/end_location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Open route: Howard Street to Columbus Avenue to California Street to Sutter Street</h4>
+<form name=omsmapform action=http://elocation.oracle.com/routeserver/servlet/RouteServerServlet?format=JSON method=post>
+<textarea name=xml_request rows=20 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_route_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="747 Howard Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1300 Columbus" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="1450 California St" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="4" &gt;
+      &lt;input_address&gt;
+        &lt;unformatted country="US" &gt;
+          &lt;address_line value="800 Sutter Street" /&gt;
+          &lt;address_line value="San Francisco, CA" /&gt;
+        &lt;/unformatted &gt;
+      &lt;/input_address&gt;
+    &lt;/input_location&gt;
+  &lt;/location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Open route between geographical locations</h4>
+<form name=omsmapform action=http://elocation.oracle.com/elocation/lbs?format=JSON method=post>
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;route_request id="1" route_preference="fastest"
+  return_route_geometry="true"&gt;
+  &lt;start_location&gt;
+    &lt;input_location id="1" longitude="-122.4016" latitude="37.78415"/&gt;
+  &lt;/start_location&gt;
+  &lt;location&gt;
+    &lt;input_location id="2" longitude="-122.41837" latitude="37.80598"/&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="3" longitude="-122.4183262962963" latitude="37.79087703703704"/&gt;
+  &lt;/location&gt;
+  &lt;location&gt;
+    &lt;input_location id="4" longitude="-122.41379" latitude="37.78856"/&gt;
+  &lt;/location&gt;
+&lt;/route_request&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#us-short"> US Short Distance </a></td>
+  <td> <a href="#us-medium"> US Medium Distance </a></td>
+  <td> <a href="#us-long"> US Long Distance </a></td>
+  <td> <a href="#eu-short"> Europe Short Distance </a></td>
+  <td> <a href="#eu-medium"> Europe Medium Distance </a></td>
+  <td> <a href="#eu-long"> Europe Long Distance </a></td>
+  <td> <a href="#multi"> Multiple destinations </a></td>
+  <td> <a href="#batch"> Batch routes </a></td>
+  <td> <a href="#gc"> Pre_geocoded destinations </a></td>
+  <td> <a href="#geo"> Geographic destinations </a></td>
+  <td> <a href="#nonr"> Non-routable destinations </a></td>
+  <td> <a href="#json"> JSON responses </a></td>
+</tr>
+</table>
+
+</body>
+</html>

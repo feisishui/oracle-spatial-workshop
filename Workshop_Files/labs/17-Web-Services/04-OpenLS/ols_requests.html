@@ -1,0 +1,598 @@
+<html>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+  <title>Oracle OpenLS Tests</title>
+</head>
+<body>
+<h1>Oracle OpenLS Tests</h1>
+<hr>
+<table cellpadding="5" cellspacing="3" border="0" summary="">
+<tr>
+  <td> <a href="#GC"> Geocoding </a></td>
+  <td> <a href="#MA"> Mapping </a></td>
+  <td> <a href="#RT"> Routing </a></td>
+  <td> <a href="#YP"> Yellow pages </a></td>
+</tr>
+</table>
+
+<hr>
+<a name="GC">
+<H2>Geocoding</H2>
+
+<H3>GeocodeRequest</H3>
+
+<H4>United States of America</H4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request methodName="GeocodeRequest"
+    maximumResponses="10"
+    requestID="123" version="1.0"&gt;
+    &lt;GeocodeRequest&gt;
+      &lt;Address countryCode="US"&gt;
+        &lt;StreetAddress&gt;
+          &lt;Building number="400"/&gt;
+          &lt;Street&gt;Post Street&lt;/Street&gt;
+        &lt;/StreetAddress&gt;
+        &lt;Place type="CountrySubdivision"&gt;CA&lt;/Place&gt;
+        &lt;Place type="Municipality"&gt;San Francisco&lt;/Place&gt;
+        &lt;PostalCode&gt;94102&lt;/PostalCode&gt;
+      &lt;/Address&gt;
+      &lt;Address countryCode="US"&gt;
+        &lt;StreetAddress&gt;
+          &lt;Building number="233"/&gt;
+          &lt;Street&gt;Pennsylvania Avenue&lt;/Street&gt;
+        &lt;/StreetAddress&gt;
+        &lt;Place type="CountrySubdivision"&gt;DC&lt;/Place&gt;
+        &lt;Place type="Municipality"&gt;Washington&lt;/Place&gt;
+      &lt;/Address&gt;
+    &lt;/GeocodeRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>France</H4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request methodName="GeocodeRequest"
+    maximumResponses="10"
+    requestID="123" version="1.0"&gt;
+    &lt;GeocodeRequest&gt;
+      &lt;Address countryCode="FR"&gt;
+        &lt;StreetAddress&gt;
+          &lt;Building number="150"/&gt;
+          &lt;Street&gt;Boulevard Hausman&lt;/Street&gt;
+        &lt;/StreetAddress&gt;
+        &lt;Place type="Municipality"&gt;Paris&lt;/Place&gt;
+      &lt;/Address&gt;
+    &lt;/GeocodeRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Germany</H4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request methodName="GeocodeRequest"
+    maximumResponses="10"
+    requestID="123" version="1.0"&gt;
+    &lt;GeocodeRequest&gt;
+      &lt;Address countryCode="DE"&gt;
+        &lt;StreetAddress&gt;
+          &lt;Street&gt;Alexanderplatz&lt;/Street&gt;
+        &lt;/StreetAddress&gt;
+        &lt;PostalCode&gt;D-10178&lt;/PostalCode&gt;
+        &lt;Place type="Municipality"&gt;Berlin Mitte&lt;/Place&gt;
+      &lt;/Address&gt;
+    &lt;/GeocodeRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H3>ReverseGeocodeRequest (not supported)</H3>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request methodName="ReverseGeocodeRequest"
+    maximumResponses="10"
+    requestID="123" version="1.0"&gt;
+    &lt;ReverseGeocodeRequest&gt;
+      &lt;Position&gt;
+        &lt;gml:Point&gt;
+          &lt;gml:pos&gt;-71.514683047917 41.779700033060&lt;/gml:pos&gt;
+        &lt;/gml:Point&gt;
+      &lt;/Position&gt;
+      &lt;ReverseGeocodePreference&gt;StreetAddress&lt;/ReverseGeocodePreference&gt;
+    &lt;/ReverseGeocodeRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<a name="MA">
+<H2>Mapping</H2>
+
+<H3>PortrayMapRequest</H3>
+
+<h4>Simple map request </h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request methodName="PortrayMapRequest"
+    requestID="456" version="1.1"&gt;
+    &lt;PortrayMapRequest&gt;
+      &lt;Output
+        width="800" height="600"
+        BGcolor="#a6cae0"
+        format="jpg_url"&gt;
+        &lt;CenterContext&gt;
+          &lt;CenterPoint srsName="8307"&gt;
+            &lt;gml:pos&gt;-122.2615 37.5266&lt;/gml:pos&gt;
+          &lt;/CenterPoint&gt;
+          &lt;Radius unit="M"&gt;50000&lt;/Radius&gt;
+        &lt;/CenterContext&gt;
+      &lt;/Output&gt;
+      &lt;Basemap filter="Include"&gt;
+        &lt;Layer name="mvdemo.demo_map.THEME_DEMO_COUNTIES"/&gt;
+        &lt;Layer name="mvdemo.demo_map.THEME_DEMO_HIGHWAYS"/&gt;
+      &lt;/Basemap&gt;
+    &lt;/PortrayMapRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<h4>Map request with POI overlays </h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request
+    maximumResponses="10"
+    methodName="PortrayMapRequest"
+    requestID="456"
+    version="1.1"&gt;
+    &lt;PortrayMapRequest&gt;
+      &lt;Output
+        BGcolor="#a6cae0"
+        content="URL"
+        format="GIF_URL"
+        height="600"
+        transparent="false"
+        width="800"&gt;
+        &lt;CenterContext SRS="8307"&gt;
+          &lt;CenterPoint srsName="8307"&gt;
+            &lt;gml:pos&gt;-122.2615 37.5266&lt;/gml:pos&gt;
+          &lt;/CenterPoint&gt;
+          &lt;Radius unit="M"&gt;50000&lt;/Radius&gt;
+        &lt;/CenterContext&gt;
+      &lt;/Output&gt;
+      &lt;Basemap filter="Include"&gt;
+        &lt;Layer name="mvdemo.demo_map.THEME_DEMO_COUNTIES"/&gt;
+        &lt;Layer name="mvdemo.demo_map.THEME_DEMO_HIGHWAYS"/&gt;
+      &lt;/Basemap&gt;
+      &lt;Overlay zorder="1"&gt;
+        &lt;POI
+          ID="123"
+          description="description"
+          phoneNumber="1234"
+          POIName="Books at Post Str (point)"&gt;
+          &lt;gml:Point srsName="4326"&gt;
+            &lt;gml:pos&gt;-122.4083257 37.788208&lt;/gml:pos&gt;
+          &lt;/gml:Point&gt;
+        &lt;/POI&gt;
+      &lt;/Overlay&gt;
+      &lt;Overlay zorder="2"&gt;
+        &lt;POI
+          ID="456"
+          description="description"
+          phoneNumber="1234"
+          POIName="Books at Winston Dr (address)"&gt;
+          &lt;Address countryCode="US"&gt;
+            &lt;StreetAddress&gt;
+              &lt;Building number="233"/&gt;
+              &lt;Street&gt;Winston Drive&lt;/Street&gt;
+            &lt;/StreetAddress&gt;
+            &lt;Place type="CountrySubdivision"&gt;CA&lt;/Place&gt;
+            &lt;Place type="CountrySecondarySubdivision"/&gt;
+            &lt;Place type="Municipality"&gt;San Francisco&lt;/Place&gt;
+            &lt;Place type="MunicipalitySubdivision"/&gt;
+            &lt;PostalCode&gt;94132&lt;/PostalCode&gt;
+          &lt;/Address&gt;
+        &lt;/POI&gt;
+      &lt;/Overlay&gt;
+      &lt;Overlay zorder="3"&gt;
+        &lt;Position levelOfConf="1"&gt;
+          &lt;gml:Point gid="a boat (point)" srsName="4326"&gt;
+            &lt;gml:pos&gt;-122.8053965 37.388208&lt;/gml:pos&gt;
+          &lt;/gml:Point&gt;
+        &lt;/Position&gt;
+      &lt;/Overlay&gt;
+    &lt;/PortrayMapRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<a name="RT">
+<H2>Routing</H2>
+
+<H3>DetermineRouteRequest</H3>
+
+<H4>Simple route</H4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+    &lt;Request
+      maximumResponses="10"
+      methodName="DetermineRouteRequest"
+      requestID="12345"
+      version="1.0"&gt;
+      &lt;DetermineRouteRequest&gt;
+        &lt;RoutePlan&gt;
+          &lt;RoutePreference&gt;Fastest&lt;/RoutePreference&gt;
+          &lt;WayPointList&gt;
+            &lt;StartPoint&gt;
+              &lt;Address countryCode="US"&gt;
+                &lt;StreetAddress&gt;
+                  &lt;Building number="100"/&gt;
+                  &lt;Street&gt;Cambridgeside Pl&lt;/Street&gt;
+                &lt;/StreetAddress&gt;
+                &lt;Place type="CountrySubdivision"&gt;MA&lt;/Place&gt;
+                &lt;Place type="Municipality"&gt;Cambridge&lt;/Place&gt;
+                &lt;PostalCode&gt;02141&lt;/PostalCode&gt;
+              &lt;/Address&gt;
+            &lt;/StartPoint&gt;
+            &lt;EndPoint&gt;
+              &lt;Address countryCode="US"&gt;
+                &lt;StreetAddress&gt;
+                  &lt;Building number="1"/&gt;
+                  &lt;Street&gt;Oracle Dr&lt;/Street&gt;
+                &lt;/StreetAddress&gt;
+                &lt;Place type="CountrySubdivision"&gt;New Hampshire&lt;/Place&gt;
+                &lt;Place type="Municipality"&gt;Nashua&lt;/Place&gt;
+                &lt;PostalCode&gt;03062&lt;/PostalCode&gt;
+              &lt;/Address&gt;
+            &lt;/EndPoint&gt;
+          &lt;/WayPointList&gt;
+          &lt;AvoidList/&gt;
+        &lt;/RoutePlan&gt;
+      &lt;RouteGeometryRequest maxPoints="100" provideStartingPortion="true" scale="1"&gt;
+        &lt;BoundingBox&gt;
+          &lt;gml:pos/&gt;
+          &lt;gml:pos/&gt;
+        &lt;/BoundingBox&gt;
+      &lt;/RouteGeometryRequest&gt;
+      &lt;RouteMapRequest&gt;
+        &lt;Output BGcolor="" format="" height="600" transparent="false" width="800"/&gt;
+      &lt;/RouteMapRequest&gt;
+    &lt;/DetermineRouteRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+<a name="YP">
+<H2>Yellow pages</H2>
+
+<H3>DirectoryRequest</H3>
+
+<H4>Search for a specific POI by name</h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="POIName" value="MERCURE ROYAL MADELEINE"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for all tourist offices (category 7389) in the US</h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;Address countryCode="US"&gt;
+        &lt;/Address&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_code" value="7389"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for the nearest restaurant from a geographical point </h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;Nearest nearestCriterion="Proximity"&gt;
+         &lt;Position&gt;
+          &lt;gml:Point xmlns:gml="http://www.opengis.net/gml"&gt;
+           &lt;gml:pos dimension="2" srsName="4326"&gt;
+             -122.4083257 37.788208
+           &lt;/gml:pos&gt;
+          &lt;/gml:Point&gt;
+         &lt;/Position&gt;
+        &lt;/Nearest&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_type" value="RESTAURANT"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for the nearest restaurant from an address - Not implemented (nearest search ignored)</h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;Nearest nearestCriterion="Proximity"&gt;
+          &lt;Address countryCode="US"&gt;
+            &lt;StreetAddress&gt;
+              &lt;Building number="400"/&gt;
+              &lt;Street&gt;Post Street&lt;/Street&gt;
+            &lt;/StreetAddress&gt;
+            &lt;Place type="CountrySubdivision"&gt;CA&lt;/Place&gt;
+            &lt;Place type="Municipality"&gt;San Francisco&lt;/Place&gt;
+            &lt;PostalCode&gt;94102&lt;/PostalCode&gt;
+          &lt;/Address&gt;
+        &lt;/Nearest&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_type" value="RESTAURANT"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for the nearest restaurant from a hotel - Not implemented (nearest search ignored)</h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;Nearest nearestCriterion="Proximity"&gt;
+          &lt;POI ID="1"&gt;
+            &lt;POIAttributeList&gt;
+              &lt;POIInfoList&gt;
+                &lt;POIInfo name="POIName" value="MERCURE ROYAL MADELEINE"/&gt;
+              &lt;/POIInfoList&gt;
+            &lt;/POIAttributeList&gt;
+          &lt;/POI&gt;
+        &lt;/Nearest&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_type" value="RESTAURANT"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for all restaurants within a distance from a geographical point </h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;WithinDistance&gt;
+          &lt;POI&gt;
+            &lt;gml:Point xmlns:gml="http://www.opengis.net/gml"&gt;
+              &lt;gml:pos dimension="2" srsName="4326"&gt;
+                -122.4083257 37.788208
+              &lt;/gml:pos&gt;
+            &lt;/gml:Point&gt;
+          &lt;/POI&gt;
+          &lt;MaximumDistance value="50"/&gt;
+        &lt;/WithinDistance&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_type" value="RESTAURANT"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<H4>Search for all tourist offices in San Francisco</h4>
+
+<form name=wfsform
+  action="http://localhost:8888/SpatialWS-SpatialWS-context-root/SpatialWSXmlServlet"
+  method="post">
+<textarea name=xml_request rows=15 cols=80>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;XLS version="1.1"
+  xmlns="http://www.opengis.net/xls"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/xls"&gt;
+  &lt;RequestHeader clientName="USERNAME" clientPassword="PASSWORD"/&gt;
+  &lt;Request version="1.1"
+    requestID="123"
+    maximumResponses="10"
+    methodName="DirectoryRequest"&gt;
+    &lt;DirectoryRequest&gt;
+      &lt;POILocation&gt;
+        &lt;Address countryCode="US"&gt;
+          &lt;Place type="CountrySubdivision"&gt;CALIFORNIA&lt;/Place&gt;
+          &lt;Place type="Municipality"&gt;SAN FRANCISCO&lt;/Place&gt;
+        &lt;/Address&gt;
+      &lt;/POILocation&gt;
+      &lt;POIProperties&gt;
+        &lt;POIProperty name="SIC_type" value="TOURIST INFORMATION"/&gt;
+      &lt;/POIProperties&gt;
+    &lt;/DirectoryRequest&gt;
+  &lt;/Request&gt;
+&lt;/XLS&gt;
+</textarea>
+<br><input type=submit value=Submit>
+</form>
+
+<hr>
+</body>
+</html>

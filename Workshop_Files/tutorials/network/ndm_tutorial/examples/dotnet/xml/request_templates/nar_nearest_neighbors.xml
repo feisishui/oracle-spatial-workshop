@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" ?>
+<networkAnalysisRequest
+   xmlns="http://xmlns.oracle.com/spatial/network"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <networkName>NAVTEQ_SF</networkName>
+  <nearestNeighbors>
+    <startPoint>
+      <nodeID>199520844</nodeID>
+    </startPoint>
+    <noOfNeighbors> 10 </noOfNeighbors>
+    <subPathRequestParameter>
+      <cost> true </cost>
+      <isFullPath> true </isFullPath>
+      <geometry>true</geometry>
+      <pathRequestParameter>
+        <cost> true </cost>
+        <endNodeID>true</endNodeID>
+        <geometry>true</geometry>
+        <linksRequestParameter>
+          <linkRequestParameter>
+            <id>true</id>
+            <cost>true</cost>
+            <isActive>true</isActive>
+            <isBidirected>true</isBidirected>
+            <startNodeID>true</startNodeID>
+            <endNodeID>true</endNodeID>
+            <linkLevel>true</linkLevel>
+            <geometry>true</geometry>
+          </linkRequestParameter>
+        </linksRequestParameter>
+        <nodesRequestParameter>
+          <nodeRequestParameter>
+            <id>true</id>
+            <cost>true</cost>
+            <isActive>true</isActive>
+            <geometry>true</geometry>
+          </nodeRequestParameter>
+        </nodesRequestParameter>
+      </pathRequestParameter>
+    </subPathRequestParameter>
+  </nearestNeighbors>
+</networkAnalysisRequest>

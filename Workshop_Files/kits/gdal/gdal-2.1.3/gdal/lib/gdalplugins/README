@@ -1,0 +1,7 @@
+SDK used to build plugins:
+ogr_PG: PLSQL 8.4
+ogr_FileGDB: FileGDB_API 1.4
+gdal_HDF5: hdf5-1.8.9
+gdal_HDF4: hdf-4.2.9
+gdal_ECW_JP2ECW: ERDAS_ECWJP2_SDK-5.3.0
+gdal_JP2OpenJPEG: openjpeg-2.1.2
